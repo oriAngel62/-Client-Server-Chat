@@ -5,6 +5,8 @@ function App() {
     const contactList = [
         { name: "Ori1", lastMessage: "aaa", time: "1 min ago" },
         { name: "David", lastMessage: "aaa", time: "1 min ago" },
+        { name: "David2", lastMessage: "aaa", time: "1 min ago" },
+        { name: "David2", lastMessage: "aaa", time: "1 min ago" },
     ];
 
     const contactMap = contactList.map((contact, key) => {
@@ -20,9 +22,12 @@ function App() {
     return (
         <div className="container -fluid">
             <div className="row">
-                {contactMap}
-                <div className="col-9">
-                    <div className="chat">One of three columns12</div>
+                <div className="col-3">
+                    <button onClick={this.addContact}>click</button>
+                    {contactMap}
+                    <div className="col-9">
+                        <div className="chat">One of three columns12</div>
+                    </div>
                 </div>
             </div>
         </div>
