@@ -2,20 +2,25 @@ import "./App.css";
 import ContactItem from "./contactItem/ContactItem";
 import React, { useState } from "react";
 import { render } from "react-dom";
+import Popup from "./contactItem/Popup";
 
 function App() {
     const listMessages = [
         {
             sender: "a",
             type: "text",
+            date: "05/04/2022",
+            time: "12:54",
             context: "somthing intrseting",
-            time: "10 min ago",
+            lastContextTime: "10 min ago",
         },
         {
             sender: "a",
             type: "text",
-            context: "last",
-            time: "10 min ago",
+            date: "05/04/2022",
+            time: "12:54",
+            context: "somthing intrseting",
+            lastContextTime: "11 min ago",
         },
     ];
     const contactList = [
@@ -24,7 +29,13 @@ function App() {
     ];
 
     const [list, setList] = useState(contactList);
-    const [name, setName] = useState("");
+    const handleCallback = (childData) => {
+        console.log(childData.name);
+        if (childData.name != "") {
+            handleAdd(childData.name);
+        }
+    };
+
     const contactMap = list.map((contact, key) => {
         return (
             <ContactItem
@@ -39,40 +50,24 @@ function App() {
         );
     });
 
-    function handleChange(event) {
-        setName(event.target.value);
-    }
-
-    function handleAdd() {
+    function handleAdd(name) {
         const newList = list.concat({
             name: name,
             listMessages,
         });
-
         setList(newList);
-        setName("");
-
-        console.log(newList);
-        contactList = list;
         console.log(contactList);
     }
     return (
         <div className="container -fluid">
             <div className="row">
                 <div className="col-3">
-                    <div>
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={handleChange}
-                        />
-                        <button type="button" onClick={handleAdd}>
-                            Add
-                        </button>
-                    </div>
-                    {contactMap}
-                    <div className="col-9">
-                        <div className="chat">One of three columns12</div>
+                    <div className="overflow-auto">
+                        <Popup sendDataToParent={handleCallback} />
+                        {contactMap}
+                        <div className="col-9">
+                            <div className="chat">One of three columns12</div>
+                        </div>
                     </div>
                 </div>
             </div>

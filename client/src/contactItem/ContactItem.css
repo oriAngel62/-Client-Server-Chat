@@ -1,4 +1,4 @@
-.contact{
-    margin: 0px;
-    background-color: aqua;
+
+#list-tab:focus {     
+    background-color:yellow;    
 }

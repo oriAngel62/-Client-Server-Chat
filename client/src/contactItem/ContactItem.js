@@ -1,5 +1,6 @@
 import ChatHistory from "../chatHistory/ChatHistory";
 import React, { useState, useEffect } from "react";
+import "./ContactItem.css";
 
 function showChatHistory(contactItem) {
     <ChatHistory contactList={contactItem} />;
@@ -11,13 +12,18 @@ function ContactItem({ contactItem }) {
     //     // Update the document title using the browser API
     //     document.title = `You clicked ${count} times`;
     // });
-    console.log(contactItem);
+    // console.log(
+    //     contactItem.listMessages[contactItem.listMessages.length - 1].time
+    // );
+    <style> </style>;
     return (
         <div className="contact">
             <div className="list-group">
                 <button
                     href="#"
                     className="list-group-item list-group-item-action "
+                    id="list-tab"
+                    role="tablist"
                     aria-current="true"
                     // onClick={() => <ChatHistory />}
                     // data-toggle="collapse"
@@ -34,15 +40,16 @@ function ContactItem({ contactItem }) {
                         <small>
                             {
                                 contactItem.listMessages[
-                                    listMessages.length - 1
-                                ].time
+                                    contactItem.listMessages.length - 1
+                                ].lastContextTime
                             }
                         </small>
                     </div>
                     <p className="mb-1">
                         {
-                            contactItem.listMessages[listMessages.length - 1]
-                                .context
+                            contactItem.listMessages[
+                                contactItem.listMessages.length - 1
+                            ].context
                         }
                     </p>
                 </button>
