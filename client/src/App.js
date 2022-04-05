@@ -14,7 +14,7 @@ function App() {
         {
             sender: "a",
             type: "text",
-            context: "somthing intrseting",
+            context: "last",
             time: "10 min ago",
         },
     ];
@@ -23,26 +23,29 @@ function App() {
         { name: "David", listMessages },
     ];
 
-    const contactMap = contactList.map((contact, key) => {
+    const [list, setList] = useState(contactList);
+    const [name, setName] = useState("");
+    const contactMap = list.map((contact, key) => {
         return (
             <ContactItem
-                name={contact.name}
-                lastMessage={contact.lastMessage}
-                time={contact.time}
+                contactItem={contact}
+                // name={contact.name}
+                // lastMessage={
+                //     contact.listMessages[listMessages.length - 1].context
+                // }
+                // time={contact.listMessages[listMessages.length - 1].time}
                 key={key}
             />
         );
     });
-    const [list, setList] = useState(contactList);
-    const [name, setName] = useState("");
 
     function handleChange(event) {
         setName(event.target.value);
     }
 
     function handleAdd() {
-        const newList = contactList.concat({
-            name: "o",
+        const newList = list.concat({
+            name: name,
             listMessages,
         });
 
@@ -50,9 +53,9 @@ function App() {
         setName("");
 
         console.log(newList);
-        console.log(list);
+        contactList = list;
+        console.log(contactList);
     }
-
     return (
         <div className="container -fluid">
             <div className="row">

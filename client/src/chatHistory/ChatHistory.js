@@ -1,4 +1,4 @@
-function ChatHistory({ contactList }) {
+function ChatHistory({ contact }) {
     return (
         <div>
             <p style="size:20px;">helllo</p>
