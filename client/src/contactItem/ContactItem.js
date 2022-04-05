@@ -11,7 +11,9 @@ function ContactItem({ contactItem }) {
     //     // Update the document title using the browser API
     //     document.title = `You clicked ${count} times`;
     // });
-    console.log(contactItem);
+    // console.log(
+    //     contactItem.listMessages[contactItem.listMessages.length - 1].time
+    // );
     return (
         <div className="contact">
             <div className="list-group">
@@ -34,15 +36,16 @@ function ContactItem({ contactItem }) {
                         <small>
                             {
                                 contactItem.listMessages[
-                                    listMessages.length - 1
-                                ].time
+                                    contactItem.listMessages.length - 1
+                                ].lastContextTime
                             }
                         </small>
                     </div>
                     <p className="mb-1">
                         {
-                            contactItem.listMessages[listMessages.length - 1]
-                                .context
+                            contactItem.listMessages[
+                                contactItem.listMessages.length - 1
+                            ].context
                         }
                     </p>
                 </button>
