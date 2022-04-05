@@ -62,12 +62,10 @@ function App() {
         <div className="container -fluid">
             <div className="row">
                 <div className="col-3">
-                    <div className="overflow-auto">
-                        <Popup sendDataToParent={handleCallback} />
-                        {contactMap}
-                        <div className="col-9">
-                            <div className="chat">One of three columns12</div>
-                        </div>
+                    <Popup sendDataToParent={handleCallback} />
+                    <div className="scroll">{contactMap}</div>
+                    <div className="col-9">
+                        <div className="chat">One of three columns12</div>
                     </div>
                 </div>
             </div>
