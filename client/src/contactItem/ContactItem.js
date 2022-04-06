@@ -1,9 +1,10 @@
 import ChatHistory from "../chatHistory/ChatHistory";
-import React, { useState, useEffect } from "react";
 import "./ContactItem.css";
+import React, { useState } from "react";
 
 function ContactItem({ contactItem }) {
-    console.log("Ad");
+    const [ChatHistory, setChatHistory] = useState(false);
+
     // const [count, setCount] = useState(0);
     // useEffect(() => {
     //     // Update the document title using the browser API
@@ -13,9 +14,19 @@ function ContactItem({ contactItem }) {
     //     contactItem.listMessages[contactItem.listMessages.length - 1].time
     // );
     // <ChatHistory contactList={contactItem}
+    // function handleClick(contactItem) {
+    //     return (
+    //         <div className="game">
+    //             <p>dlaskdklasjdk</p>
+    //         </div>
+    //     );
+
+    //     // return <ChatHistory contactList={contactItem} />;
+    // }
     function handleClick(contactItem) {
-        return <ChatHistory contactList={contactItem} />;
+        return <p>dasd</p>;
     }
+
     return (
         <div className="contact">
             <div className="list-group">
@@ -29,7 +40,8 @@ function ContactItem({ contactItem }) {
                     // data-toggle="collapse"
                     // data-target="#learnMore"
                     // onClick={showChatHistory(contactItem)}
-                    onClick={(contactItem) => handleClick(contactItem)}
+
+                    onClick={() => setChatHistory(true)}
                 >
                     <div className="d-flex w-100 justify-content-between">
                         <img
@@ -54,11 +66,6 @@ function ContactItem({ contactItem }) {
                         }
                     </p>
                 </button>
-                <div id="learnMore" className="collapse">
-                    GeeksforGeeks is a computer science portal where you can
-                    learn programming. It is a platform where you can practice
-                    multiple languages content and many more.
-                </div>
             </div>
         </div>
     );

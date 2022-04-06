@@ -3,6 +3,7 @@ import ContactItem from "./contactItem/ContactItem";
 import React, { useState } from "react";
 import { render } from "react-dom";
 import Popup from "./contactItem/Popup";
+import ChatHistory from "./chatHistory/ChatHistory";
 
 function App() {
     const listMessages = [
@@ -64,13 +65,12 @@ function App() {
                 <div className="col-3">
                     <Popup sendDataToParent={handleCallback} />
                     <div className="scroll">{contactMap}</div>
-                    <div className="col-9">
-                        <div className="chat">One of three columns12</div>
-                    </div>
+                    <div className="col-9"></div>
                 </div>
             </div>
         </div>
     );
 }
+// <ChatHistory contact={{ name: "Ori1", listMessages }} />
 
 export default App;

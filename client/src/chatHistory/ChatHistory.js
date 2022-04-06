@@ -1,5 +1,5 @@
 import "./ChatHistory.css";
-import MessegeBox from "../chatHistory/MessegeBox";
+import MessegeBox from "./MessegeBox";
 
 function ChatHistory({ contact }) {
     console.log("dav");
