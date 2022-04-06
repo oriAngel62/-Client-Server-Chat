@@ -2,11 +2,8 @@ import ChatHistory from "../chatHistory/ChatHistory";
 import React, { useState, useEffect } from "react";
 import "./ContactItem.css";
 
-function showChatHistory(contactItem) {
-    <ChatHistory contactList={contactItem} />;
-}
-
 function ContactItem({ contactItem }) {
+    console.log("Ad");
     // const [count, setCount] = useState(0);
     // useEffect(() => {
     //     // Update the document title using the browser API
@@ -15,7 +12,10 @@ function ContactItem({ contactItem }) {
     // console.log(
     //     contactItem.listMessages[contactItem.listMessages.length - 1].time
     // );
-    <style> </style>;
+    // <ChatHistory contactList={contactItem}
+    function handleClick(contactItem) {
+        return <ChatHistory contactList={contactItem} />;
+    }
     return (
         <div className="contact">
             <div className="list-group">
@@ -28,7 +28,8 @@ function ContactItem({ contactItem }) {
                     // onClick={() => <ChatHistory />}
                     // data-toggle="collapse"
                     // data-target="#learnMore"
-                    onClick={showChatHistory(contactItem)}
+                    // onClick={showChatHistory(contactItem)}
+                    onClick={(contactItem) => handleClick(contactItem)}
                 >
                     <div className="d-flex w-100 justify-content-between">
                         <img
