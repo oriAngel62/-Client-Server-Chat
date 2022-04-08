@@ -13,21 +13,20 @@ function ChatHistory({ contact }) {
             <div calssName="chatBox">
                 {chatList}
             </div>
-            bottom
+            <div className="bottomPart">
+                <div className="attachment"></div>
+                <form class="d-flex">
+        <input class="form-control me-2" type="messege" placeholder="Write a new message" aria-label="Search"></input>
+        <button
+        //  value={messege}
+        //  class="btn btn-outline-success" type="submit" onClick={() => {
+        //     contact.listMessages.append({messege});
+        // }}
+         >Send</button>
+      </form>
+            </div> 
         </div>
     );
 }
-/*
-<div>
-                    
-                </div>
-<div className="bottomPart">
-                <div className="attachment"></div>
-                <div>
-                    <input placeholder="Write a new message">
-                        <button>Send</button>
-                    </input>
-                </div>
-            </div> 
-*/
+
 export default ChatHistory;

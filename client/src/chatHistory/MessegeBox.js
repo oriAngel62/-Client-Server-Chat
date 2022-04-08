@@ -3,7 +3,7 @@ import "./MessegeBox.css";
 function MessegeBox({messege}){
     if(messege.sender=="me")
     return(
-        <div>
+        <div className="line-in-chat">
         <div className="msg_box_send">
             {messege.context} 
             <br></br>
@@ -13,12 +13,13 @@ function MessegeBox({messege}){
     );
     else
     return(
-        <div>
+        <div className="line-in-chat">
         <div className="msg_box_receive">
             {messege.context}
             <h6>{messege.time} {messege.date}</h6>
         </div>
         </div>
+        
     );
 
 }
