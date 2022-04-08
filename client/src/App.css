@@ -7,11 +7,6 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
 .App-header {
   background-color: #282c34;
@@ -28,16 +23,22 @@
   color: #61dafb;
 }
 .scroll{
-  height: 500px;
+  height: 100%;
   overflow: scroll;
 }
-
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.col-3{
+  width: 25%
+}
+.col-9{
+  height: 100%;
+  width: 75%;
+  overflow: scroll;
+  background-color: rgb(255, 158, 102);
+}
+.row {
+  --bs-gutter-x: 0;
+  height: 100%;
+}
+.container-fluid{
+  height: 100%;
 }

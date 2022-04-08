@@ -5,10 +5,9 @@ function MessegeBox({messege}){
     return(
         <div>
         <div className="msg_box_send">
-            {messege.context}
-        </div>
-        <div className="msg_time_send">
-            {messege.time} {messege.date}
+            {messege.context} 
+            <br></br>
+            <h6>{messege.time} {messege.date}</h6>
         </div>
         </div>
     );
@@ -17,9 +16,7 @@ function MessegeBox({messege}){
         <div>
         <div className="msg_box_receive">
             {messege.context}
-        </div>
-        <div className="msg_time_receive">
-            {messege.time} {messege.date}
+            <h6>{messege.time} {messege.date}</h6>
         </div>
         </div>
     );

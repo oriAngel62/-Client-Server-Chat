@@ -8,7 +8,7 @@ import ChatHistory from "./chatHistory/ChatHistory";
 function App() {
     const listMessages = [
         {
-            sender: "a",
+            sender: "me",
             type: "text",
             date: "05/04/2022",
             time: "12:54",
@@ -16,7 +16,7 @@ function App() {
             lastContextTime: "10 min ago",
         },
         {
-            sender: "a",
+            sender: "tome",
             type: "text",
             date: "05/04/2022",
             time: "12:54",
@@ -32,7 +32,7 @@ function App() {
     const [list, setList] = useState(contactList);
     const handleCallback = (childData) => {
         console.log(childData.name);
-        if (childData.name != "") {
+        if (childData.name !== "") {
             handleAdd(childData.name);
         }
     };
@@ -60,17 +60,18 @@ function App() {
         console.log(contactList);
     }
     return (
-        <div className="container -fluid">
+        <div className="container-fluid">
             <div className="row">
                 <div className="col-3">
                     <Popup sendDataToParent={handleCallback} />
                     <div className="scroll">{contactMap}</div>
-                    <div className="col-9"></div>
+                </div>
+                <div className="col-9">
+                    <ChatHistory contact={{ name: "Ori1", listMessages }} />
                 </div>
             </div>
         </div>
     );
 }
-// <ChatHistory contact={{ name: "Ori1", listMessages }} />
 
 export default App;

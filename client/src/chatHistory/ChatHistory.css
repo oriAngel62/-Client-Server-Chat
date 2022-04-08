@@ -2,3 +2,16 @@
     float:  left;
     background-color: grey;
 }
+.chatPlace{
+    min-height: 100px;
+    width: 75%;
+    border: 1px solid black;
+    position: absolute;
+    background-color: rgb(255, 158, 102);
+}
+.chatBox{
+    height: 100%;
+}
+.d-block p-2 bg-primary text-white{
+    margin: 0px;
+}
