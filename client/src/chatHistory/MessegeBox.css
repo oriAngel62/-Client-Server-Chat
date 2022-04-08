@@ -6,6 +6,11 @@
     background-color: #82ccdd;
     padding: 10px;
     position: relative;
+    text-align: right;
+    right: 0px;
+    top: 0px;
+    width: 25%;
+    position: relative;
     }
     .msg_box_send{
     margin-top: auto;
@@ -15,6 +20,7 @@
     background-color: #78e08f;
     padding: 10px;
     position: relative;
+    width: 25%;
     }
     .msg_time_receive{
     position: absolute;
