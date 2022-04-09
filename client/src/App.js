@@ -66,7 +66,7 @@ function App() {
                     <Popup sendDataToParent={handleCallback} />
                     <div className="scroll">{contactMap}</div>
                 </div>
-                <div className="col-9">
+                <div className="col-9 vh-100">
                     <ChatHistory contact={{ name: "Ori1", listMessages }} />
                 </div>
             </div>
