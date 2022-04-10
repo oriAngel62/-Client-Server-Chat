@@ -31,7 +31,6 @@
 }
 .col-9{
   width: 75%;
-  overflow: scroll;
   background-color: rgb(255, 158, 102);
 }
 .row {

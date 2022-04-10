@@ -10,9 +10,8 @@
     background-color: rgb(255, 158, 102);
 }
 .chatBox{
-    height: 100%;
     position: relative;
-    bottom: 0px;
+    overflow: scroll;
 }
 .d-block p-2 bg-primary text-white{
     margin: 0px;
