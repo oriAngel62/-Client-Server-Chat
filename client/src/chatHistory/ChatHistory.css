@@ -12,6 +12,7 @@
 .chatBox{
     position: relative;
     overflow: scroll;
+    height: 100%;
 }
 .d-block p-2 bg-primary text-white{
     margin: 0px;

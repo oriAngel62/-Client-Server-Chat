@@ -33,8 +33,8 @@ function ChatHistory({ contact }) {
                 var newList = [];
                 newList= list_of_messeges.concat(messege);
                 set_list_of_messeges(newList);
-            //     const textBox = document.getElementById('text');
-            //    textBox.value = '';
+                 const textBox = document.getElementById('text');
+                 setInput('');
             }}>Send</button>
       </div>
                 
