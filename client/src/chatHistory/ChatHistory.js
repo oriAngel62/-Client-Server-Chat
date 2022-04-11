@@ -35,21 +35,31 @@ function ChatHistory({ contact }) {
             <div className="bottomPart" >
             <div ref={menuRef}>
                { showMenu?<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary">picture</button>
-                        <button type="button" class="btn btn-secondary">voice message</button>
-                         <button type="button" class="btn btn-secondary">video</button>
+                        <button type="button" className="btn btn-secondary">
+                        <span>
+                        <i class="bi bi-file-image"></i>
+                        </span>
+                        </button>
+                        <button type="button" className="btn btn-secondary">
+                         <span>
+                        <i class="bi bi-camera-video"></i>
+                        </span></button>
+                        <button type="button" className="btn btn-secondary">
+                        <span>
+                        <i class="bi bi-voicemail"></i>
+                        </span></button>
                         </div>:null
                 }
             </div>
             <div ref={menuButtonRef} className="attachment">
-                <button type="button" class="btn btn-primary" aria-label="glyphicon glyphicon-paperclip"
+                <button type="button" className="btn btn-primary" aria-label="glyphicon glyphicon-paperclip"
                 onClick={() => {
                     if(showMenu)
                     {setShowMenu(false);}
                     else
                     setShowMenu(true);}}>
-                <span class="glyphicon glyphicon-paperclip" aria-hidden="true">
-                    <i class="bi bi-paperclip"></i>
+                <span className="glyphicon glyphicon-paperclip" aria-hidden="true">
+                    <i className="bi bi-paperclip"></i>
                 </span>
                 </button>
             </div>
