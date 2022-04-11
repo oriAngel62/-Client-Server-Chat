@@ -1,6 +1,7 @@
 import "./ChatHistory.css";
 import MessegeBox from "./MessegeBox";
-import React, {useState}   from 'react';
+import React, {useState, useEffect, useRef}   from 'react';
+
 
 function ChatHistory({ contact }) {
     
@@ -9,6 +10,18 @@ function ChatHistory({ contact }) {
         return <MessegeBox messege={messege} key={key} />;
     });
     const [input, setInput] = useState('');
+    const [showMenu,setShowMenu] = useState(false);
+    let menuRef = useRef(); 
+    let menuButtonRef = useRef(); 
+    useEffect(() => {
+        document.addEventListener("mousedown",(event) => {
+            if(!menuRef.current.contains(event.target) && !menuButtonRef.current.contains(event.target)){
+            setShowMenu(false);
+            }
+        }
+
+        );
+    });
    
     
     return (
@@ -20,7 +33,26 @@ function ChatHistory({ contact }) {
                 {chatList}
             </div>
             <div className="bottomPart" >
-            <div className="attachment"></div>
+            <div ref={menuRef}>
+               { showMenu?<div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary">picture</button>
+                        <button type="button" class="btn btn-secondary">voice message</button>
+                         <button type="button" class="btn btn-secondary">video</button>
+                        </div>:null
+                }
+            </div>
+            <div ref={menuButtonRef} className="attachment">
+                <button type="button" class="btn btn-primary" aria-label="glyphicon glyphicon-paperclip"
+                onClick={() => {
+                    if(showMenu)
+                    {setShowMenu(false);}
+                    else
+                    setShowMenu(true);}}>
+                <span class="glyphicon glyphicon-paperclip" aria-hidden="true">
+                    <i class="bi bi-paperclip"></i>
+                </span>
+                </button>
+            </div>
             <input type="text" placeholder="Write a new message" id="text"
             value={input} onInput={e => setInput(e.target.value) } ></input>
             <button  onClick={() => {
