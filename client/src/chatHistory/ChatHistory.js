@@ -1,6 +1,7 @@
 import "./ChatHistory.css";
 import MessegeBox from "./MessegeBox";
 import React, {useState, useEffect, useRef}   from 'react';
+import AddVidPic from "./AddVidPic";
 
 
 function ChatHistory({ contact }) {
@@ -35,15 +36,7 @@ function ChatHistory({ contact }) {
             <div className="bottomPart" >
             <div ref={menuRef}>
                { showMenu?<div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" className="btn btn-secondary">
-                        <span>
-                        <i class="bi bi-file-image"></i>
-                        </span>
-                        </button>
-                        <button type="button" className="btn btn-secondary">
-                         <span>
-                        <i class="bi bi-camera-video"></i>
-                        </span></button>
+                        <AddVidPic list={list_of_messeges} setList={set_list_of_messeges}/>
                         <button type="button" className="btn btn-secondary">
                         <span>
                         <i class="bi bi-voicemail"></i>
