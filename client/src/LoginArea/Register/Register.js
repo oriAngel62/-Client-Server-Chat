@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import LoginMenu from "../LoginMenu/LoginMenu"
+import LoginMenu from "../LoginMenu/LoginMenu";
+import { NavLink } from "react-router-dom";
 import "./Register.css";
 
 function Register() {
@@ -51,6 +52,7 @@ function Register() {
                     <button class="btn btn-success">Register</button>
 
                 </form>
+                <p>Already registered <NavLink to="/login"> Click here</NavLink> to login</p>
             </main>
             <footer>
             </footer>

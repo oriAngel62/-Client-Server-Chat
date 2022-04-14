@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import LoginMenu from "../LoginMenu/LoginMenu"
+import LoginMenu from "../LoginMenu/LoginMenu";
+import { NavLink } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
@@ -49,6 +50,7 @@ function Login() {
                     <button class="btn btn-success">Login</button>
 
                 </form>
+                <p>Not registered yet? <NavLink to="/register"> Click here</NavLink> to register</p>
             </main>
             <footer>
             </footer>
