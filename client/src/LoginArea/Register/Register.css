@@ -1,0 +1,35 @@
+.Register {
+    margin: auto;
+    width: 50%;
+}
+
+.Register>form {
+    width: 250px;
+    position: relative;
+}
+
+.Register input,
+.Register button {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 20px 0;
+}
+
+.Register span {
+    color: red;
+    margin: 0 20px;
+    margin-left: 40%;
+}
+
+.Register label {
+    width: 100%;
+}
+
+.LoginMenu hr {
+    position: relative;
+    top: 20px;
+    border: none;
+    height: 12px;
+    background: black;
+    margin-bottom: 50px;
+}

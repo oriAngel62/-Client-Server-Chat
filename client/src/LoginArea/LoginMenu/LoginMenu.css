@@ -1,0 +1,24 @@
+.LoginMenu {
+    display: flex;
+    margin-top: 10%;
+    margin-left: 50%;
+    border-radius: 10px;
+    justify-content: center;
+    flex-shrink: 1;
+    width: 50%;
+}
+
+.LoginMenu button {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 20px 0;
+}
+
+.LoginMenu hr {
+    position: relative;
+    top: 20px;
+    border: none;
+    height: 12px;
+    background: black;
+    margin-bottom: 50px;
+}
