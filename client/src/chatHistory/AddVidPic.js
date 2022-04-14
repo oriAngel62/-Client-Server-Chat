@@ -1,7 +1,19 @@
 import React, {useState, useEffect, useRef}   from 'react';
 
 function AddVidPic(list,setList) {
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState();
+    // const pickerOpts = {
+    //     types: [
+    //       {
+    //         description: 'Images',
+    //         accept: {
+    //           'image/*': ['.png', '.gif', '.jpeg', '.jpg']
+    //         }
+    //       },
+    //     ],
+    //     excludeAcceptAllOption: true,
+    //     multiple: false
+    //   };
     return (
         <div>
             <button type="button" className="btn btn-secondary"
@@ -31,10 +43,14 @@ function AddVidPic(list,setList) {
                             <input
                                 type="file"
                                 name="myImage"
-                                inputProps={{ accept: 'image/*' }}  //make it work
+                                //inputProps={pickerOpts}  //make it work
                                 onChange={(event) => {
-                                  console.log(event.target.files[0]);  //to delete after everything
-                                  setSelectedImage(event.target.files[0]);
+                                  console.log((URL.createObjectURL(event.target.files[0])).split('b:').pop());  //to delete after everything
+                                  setSelectedImage((URL.createObjectURL(event.target.files[0])).split('b:').pop());
+                                  (
+                                    <div>
+                                    <img width={"250px"} src={selectedImage} ></img> 
+                                    </div>);
                                 }}
                             />
                         </div>
@@ -47,23 +63,23 @@ function AddVidPic(list,setList) {
                                 onClick={()=>
                                     {if(selectedImage!=null)
                                     {
-                                        
+                                        console.log(typeof selectedImage);
                                     (
                                         <div>
-                                        <img alt="not fount" width={"250px"} src={URL.createObjectURL(selectedImage)} />   
+                                        <img alt="not fount" width={"250px"} src={selectedImage}> </img> 
                                         </div>);
                                         const messege = [{sender: "me",
                                         type: "image",
                                         date: "05/04/2022",
                                         time: "12:54",
-                                        context: URL.createObjectURL(selectedImage),
+                                        context: {selectedImage},
                                         lastContextTime: "10 min ago",},];
                                         var newList = [];
                                         newList= list.concat(messege);
                                         setList(newList);
                                 }setSelectedImage(null);}}
                             >
-                                Close
+                                Submit
                             </button>
                             </div>       
                         </div>
