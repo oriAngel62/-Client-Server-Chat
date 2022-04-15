@@ -30,7 +30,7 @@ function MessegeBox({messege}){
     return(
         <div className="line-in-chat">
         <div className="msg_box_send">
-        <img alt="not fount" width={"150px"} src={messege.context} ></img>
+        <img alt="not found"  width={"150px"} src={messege.context} ></img>
             <br></br>
             <h6>{messege.time} {messege.date}</h6>
         </div>
