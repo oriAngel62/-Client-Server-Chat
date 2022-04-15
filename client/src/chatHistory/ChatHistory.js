@@ -8,8 +8,11 @@ function ChatHistory({ contact }) {
     var [list_of_messeges, set_list_of_messeges] = useState(
         contact.listMessages
     );
+    useEffect(() => {
+        set_list_of_messeges(contact.listMessages);
+    }, [contact.listMessages]);
+    console.log(list_of_messeges);
     const [selectedImage, setSelectedImage] = useState();
-
     var chatList = list_of_messeges.map((messege, key) => {
         return <MessegeBox messege={messege} key={key} />;
     });
