@@ -1,0 +1,40 @@
+.msg_box_receive{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    border-radius: 25px;
+    background-color: #82ccdd;
+    padding: 10px;
+    position: relative;
+    text-align: right;
+    right: 0px;
+    top: 0px;
+    width: 25%;
+    }
+.msg_box_send{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 10px;
+    border-radius: 25px;
+    background-color: #78e08f;
+    padding: 10px;
+    position: relative;
+    width: 25%;
+    }
+.msg_time_receive{
+    position: absolute;
+    left: 0;
+    bottom: -15px;
+    color: rgba(255,255,255,0.5);
+    font-size: 10px;
+    }
+.msg_time_send{
+    position: absolute;
+    right:0;
+    bottom: -15px;
+    color: rgba(255,255,255,0.5);
+    font-size: 10px;
+    }
+.line-in-chat{
+    position: relative;
+}

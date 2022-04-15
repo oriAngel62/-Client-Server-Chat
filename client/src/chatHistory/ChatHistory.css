@@ -1,0 +1,23 @@
+.attachment{
+    float:  left;
+    background-color: grey;
+}
+.chatPlace{
+    height: 100%;
+    width: 75%;
+    border: 1px solid black;
+    position: absolute;
+    background-color: rgb(255, 158, 102);
+}
+.chatBox{
+    position: relative;
+    overflow: scroll;
+    height: 100%;
+}
+.d-block p-2 bg-primary text-white{
+    margin: 0px;
+}
+.bottomPart{
+    position: absolute;
+    bottom: 0px;
+}
