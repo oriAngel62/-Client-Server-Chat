@@ -34,18 +34,28 @@ function App() {
             lastContextTime: "11 min ago",
         },
     ];
+    const listMessages2 = [
+        {
+            sender: "me",
+            type: "text",
+            date: "05/04/2022",
+            time: "12:54",
+            context: "fd df",
+            lastContextTime: "10 min ago",
+        },
+    ];
     const contactList = [
         {
             id: 1,
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp",
             name: "tome",
-            listMessages,
+            listMessages: listMessages,
         },
         {
             id: 2,
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp",
             name: "David",
-            listMessages,
+            listMessages: listMessages2,
         },
     ];
     const [list, setList] = useState(contactList);
