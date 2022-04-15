@@ -6,8 +6,9 @@ import "./paperclip.png"
 
 
 function ChatHistory({ contact }) {
-    
-    const [list_of_messeges,set_list_of_messeges] = useState(contact.listMessages);
+    var listMsg = contact.listMessages;
+    console.log(listMsg);
+    var [list_of_messeges,set_list_of_messeges] = useState(listMsg);
     const [selectedImage, setSelectedImage] = useState();
       
     var chatList = list_of_messeges.map((messege, key) => {
