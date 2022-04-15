@@ -72,6 +72,8 @@ function App() {
 
     function handleAdd(name) {
         const newList = list.concat({
+            id: list.length + 1,
+            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp",
             name: name,
             listMessages,
         });
