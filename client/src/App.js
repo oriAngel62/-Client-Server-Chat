@@ -23,9 +23,19 @@ function App() {
             context: "somthing intrseting",
             lastContextTime: "11 min ago",
         },
+        {
+            sender: "tome",
+            type: "text",
+            date: "05/04/2022",
+            time: "12:54",
+            context:
+                "dasdasdad  fdsfsf dsf sf dsf sdf sf sf sfsdfsd s f sdfsf sf df sdf ",
+
+            lastContextTime: "11 min ago",
+        },
     ];
     const contactList = [
-        { name: "Ori1", listMessages },
+        { name: "tome", listMessages },
         { name: "David", listMessages },
     ];
 
