@@ -35,13 +35,27 @@ function App() {
         },
     ];
     const contactList = [
-        { name: "tome", listMessages },
-        { name: "David", listMessages },
+        {
+            id: 1,
+            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp",
+            name: "tome",
+            listMessages,
+        },
+        {
+            id: 2,
+            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp",
+            name: "David",
+            listMessages,
+        },
     ];
-
     const [list, setList] = useState(contactList);
-    const handleCallback = (childData) => {
-        console.log(childData.name);
+    const [chatHistory, setChatHistory] = useState("");
+    const callbackContactItem = (childData) => {
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].id == childData.id) setChatHistory(childData);
+        }
+    };
+    const callbackPopUp = (childData) => {
         if (childData.name !== "") {
             handleAdd(childData.name);
         }
@@ -51,12 +65,7 @@ function App() {
         return (
             <ContactItem
                 contactItem={contact}
-                // name={contact.name}
-                // lastMessage={
-                //     contact.listMessages[listMessages.length - 1].context
-                // }
-                // time={contact.listMessages[listMessages.length - 1].time}
-                key={key}
+                sendDataToParent={callbackContactItem}
             />
         );
     });
@@ -67,17 +76,25 @@ function App() {
             listMessages,
         });
         setList(newList);
-        console.log(contactList);
+        // console.log(contactList);
+    }
+
+    function showChatHistory() {
+        return <ChatHistory contact={chatHistory} />;
     }
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col-3">
-                    <Popup sendDataToParent={handleCallback} />
+                    <Popup sendDataToParent={callbackPopUp} />
                     <div className="scroll">{contactMap}</div>
                 </div>
                 <div className="col-9 vh-100">
-                    <ChatHistory contact={{ name: "Ori1", listMessages }} />
+                    {chatHistory != "" ? (
+                        <ChatHistory contact={chatHistory} />
+                    ) : (
+                        <p className="mb-1">Choose Contact to talk with</p>
+                    )}
                 </div>
             </div>
         </div>
