@@ -6,7 +6,7 @@ import Popup from "./contactItem/Popup";
 import ChatHistory from "./chatHistory/ChatHistory";
 
 function App() {
-    const listMessages = [
+    var listMessages = [
         {
             sender: "me",
             type: "text",
@@ -34,7 +34,7 @@ function App() {
             lastContextTime: "11 min ago",
         },
     ];
-    const listMessages2 = [
+    var listMessages2 = [
         {
             sender: "me",
             type: "text",
@@ -44,7 +44,7 @@ function App() {
             lastContextTime: "10 min ago",
         },
     ];
-    const contactList = [
+    var contactList = [
         {
             id: 1,
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp",
@@ -60,6 +60,7 @@ function App() {
     ];
     const [list, setList] = useState(contactList);
     const [chatHistory, setChatHistory] = useState("");
+    const [lastMessage, setLastMessage] = useState("");
     const callbackContactItem = (childData) => {
         for (let i = 0; i < list.length; i++) {
             if (list[i].id == childData.id) setChatHistory(childData);
@@ -71,7 +72,19 @@ function App() {
         }
     };
 
-    const contactMap = list.map((contact, key) => {
+    const callbackChatHistory = (contactItem, meesage, id) => {
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].id == id) {
+                list[i].listMessages.push(meesage);
+                // setLastMessage(meesage);
+                setChatHistory(contactItem);
+                // setList(list);
+                console.log(list);
+            }
+        }
+    };
+
+    var contactMap = list.map((contact, key) => {
         return (
             <ContactItem
                 contactItem={contact}
@@ -85,15 +98,11 @@ function App() {
             id: list.length + 1,
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp",
             name: name,
-            listMessages,
+            listMessages: [{}],
         });
         setList(newList);
-        // console.log(contactList);
     }
 
-    function showChatHistory() {
-        return <ChatHistory contact={chatHistory} />;
-    }
     return (
         <div className="container-fluid">
             <div className="row">
@@ -103,7 +112,10 @@ function App() {
                 </div>
                 <div className="col-9 vh-100">
                     {chatHistory != "" ? (
-                        <ChatHistory contact={chatHistory} />
+                        <ChatHistory
+                            contact={chatHistory}
+                            sendDataToParent={callbackChatHistory}
+                        />
                     ) : (
                         <p className="mb-1">Choose Contact to talk with</p>
                     )}

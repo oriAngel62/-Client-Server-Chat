@@ -4,14 +4,14 @@ import React, { useState, useEffect, useRef } from "react";
 import AddVidPic from "./AddVidPic";
 import "./paperclip.png";
 
-function ChatHistory({ contact }) {
+function ChatHistory({ contact, sendDataToParent }) {
     var [list_of_messeges, set_list_of_messeges] = useState(
         contact.listMessages
     );
     useEffect(() => {
         set_list_of_messeges(contact.listMessages);
     }, [contact.listMessages]);
-    console.log(list_of_messeges);
+
     const [selectedImage, setSelectedImage] = useState();
     var chatList = list_of_messeges.map((messege, key) => {
         return <MessegeBox messege={messege} key={key} />;
@@ -158,6 +158,7 @@ function ChatHistory({ contact }) {
                                                                         "10 min ago",
                                                                 },
                                                             ];
+
                                                             var newList = [];
                                                             newList =
                                                                 list_of_messeges.concat(
@@ -223,6 +224,7 @@ function ChatHistory({ contact }) {
                         set_list_of_messeges(newList);
                         const textBox = document.getElementById("text");
                         setInput("");
+                        sendDataToParent(contact, messege, contact.id);
                     }}
                 >
                     Send

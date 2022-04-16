@@ -1,6 +1,6 @@
 import ChatHistory from "../chatHistory/ChatHistory";
 import "./ContactItem.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function ContactItem({ contactItem, sendDataToParent }) {
     // const numImg = Math.floor(Math.random() * (8 - 1 + 1) + 1).toString();
@@ -8,7 +8,12 @@ function ContactItem({ contactItem, sendDataToParent }) {
     //     "https://www.bootdey.com/img/Content/avatar/avatar" + numImg + ".png";
     const srcImg =
         "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp";
-
+    var [lastMessage, setLastMessage] = useState(
+        contactItem.listMessages[contactItem.listMessages.length - 1]
+    );
+    useEffect(() => {
+        setLastMessage(lastMessage);
+    }, [lastMessage]);
     return (
         <div className="contact">
             <div className="list-group">
@@ -39,18 +44,14 @@ function ContactItem({ contactItem, sendDataToParent }) {
                             }
                         </small>
                     </div>
-                    {contactItem.listMessages[
-                        contactItem.listMessages.length - 1
-                    ].type == "text" ? (
-                        <p className="mb-1">
-                            {
-                                contactItem.listMessages[
-                                    contactItem.listMessages.length - 1
-                                ].context
-                            }
-                        </p>
+                    {lastMessage.type == "text" ? (
+                        <p className="mb-1">{lastMessage.context}</p>
+                    ) : lastMessage.type == "image" ? (
+                        <p className="mb-1">image</p>
+                    ) : lastMessage.type == "video" ? (
+                        <p className="mb-1">video</p>
                     ) : (
-                        <p className="mb-1">Media</p>
+                        <p className="mb-1"></p>
                     )}
                 </button>
             </div>
