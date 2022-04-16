@@ -1,18 +1,23 @@
 import "./ChatHistory.css";
 import MessegeBox from "./MessegeBox";
 import React, { useState, useEffect, useRef } from "react";
-import AddVidPic from "./AddVidPic";
+import Recording from "./Recording";
 import "./paperclip.png";
 
-function ChatHistory({ contact, sendDataToParent }) {
+
+
+function ChatHistory({ contact }) {
+    
+    
     var [list_of_messeges, set_list_of_messeges] = useState(
         contact.listMessages
     );
     useEffect(() => {
         set_list_of_messeges(contact.listMessages);
     }, [contact.listMessages]);
-
+    console.log(list_of_messeges);
     const [selectedImage, setSelectedImage] = useState();
+    
     var chatList = list_of_messeges.map((messege, key) => {
         return <MessegeBox messege={messege} key={key} />;
     });
@@ -30,7 +35,7 @@ function ChatHistory({ contact, sendDataToParent }) {
             }
         });
     });
-
+    
     return (
         <div className="chatPlace">
             <span className="d-block p-2 bg-primary text-white">
@@ -68,11 +73,48 @@ function ChatHistory({ contact, sendDataToParent }) {
                                 </span>
                             </button>
 
-                            <button type="button" className="btn btn-secondary">
+                            <button type="button" className="btn btn-secondary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal2">
                                 <span>
                                     <i class="bi bi-voicemail"></i>
                                 </span>
                             </button>
+                            <div
+                                className="modal fade"
+                                id="exampleModal2"
+                                tabIndex="-1"
+                                role="dialog"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                            >
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                        
+                                           
+                                            <div className="modal-body">
+    
+                                            <Recording/>
+                                            </div>
+
+                                            
+                                            
+                                        
+                                        <div className="modal-footer">
+                                            <div>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-secondary btn-lg"
+                                                    data-bs-dismiss="modal"
+                                                    
+                                                >
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div
                                 className="modal fade"
                                 id="exampleModal1"
@@ -115,14 +157,18 @@ function ChatHistory({ contact, sendDataToParent }) {
                                                                 .split("b:")
                                                                 .pop()
                                                         );
-                                                        <div>
-                                                            <img
-                                                                width={"250px"}
-                                                                src={
-                                                                    selectedImage
-                                                                }
-                                                            ></img>
-                                                        </div>;
+                                                        // <div>
+                                                        //     <img
+                                                        //         width={"250px"}
+                                                        //         src={
+                                                        //             selectedImage
+                                                        //         }
+                                                        //     ></img>
+                                                        // </div>;
+                                                    }
+                                                    else
+                                                    {
+                                                    alert("choose an image file please");
                                                     }
                                                 }}
                                             />
@@ -158,7 +204,6 @@ function ChatHistory({ contact, sendDataToParent }) {
                                                                         "10 min ago",
                                                                 },
                                                             ];
-
                                                             var newList = [];
                                                             newList =
                                                                 list_of_messeges.concat(
@@ -178,6 +223,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     ) : null}
                 </div>
@@ -224,7 +270,6 @@ function ChatHistory({ contact, sendDataToParent }) {
                         set_list_of_messeges(newList);
                         const textBox = document.getElementById("text");
                         setInput("");
-                        sendDataToParent(contact, messege, contact.id);
                     }}
                 >
                     Send
@@ -235,3 +280,4 @@ function ChatHistory({ contact, sendDataToParent }) {
 }
 
 export default ChatHistory;
+
