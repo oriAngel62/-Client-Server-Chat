@@ -110,7 +110,7 @@ function App() {
                     <Popup sendDataToParent={callbackPopUp} />
                     <div className="scroll">{contactMap}</div>
                 </div>
-                <div className="col-9 vh-100">
+                <div className="col-9">
                     {chatHistory != "" ? (
                         <ChatHistory
                             contact={chatHistory}

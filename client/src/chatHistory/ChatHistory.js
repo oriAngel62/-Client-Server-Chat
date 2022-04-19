@@ -3,12 +3,12 @@ import MessegeBox from "./MessegeBox";
 import React, { useState, useEffect, useRef } from "react";
 import Recording from "./Recording";
 import "./paperclip.png";
+import AddVidPic from "./AddVidPic";
 
 
 
 function ChatHistory({ contact }) {
-    
-    
+    let videoType ="";
     var [list_of_messeges, set_list_of_messeges] = useState(
         contact.listMessages
     );
@@ -17,11 +17,12 @@ function ChatHistory({ contact }) {
     }, [contact.listMessages]);
     console.log(list_of_messeges);
     const [selectedImage, setSelectedImage] = useState();
-    
+    const [modeVidPic,setModeVidPic] = useState("pic");
     var chatList = list_of_messeges.map((messege, key) => {
         return <MessegeBox messege={messege} key={key} />;
     });
     const [input, setInput] = useState("");
+    const [inputFile, setInputFile] = useState("");
     const [showMenu, setShowMenu] = useState(false);
     let menuRef = useRef();
     let menuButtonRef = useRef();
@@ -57,6 +58,9 @@ function ChatHistory({ contact }) {
                                 className="btn btn-secondary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal1"
+                                onClick={() => {setInputFile("");
+                                setModeVidPic("pic");
+                        }}
                             >
                                 <span>
                                     <i class="bi bi-file-image"></i>
@@ -67,6 +71,9 @@ function ChatHistory({ contact }) {
                                 className="btn btn-secondary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal1"
+                                onClick={() => {setInputFile("");
+                                setModeVidPic("vid");
+                               }}
                             >
                                 <span>
                                     <i class="bi bi-camera-video"></i>
@@ -75,7 +82,7 @@ function ChatHistory({ contact }) {
 
                             <button type="button" className="btn btn-secondary"
                             data-bs-toggle="modal"
-                            data-bs-target="#exampleModal2">
+                            data-bs-target="#exampleModal">
                                 <span>
                                     <i class="bi bi-voicemail"></i>
                                 </span>
@@ -94,7 +101,7 @@ function ChatHistory({ contact }) {
                                            
                                             <div className="modal-body">
     
-                                            <Recording/>
+                                            {/* <Recording/> */}
                                             </div>
 
                                             
@@ -129,10 +136,14 @@ function ChatHistory({ contact }) {
                                             <input
                                                 type="file"
                                                 name="myImage"
+                                                id="inputPicVid"
+                                                value={inputFile}
+                                                onInput={(e) => setInputFile(e.target.value)}
                                                 onChange={(event) => {
                                                     var name =
                                                         event.target.files[0]
                                                             .name;
+                                                            if(modeVidPic == "pic")
                                                     if (
                                                         name.endsWith(".png") ||
                                                         name.endsWith(".gif") ||
@@ -141,39 +152,61 @@ function ChatHistory({ contact }) {
                                                         ) ||
                                                         name.endsWith(".jpg")
                                                     ) {
-                                                        console.log(
-                                                            URL.createObjectURL(
-                                                                event.target
-                                                                    .files[0]
-                                                            )
-                                                                .split("b:")
-                                                                .pop()
-                                                        ); //to delete after everything
                                                         setSelectedImage(
                                                             URL.createObjectURL(
                                                                 event.target
                                                                     .files[0]
-                                                            )
-                                                                .split("b:")
-                                                                .pop()
+                                                            )       
                                                         );
-                                                        // <div>
-                                                        //     <img
-                                                        //         width={"250px"}
-                                                        //         src={
-                                                        //             selectedImage
-                                                        //         }
-                                                        //     ></img>
-                                                        // </div>;
                                                     }
                                                     else
                                                     {
                                                     alert("choose an image file please");
+                                                    setInputFile("");
+                                                    setSelectedImage("");
+                                                    }
+                                                    else
+                                                    {
+                                                        if (
+                                                            name.endsWith(".mp4") ||
+                                                            name.endsWith(".mov") ||
+                                                            name.endsWith(".wmv") ||
+                                                            name.endsWith(".avi") ||
+                                                            name.endsWith(".avchd") ||
+                                                            name.endsWith(".mkv") ||
+                                                            name.endsWith(".flv") ||
+                                                            name.endsWith(".f4v") ||
+                                                            name.endsWith(".swf") ||
+                                                            name.endsWith(".webm") ||
+                                                            name.endsWith(".html5") 
+                                                        ) {
+                                                            setSelectedImage(
+                                                                URL.createObjectURL(
+                                                                    event.target
+                                                                        .files[0]
+                                                                )       
+                                                            );
+                                                            const wordArray = name.split(".");
+                                                            videoType = "video/" + wordArray[1];
+                                                           
+                                                            
+                                                        }
+                                                        else
+                                                        {
+                                                        alert("choose a video file please");
+                                                        setInputFile("");
+                                                        setSelectedImage("");
+                                                        }
                                                     }
                                                 }}
+                                                
                                             />
                                         </div>
+                                        {/* <AddVidPic param={modeVidPic} selected={selectedImage} type={videoType}/>   almost working
+                                        its a display of the selected video or picture */}
+                                         
                                         <div className="modal-footer">
+                                            
                                             <div>
                                                 <button
                                                     type="button"
@@ -183,23 +216,45 @@ function ChatHistory({ contact }) {
                                                         if (
                                                             selectedImage !=
                                                             null
-                                                        ) {
+                                                        )
+                                                        if(modeVidPic=="pic")
+                                                         {
                                                             console.log(
                                                                 typeof selectedImage
                                                             );
-                                                            // (
-                                                            //     <div>
-                                                            //     <img alt="not fount" width={"250px"} src={selectedImage}> </img>
-                                                            //     </div>);
+                                                            var imageSource = selectedImage;
                                                             const messege = [
                                                                 {
                                                                     sender: "me",
                                                                     type: "image",
                                                                     date: "05/04/2022",
                                                                     time: "12:54",
-                                                                    context: {
-                                                                        selectedImage,
-                                                                    },
+                                                                    context: imageSource,
+                                                                    lastContextTime:
+                                                                        "10 min ago",
+                                                                },
+                                                            ];
+                                                            var newList = [];
+                                                            newList =
+                                                                list_of_messeges.concat(
+                                                                    messege
+                                                                );
+                                                            set_list_of_messeges(
+                                                                newList
+                                                            );
+                                                        }
+                                                        else{
+                                                            console.log(
+                                                                typeof selectedImage
+                                                            );
+                                                            var imageSource =[ selectedImage,videoType];
+                                                            const messege = [
+                                                                {
+                                                                    sender: "me",
+                                                                    type: "video",
+                                                                    date: "05/04/2022",
+                                                                    time: "12:54",
+                                                                    context: imageSource,
                                                                     lastContextTime:
                                                                         "10 min ago",
                                                                 },

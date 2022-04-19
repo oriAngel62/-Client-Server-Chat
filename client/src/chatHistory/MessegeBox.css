@@ -7,9 +7,9 @@
     padding: 10px;
     position: relative;
     text-align: right;
-    right: 0px;
+    margin-right: 0px;
     top: 0px;
-    width: 25%;
+    width: 100%;
     }
 .msg_box_send{
     margin-top: auto;
@@ -37,4 +37,5 @@
     }
 .line-in-chat{
     position: relative;
+    margin-right: 100px;
 }
