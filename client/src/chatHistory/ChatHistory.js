@@ -1,7 +1,7 @@
 import "./ChatHistory.css";
 import MessegeBox from "./MessegeBox";
 import React, { useState, useEffect, useRef } from "react";
-// import Recording from "./Recording";
+ import Recording from "./Recording";
 import "./paperclip.png";
 import AddVidPic from "./AddVidPic";
 
@@ -102,7 +102,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
                                         <div className="modal-body">
-                                            {/* <Recording/> */}
+                                            <Recording/>
                                         </div>
 
                                         <div className="modal-footer">
