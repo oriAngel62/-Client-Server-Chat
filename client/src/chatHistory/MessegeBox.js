@@ -65,9 +65,12 @@ function MessegeBox({ messege }) {
             return (
                 <div className="line-in-chat">
                     <div className="msg_box_send">
-                    <video width={"150px"} height={"150px"} controls >
-                        <source src={messege.context[0]} type={messege.context[1]}></source>
-                    </video>
+                        <video width={"150px"} height={"150px"} controls>
+                            <source
+                                src={messege.context[0]}
+                                type={messege.context[1]}
+                            ></source>
+                        </video>
                         <br></br>
                         <h6>
                             {messege.time} {messege.date}
@@ -79,9 +82,12 @@ function MessegeBox({ messege }) {
             return (
                 <div className="line-in-chat">
                     <div className="msg_box_receive">
-                    <video width={"150px"} height={"150px"} controls >
-                        <source src={messege.context[0]} type={messege.context[1]}></source>
-                    </video>
+                        <video width={"150px"} height={"150px"} controls>
+                            <source
+                                src={messege.context[0]}
+                                type={messege.context[1]}
+                            ></source>
+                        </video>
                         <br></br>
                         <h6>
                             {messege.time} {messege.date}

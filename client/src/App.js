@@ -1,6 +1,6 @@
 import "./App.css";
 import ContactItem from "./contactItem/ContactItem";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
 import Popup from "./contactItem/Popup";
 import ChatHistory from "./chatHistory/ChatHistory";
@@ -46,13 +46,13 @@ function App() {
     ];
     var contactList = [
         {
-            id: 1,
+            id: 0,
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp",
             name: "Yoni",
             listMessages: listMessages,
         },
         {
-            id: 2,
+            id: 1,
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp",
             name: "Noa",
             listMessages: listMessages2,
@@ -68,12 +68,18 @@ function App() {
     ];
 
     const [list, setList] = useState(contactList);
-    const [chatHistory, setChatHistory] = useState("");
+    const [currentId, setCurrentId] = useState(0);
     const [lastMessage, setLastMessage] = useState("");
     const [users, setusers] = useState(usersList);
+
+    // useEffect(() => {}, [chatHistory]);
+
     const callbackContactItem = (childData) => {
         for (let i = 0; i < list.length; i++) {
-            if (list[i].id == childData.id) setChatHistory(childData);
+            if (list[i].id == childData.id) {
+                setCurrentId(childData.id);
+                setList(list);
+            }
         }
     };
     const callbackPopUp = (childData) => {
@@ -82,14 +88,30 @@ function App() {
         }
     };
 
+    function handleAdd(name) {
+        const newList = list.concat({
+            id: list.length,
+            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp",
+            name: name,
+            listMessages: [{}],
+        });
+        setList(newList);
+
+        const newUser = users.concat({ username: name });
+        setList(newList);
+        setusers(newUser);
+    }
+
     const callbackChatHistory = (contactItem, meesage, id) => {
         for (let i = 0; i < list.length; i++) {
             if (list[i].id == id) {
                 list[i].listMessages.push(meesage);
-                // setLastMessage(meesage);
-                setChatHistory(contactItem);
-                setList(list);
-                console.log(list);
+                const newList = list.concat({
+                    id: list[i].id,
+                    src: list[i].src,
+                    name: list[i].name,
+                    listMessages: list[i].listMessages,
+                });
             }
         }
     };
@@ -104,20 +126,6 @@ function App() {
         );
     });
 
-    function handleAdd(name) {
-        const newList = list.concat({
-            id: list.length + 1,
-            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp",
-            name: name,
-            listMessages: [{}],
-        });
-        setList(newList);
-
-        const newUser = users.concat({ username: name });
-        setList(newList);
-        setusers(newUser);
-    }
-
     return (
         <div className="container-fluid">
             <div className="row">
@@ -126,14 +134,10 @@ function App() {
                     <div className="scroll">{contactMap}</div>
                 </div>
                 <div className="col-9">
-                    {chatHistory != "" ? (
-                        <ChatHistory
-                            contact={chatHistory}
-                            sendDataToParent={callbackChatHistory}
-                        />
-                    ) : (
-                        <p className="mb-1">Choose Contact to talk with</p>
-                    )}
+                    <ChatHistory
+                        contact={list[currentId]}
+                        sendDataToParent={callbackChatHistory}
+                    />
                 </div>
             </div>
         </div>

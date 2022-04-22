@@ -10,6 +10,8 @@ function ChatHistory({ contact, sendDataToParent }) {
     var [list_of_messeges, set_list_of_messeges] = useState(
         contact.listMessages
     );
+
+    // set_list_of_messeges(contact.listMessages);
     useEffect(() => {
         set_list_of_messeges(contact.listMessages);
     }, [contact.listMessages]);
@@ -83,7 +85,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                 type="button"
                                 className="btn btn-secondary"
                                 data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
+                                data-bs-target="#exampleModal2"
                             >
                                 <span>
                                     <i class="bi bi-voicemail"></i>
@@ -248,9 +250,6 @@ function ChatHistory({ contact, sendDataToParent }) {
                                                                 modeVidPic ==
                                                                 "pic"
                                                             ) {
-                                                                console.log(
-                                                                    typeof selectedImage
-                                                                );
                                                                 var imageSource =
                                                                     selectedImage;
                                                                 const messege =
@@ -276,9 +275,6 @@ function ChatHistory({ contact, sendDataToParent }) {
                                                                     newList
                                                                 );
                                                             } else {
-                                                                console.log(
-                                                                    typeof selectedImage
-                                                                );
                                                                 var imageSource =
                                                                     [
                                                                         selectedImage,
@@ -363,7 +359,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                         set_list_of_messeges(newList);
                         const textBox = document.getElementById("text");
                         setInput("");
-                        sendDataToParent(contact, messege, contact.id);
+                        sendDataToParent(contact, messege[0], contact.id);
                     }}
                 >
                     Send
