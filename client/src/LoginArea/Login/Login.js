@@ -25,7 +25,7 @@ function Login() {
     }
 
     const users = [
-        { username: "Ori1", password: "12345", displayname: "Ori the cool" },
+        { username: "Ori", password: "12345", displayname: "Ori the cool" },
         { username: "David", password: "12345", displayname: "David the cool" },
         { username: "Avia", password: "12345", displayname: "Avia the cool" },
         {

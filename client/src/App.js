@@ -48,19 +48,29 @@ function App() {
         {
             id: 1,
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp",
-            name: "tome",
+            name: "Yoni",
             listMessages: listMessages,
         },
         {
             id: 2,
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp",
-            name: "David",
+            name: "Noa",
             listMessages: listMessages2,
         },
     ];
+
+    const usersList = [
+        { username: "Ori" },
+        { username: "David" },
+        { username: "Avia" },
+        { username: "Yoni" },
+        { username: "Noa" },
+    ];
+
     const [list, setList] = useState(contactList);
     const [chatHistory, setChatHistory] = useState("");
     const [lastMessage, setLastMessage] = useState("");
+    const [users, setusers] = useState(usersList);
     const callbackContactItem = (childData) => {
         for (let i = 0; i < list.length; i++) {
             if (list[i].id == childData.id) setChatHistory(childData);
@@ -78,7 +88,7 @@ function App() {
                 list[i].listMessages.push(meesage);
                 // setLastMessage(meesage);
                 setChatHistory(contactItem);
-                // setList(list);
+                setList(list);
                 console.log(list);
             }
         }
@@ -89,6 +99,7 @@ function App() {
             <ContactItem
                 contactItem={contact}
                 sendDataToParent={callbackContactItem}
+                key={key}
             />
         );
     });
@@ -101,13 +112,17 @@ function App() {
             listMessages: [{}],
         });
         setList(newList);
+
+        const newUser = users.concat({ username: name });
+        setList(newList);
+        setusers(newUser);
     }
 
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col-3">
-                    <Popup sendDataToParent={callbackPopUp} />
+                    <Popup sendDataToParent={callbackPopUp} users={users} />
                     <div className="scroll">{contactMap}</div>
                 </div>
                 <div className="col-9">

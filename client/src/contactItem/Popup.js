@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-function Popup({ sendDataToParent }) {
+function Popup({ sendDataToParent, users }) {
     const [name, setName] = useState("");
     function handleChange(event) {
         setName(event.target.value);
@@ -45,6 +45,14 @@ function Popup({ sendDataToParent }) {
                                     type="button"
                                     className="btn btn-primary btn-lg"
                                     onClick={() => {
+                                        for (let x in users) {
+                                            if (users[x].username === name) {
+                                                alert(
+                                                    "username already exist, please try another username"
+                                                );
+                                                return;
+                                            }
+                                        }
                                         sendDataToParent({ name });
                                     }}
                                 >
