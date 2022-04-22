@@ -89,9 +89,15 @@ function App() {
     };
 
     function handleAdd(name) {
+        var index = (list.length + 1) % 7;
+        if (index == 0) index++;
+        var src =
+            "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava" +
+            index +
+            "-bg.webp";
         const newList = list.concat({
             id: list.length,
-            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp",
+            src: src,
             name: name,
             listMessages: [{}],
         });
@@ -106,12 +112,8 @@ function App() {
         for (let i = 0; i < list.length; i++) {
             if (list[i].id == id) {
                 list[i].listMessages.push(meesage);
-                const newList = list.concat({
-                    id: list[i].id,
-                    src: list[i].src,
-                    name: list[i].name,
-                    listMessages: list[i].listMessages,
-                });
+                setCurrentId("");
+                setCurrentId(contactItem.id);
             }
         }
     };

@@ -6,14 +6,10 @@ function ContactItem({ contactItem, sendDataToParent }) {
     // const numImg = Math.floor(Math.random() * (8 - 1 + 1) + 1).toString();
     // const srcImg1 =
     //     "https://www.bootdey.com/img/Content/avatar/avatar" + numImg + ".png";
+    var lastMessage =
+        contactItem.listMessages[contactItem.listMessages.length - 1];
     const srcImg =
         "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp";
-    var [lastMessage, setLastMessage] = useState(
-        contactItem.listMessages[contactItem.listMessages.length - 1]
-    );
-    useEffect(() => {
-        setLastMessage(lastMessage);
-    }, [lastMessage]);
     return (
         <div className="contact">
             <div className="list-group">
@@ -36,19 +32,13 @@ function ContactItem({ contactItem, sendDataToParent }) {
                         <img src={contactItem.src} width="80pxd"></img>
                         <h4 className="mb-1">{contactItem.name}</h4>
                         <br></br>
-                        <small>
-                            {
-                                contactItem.listMessages[
-                                    contactItem.listMessages.length - 1
-                                ].lastContextTime
-                            }
-                        </small>
+                        <small>{lastMessage.lastContextTime}</small>
                     </div>
-                    {lastMessage.type == "text" ? (
+                    {lastMessage.type === "text" ? (
                         <p className="mb-1">{lastMessage.context}</p>
-                    ) : lastMessage.type == "image" ? (
+                    ) : lastMessage.type === "image" ? (
                         <p className="mb-1">image</p>
-                    ) : lastMessage.type == "video" ? (
+                    ) : lastMessage.type === "video" ? (
                         <p className="mb-1">video</p>
                     ) : (
                         <p className="mb-1"></p>

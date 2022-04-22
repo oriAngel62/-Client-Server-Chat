@@ -5,12 +5,11 @@ import Routing from "./Routing/Routing";
 
 ReactDOM.render(
     <React.StrictMode>
-    <header>
-        </header>
+        <header></header>
         <main>
             <Routing />
         </main>
-        <footer>
-        </footer>    </React.StrictMode>,
+        <footer></footer>{" "}
+    </React.StrictMode>,
     document.getElementById("root")
 );

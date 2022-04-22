@@ -242,6 +242,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                                     className="btn btn-secondary btn-lg"
                                                     data-bs-dismiss="modal"
                                                     onClick={() => {
+                                                        var messege = [];
                                                         if (
                                                             selectedImage !=
                                                             null
@@ -252,19 +253,18 @@ function ChatHistory({ contact, sendDataToParent }) {
                                                             ) {
                                                                 var imageSource =
                                                                     selectedImage;
-                                                                const messege =
-                                                                    [
-                                                                        {
-                                                                            sender: "me",
-                                                                            type: "image",
-                                                                            date: "05/04/2022",
-                                                                            time: "12:54",
-                                                                            context:
-                                                                                imageSource,
-                                                                            lastContextTime:
-                                                                                "10 min ago",
-                                                                        },
-                                                                    ];
+                                                                messege = [
+                                                                    {
+                                                                        sender: "me",
+                                                                        type: "image",
+                                                                        date: "05/04/2022",
+                                                                        time: "12:54",
+                                                                        context:
+                                                                            imageSource,
+                                                                        lastContextTime:
+                                                                            "1 min ago",
+                                                                    },
+                                                                ];
                                                                 var newList =
                                                                     [];
                                                                 newList =
@@ -280,19 +280,18 @@ function ChatHistory({ contact, sendDataToParent }) {
                                                                         selectedImage,
                                                                         videoType,
                                                                     ];
-                                                                const messege =
-                                                                    [
-                                                                        {
-                                                                            sender: "me",
-                                                                            type: "video",
-                                                                            date: "05/04/2022",
-                                                                            time: "12:54",
-                                                                            context:
-                                                                                imageSource,
-                                                                            lastContextTime:
-                                                                                "10 min ago",
-                                                                        },
-                                                                    ];
+                                                                messege = [
+                                                                    {
+                                                                        sender: "me",
+                                                                        type: "video",
+                                                                        date: "05/04/2022",
+                                                                        time: "12:54",
+                                                                        context:
+                                                                            imageSource,
+                                                                        lastContextTime:
+                                                                            "1 min ago",
+                                                                    },
+                                                                ];
                                                                 var newList =
                                                                     [];
                                                                 newList =
@@ -304,6 +303,11 @@ function ChatHistory({ contact, sendDataToParent }) {
                                                                 );
                                                             }
                                                         setSelectedImage(null);
+                                                        sendDataToParent(
+                                                            contact,
+                                                            messege[0],
+                                                            contact.id
+                                                        );
                                                     }}
                                                 >
                                                     Submit
@@ -351,7 +355,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                 date: "05/04/2022",
                                 time: "12:54",
                                 context: input,
-                                lastContextTime: "10 min ago",
+                                lastContextTime: "1 min ago",
                             },
                         ];
                         var newList = [];
