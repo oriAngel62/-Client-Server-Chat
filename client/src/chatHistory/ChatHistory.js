@@ -56,16 +56,18 @@ function ChatHistory({ contact, sendDataToParent }) {
 
     return (
         <div class="container py-5">
-            <div class="row d-flex justify-content-center">
-                <div class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0">
-                    <i class="fas fa-angle-left"></i>
-                    <p class="mb-0 fw-bold">{contact.name}</p>
-                    <i class="fas fa-times"></i>
-                </div>
-
-                <div className="card-body">
-                    <div calssName="chatBox" id="box">
-                        {chatList}
+            <div className="card" id="chat2">
+                <div class="row d-flex justify-content-center">
+                    <div class="card-header d-flex justify-content-between align-items-center p-3">
+                        <h5 class="mb-0">{contact.name}</h5>
+                    </div>
+                    <div
+                        class="card-body"
+                        style={{ position: "relative", height: "400px" }}
+                    >
+                        <div calssName="chatBox" id="box">
+                            {chatList}
+                        </div>
                     </div>
                     <div className="bottomPart">
                         <div ref={menuRef}>
@@ -276,7 +278,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                                     />
                                                 </div>
                                                 {/* <AddVidPic param={modeVidPic} selected={selectedImage} type={videoType}/>   almost working
-                                        its a display of the selected video or picture */}
+                                its a display of the selected video or picture */}
 
                                                 <div className="modal-footer">
                                                     <div>
@@ -368,70 +370,68 @@ function ChatHistory({ contact, sendDataToParent }) {
                                 </div>
                             ) : null}
                         </div>
-
-                        <div class="flex-grow-0 py-3 px-4 border-top">
-                            <div class="input-group">
-                                <div ref={menuButtonRef} className="attachment">
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        aria-label="glyphicon glyphicon-paperclip"
-                                        onClick={() => {
-                                            if (showMenu) {
-                                                setShowMenu(false);
-                                            } else setShowMenu(true);
-                                        }}
-                                    >
-                                        <span
-                                            className="glyphicon glyphicon-paperclip"
-                                            aria-hidden="true"
-                                        >
-                                            <i className="bi bi-paperclip"></i>
-                                        </span>
-                                    </button>
-                                </div>
-                                <input
-                                    class="form-control"
-                                    type="text"
-                                    placeholder="Write a new message"
-                                    id="text"
-                                    value={input}
-                                    onInput={(e) => setInput(e.target.value)}
-                                ></input>
+                    </div>
+                    <div class="flex-grow-0 py-3 px-4 border-top">
+                        <div class="input-group">
+                            <div ref={menuButtonRef} className="attachment">
                                 <button
-                                    class="btn btn-primary"
+                                    type="button"
+                                    className="btn btn-primary"
+                                    aria-label="glyphicon glyphicon-paperclip"
                                     onClick={() => {
-                                        const messege = [
-                                            {
-                                                sender: "me",
-                                                type: "text",
-                                                date: "05/04/2022",
-                                                time: "12:54",
-                                                context: input,
-                                                lastContextTime: "1 min ago",
-                                            },
-                                        ];
-                                        var newList = [];
-                                        if (input !== "") {
-                                            newList =
-                                                list_of_messeges.concat(
-                                                    messege
-                                                );
-                                            set_list_of_messeges(newList);
-                                            const textBox =
-                                                document.getElementById("text");
-                                            setInput("");
-                                            sendDataToParent(
-                                                contact,
-                                                messege[0],
-                                                contact.id
-                                            );
-                                        }
+                                        if (showMenu) {
+                                            setShowMenu(false);
+                                        } else setShowMenu(true);
                                     }}
                                 >
-                                    Send
+                                    <span
+                                        className="glyphicon glyphicon-paperclip"
+                                        aria-hidden="true"
+                                    >
+                                        <i className="bi bi-paperclip"></i>
+                                    </span>
                                 </button>
                             </div>
+
+                            <input
+                                class="form-control"
+                                type="text"
+                                placeholder="Write a new message"
+                                id="text"
+                                value={input}
+                                onInput={(e) => setInput(e.target.value)}
+                            ></input>
+                            <button
+                                class="btn btn-primary"
+                                onClick={() => {
+                                    const messege = [
+                                        {
+                                            sender: "me",
+                                            type: "text",
+                                            date: "05/04/2022",
+                                            time: "12:54",
+                                            context: input,
+                                            lastContextTime: "1 min ago",
+                                        },
+                                    ];
+                                    var newList = [];
+                                    if (input !== "") {
+                                        newList =
+                                            list_of_messeges.concat(messege);
+                                        set_list_of_messeges(newList);
+                                        const textBox =
+                                            document.getElementById("text");
+                                        setInput("");
+                                        sendDataToParent(
+                                            contact,
+                                            messege[0],
+                                            contact.id
+                                        );
+                                    }
+                                }}
+                            >
+                                Send
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -4,22 +4,39 @@ function MessegeBox({ messege }) {
     if (messege.type == "text") {
         if (messege.sender == "me")
             return (
-                <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                    {messege.context}
-                    <br></br>
-                    <h6>
+                <div>
+                    <p
+                        class="small p-2 ms-3 mb-1 rounded-3"
+                        style={{
+                            backgroundColor: "#f5f6f7",
+                            fontSize: "20px",
+                        }}
+                    >
+                        {messege.context}
+                    </p>
+
+                    <p class="small ms-3 mb-3 rounded-3 text-muted">
                         {messege.time} {messege.date}
-                    </h6>
+                    </p>
                 </div>
             );
         else
             return (
-                <div className="line-in-chat">
-                    <div className="msg_box_receive">
-                        {messege.context}
-                        <h6>
+                <div className="d-flex flex-row justify-content-end mb-4 pt-1">
+                    <div>
+                        <p
+                            class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
+                            style={{
+                                backgroundColor: "#f5f6f7;",
+                                fontSize: "20px",
+                            }}
+                        >
+                            {messege.context}
+                        </p>
+
+                        <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
                             {messege.time} {messege.date}
-                        </h6>
+                        </p>
                     </div>
                 </div>
             );
