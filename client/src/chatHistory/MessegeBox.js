@@ -4,14 +4,15 @@ function MessegeBox({ messege }) {
     if (messege.type == "text") {
         if (messege.sender == "me")
             return (
-                <div className="line-in-chat">
-                    <div className="msg_box_send">
-                        {messege.context}
-                        <br></br>
-                        <h6>
-                            {messege.time} {messege.date}
-                        </h6>
-                    </div>
+                <div
+                    id="myMessage"
+                    className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3"
+                >
+                    {messege.context}
+                    <br></br>
+                    <h6>
+                        {messege.time} {messege.date}
+                    </h6>
                 </div>
             );
         else
@@ -101,7 +102,12 @@ function MessegeBox({ messege }) {
             return (
                 <div className="line-in-chat">
                     <div className="msg_box_send">
-                        <audio className="audio" controls src={messege.context} type='audio/mpeg' ></audio>
+                        <audio
+                            className="audio"
+                            controls
+                            src={messege.context}
+                            type="audio/mpeg"
+                        ></audio>
                         <br></br>
                         <h6>
                             {messege.time} {messege.date}
@@ -113,7 +119,12 @@ function MessegeBox({ messege }) {
             return (
                 <div className="line-in-chat">
                     <div className="msg_box_receive">
-                    <audio className="audio" controls src={messege.context} type='audio/mpeg' ></audio>
+                        <audio
+                            className="audio"
+                            controls
+                            src={messege.context}
+                            type="audio/mpeg"
+                        ></audio>
                         <br></br>
                         <h6>
                             {messege.time} {messege.date}

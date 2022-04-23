@@ -29,12 +29,7 @@
 .col-3{
   width: 25%
 }
-.col-9{
-  width: 75%;
-  height: 100vh;
-  background-color: rgb(255, 158, 102);
-  overflow-y: scroll;
-}
+
 .row {
   --bs-gutter-x: 0;
   height: 100%;

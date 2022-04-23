@@ -40,6 +40,8 @@ function ContactItem({ contactItem, sendDataToParent }) {
                         <p className="mb-1">image</p>
                     ) : lastMessage.type === "video" ? (
                         <p className="mb-1">video</p>
+                    ) : lastMessage.type === "audio" ? (
+                        <p className="mb-1">audio</p>
                     ) : (
                         <p className="mb-1"></p>
                     )}
