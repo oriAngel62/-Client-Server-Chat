@@ -4,10 +4,7 @@ function MessegeBox({ messege }) {
     if (messege.type == "text") {
         if (messege.sender == "me")
             return (
-                <div
-                    id="myMessage"
-                    className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3"
-                >
+                <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
                     {messege.context}
                     <br></br>
                     <h6>
