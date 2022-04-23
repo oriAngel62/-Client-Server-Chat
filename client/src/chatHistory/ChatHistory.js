@@ -177,6 +177,18 @@ function ChatHistory({ contact, sendDataToParent }) {
                                                             ) ||
                                                             name.endsWith(
                                                                 ".jpg"
+                                                            ) ||
+                                                            name.endsWith(
+                                                                ".PNG"
+                                                            ) ||
+                                                            name.endsWith(
+                                                                ".GIF"
+                                                            ) ||
+                                                            name.endsWith(
+                                                                ".JPEG"
+                                                            ) ||
+                                                            name.endsWith(
+                                                                ".JPG"
                                                             )
                                                         ) {
                                                             setSelectedImage(
@@ -324,7 +336,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                                                     newList
                                                                 );
                                                             }
-                                                        setSelectedImage(null);
+                                                        setSelectedImage("");
                                                         sendDataToParent(
                                                             contact,
                                                             messege[0],
