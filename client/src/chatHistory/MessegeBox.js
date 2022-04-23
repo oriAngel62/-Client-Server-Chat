@@ -4,7 +4,7 @@ function MessegeBox({ messege }) {
     if (messege.type == "text") {
         if (messege.sender == "me")
             return (
-                <span className="line-in-chat">
+                <div className="line-in-chat">
                     <div className="msg_box_send">
                         {messege.context}
                         <br></br>
@@ -12,18 +12,18 @@ function MessegeBox({ messege }) {
                             {messege.time} {messege.date}
                         </h6>
                     </div>
-                </span>
+                </div>
             );
         else
             return (
-                <span className="line-in-chat">
+                <div className="line-in-chat">
                     <div className="msg_box_receive">
                         {messege.context}
                         <h6>
                             {messege.time} {messege.date}
                         </h6>
                     </div>
-                </span>
+                </div>
             );
     }
     if (messege.type == "image") {
@@ -88,6 +88,32 @@ function MessegeBox({ messege }) {
                                 type={messege.context[1]}
                             ></source>
                         </video>
+                        <br></br>
+                        <h6>
+                            {messege.time} {messege.date}
+                        </h6>
+                    </div>
+                </div>
+            );
+    }
+    if (messege.type == "audio") {
+        if (messege.sender == "me")
+            return (
+                <div className="line-in-chat">
+                    <div className="msg_box_send">
+                        <audio className="audio" controls src={messege.context} type='audio/mpeg' ></audio>
+                        <br></br>
+                        <h6>
+                            {messege.time} {messege.date}
+                        </h6>
+                    </div>
+                </div>
+            );
+        else
+            return (
+                <div className="line-in-chat">
+                    <div className="msg_box_receive">
+                    <audio className="audio" controls src={messege.context} type='audio/mpeg' ></audio>
                         <br></br>
                         <h6>
                             {messege.time} {messege.date}

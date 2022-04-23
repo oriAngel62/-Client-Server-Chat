@@ -10,15 +10,16 @@ function ChatHistory({ contact, sendDataToParent }) {
     var [list_of_messeges, set_list_of_messeges] = useState(
         contact.listMessages
     );
+    
 
-    // set_list_of_messeges(contact.listMessages);
+// set_list_of_messeges(contact.listMessages);
     useEffect(() => {
-        set_list_of_messeges(contact.listMessages);
+    set_list_of_messeges(contact.listMessages);
     }, [contact.listMessages]);
     const [selectedImage, setSelectedImage] = useState();
     const [modeVidPic, setModeVidPic] = useState("pic");
     var chatList = list_of_messeges.map((messege, key) => {
-        return <MessegeBox messege={messege} key={key} />;
+    return <MessegeBox messege={messege} key={key} />;
     });
     const [input, setInput] = useState("");
     const [inputFile, setInputFile] = useState("");
@@ -26,15 +27,46 @@ function ChatHistory({ contact, sendDataToParent }) {
     let menuRef = useRef();
     let menuButtonRef = useRef();
     useEffect(() => {
-        document.addEventListener("mousedown", (event) => {
-            if (
-                !menuRef.current.contains(event.target) &&
-                !menuButtonRef.current.contains(event.target)
+    document.addEventListener("mousedown", (event) => {
+        if (
+            !menuRef.current.contains(event.target) &&
+            !menuButtonRef.current.contains(event.target)
             ) {
                 setShowMenu(false);
             }
         });
     });
+    const addAudio = (audioSrc) => {
+        var audSource = audioSrc;
+    let messege = [
+        {
+            sender: "me",
+            type: "audio",
+            date: "05/04/2022",
+            time: "12:54",
+            context:
+                audSource,
+            lastContextTime:
+                "1 min ago",
+        },
+                    ];
+    var newList =
+        [];
+    newList =
+        list_of_messeges.concat(
+            messege
+        );
+    set_list_of_messeges(
+        newList
+    );
+    
+    sendDataToParent(
+    contact,
+    messege[0],
+    contact.id
+    );
+    }
+
 
     return (
         <div className="chatPlace">
@@ -101,21 +133,11 @@ function ChatHistory({ contact, sendDataToParent }) {
                             >
                                 <div className="modal-dialog" role="document">
                                     <div className="modal-content">
-                                        <div className="modal-body">
-                                            <Recording/>
-                                        </div>
+                                            <Recording sendDataBack={addAudio}/>
+                                        
+                                        
 
-                                        <div className="modal-footer">
-                                            <div>
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-secondary btn-lg"
-                                                    data-bs-dismiss="modal"
-                                                >
-                                                    Submit
-                                                </button>
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -359,11 +381,14 @@ function ChatHistory({ contact, sendDataToParent }) {
                             },
                         ];
                         var newList = [];
+                        if(input !== "")
+                        {
                         newList = list_of_messeges.concat(messege);
                         set_list_of_messeges(newList);
                         const textBox = document.getElementById("text");
                         setInput("");
                         sendDataToParent(contact, messege[0], contact.id);
+                        }
                     }}
                 >
                     Send

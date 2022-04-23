@@ -9,7 +9,7 @@
     text-align: right;
     margin-right: 0px;
     top: 0px;
-    width: 100%;
+    float: inline-end;
     }
 .msg_box_send{
     margin-top: auto;
@@ -19,23 +19,24 @@
     background-color: #78e08f;
     padding: 10px;
     position: relative;
-    width: 25%;
     }
 .msg_time_receive{
     position: absolute;
     left: 0;
-    bottom: -15px;
     color: rgba(255,255,255,0.5);
     font-size: 10px;
     }
 .msg_time_send{
     position: absolute;
     right:0;
-    bottom: -15px;
     color: rgba(255,255,255,0.5);
     font-size: 10px;
     }
 .line-in-chat{
     position: relative;
+    width: 25%;
     margin-right: 100px;
+}
+.audio{
+    width: 175px;
 }
