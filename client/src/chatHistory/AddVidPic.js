@@ -1,19 +1,15 @@
 import React from "react"
 
 function AddVidPic({vidOrPic, selected, Type}) {
-    console.log("hi");
-    console.log({vidOrPic});
-    console.log({selected});
     if(vidOrPic == "pic")
     {
-        console.log("hi shalom lah");
     return(
     <div>
     <img width={"150px"} src={selected}></img>
     </div>
     );
     }
-    if(vidOrPic == "vid")
+    if(vidOrPic == "video")
     {
     return(
         <div>
