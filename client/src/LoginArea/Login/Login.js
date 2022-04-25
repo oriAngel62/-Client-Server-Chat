@@ -34,6 +34,8 @@ function Login() {
             displayname: "Yoni from the block",
         },
         { username: "Noa", password: "12345", displayname: "Noa 101" },
+        { username: "Shaked", password: "12345", displayname: "Shaked" },
+        { username: "Aviv", password: "12345", displayname: "Aviv" },
     ];
 
     return (
