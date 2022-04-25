@@ -30,11 +30,14 @@
     flex-direction: column-reverse;
 
 }
+#chat2{
+    height: 100%;
+}
 #chat2 .form-control {
     border-color: transparent;
     }
     
-    #chat2 .form-control:focus {
+#chat2 .form-control:focus {
     border-color: transparent;
     box-shadow: inset 0px 0px 0px 1px transparent;
     }

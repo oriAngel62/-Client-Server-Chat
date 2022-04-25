@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-function Popup({ sendDataToParent, users }) {
+function Popup({ sendDataToParent, users, contactMap }) {
     const [name, setName] = useState("");
     function handleChange(event) {
         setName(event.target.value);
@@ -45,16 +45,29 @@ function Popup({ sendDataToParent, users }) {
                                     type="button"
                                     className="btn btn-primary btn-lg"
                                     onClick={() => {
+                                        var exist = false;
                                         for (let x in users) {
                                             if (users[x].username === name) {
+                                                exist = true;
                                                 sendDataToParent({ name });
                                             }
                                         }
-                                        alert(
-                                            "username already exist, please try another username"
-                                        );
+                                        if (exist == false) {
+                                            alert("username is not exist");
+                                            return;
+                                        }
+                                        var exist = false;
+                                        for (let x in contactMap) {
+                                            if (x.name === name) {
+                                                exist = true;
+                                                sendDataToParent({ name });
+                                            }
+                                        }
+                                        if (exist == false)
+                                            alert(
+                                                "username is already in contact list"
+                                            );
                                         return;
-                                        sendDataToParent({ name });
                                     }}
                                 >
                                     Add

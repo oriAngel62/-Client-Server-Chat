@@ -59,14 +59,14 @@ function ChatHistory({ contact, sendDataToParent }) {
     };
 
     return (
-        <div class="container py-5">
+        <div className="container py-5">
             <div className="card" id="chat2">
-                <div class="row d-flex justify-content-center">
-                    <div class="card-header d-flex justify-content-between align-items-center p-3">
-                        <h5 class="mb-0">{contact.name}</h5>
+                <div className="row d-flex justify-content-center">
+                    <div className="card-header d-flex justify-content-between align-items-center p-3">
+                        <h5 className="mb-0">{contact.name}</h5>
                     </div>
                     <div
-                        class="card-body"
+                        className="card-body"
                         style={{ position: "relative", height: "400px" }}
                     >
                         <div calssName="chatBox" id="box">
@@ -77,7 +77,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                         <div ref={menuRef}>
                             {showMenu ? (
                                 <div
-                                    class="btn-group"
+                                    className="btn-group"
                                     role="group"
                                     aria-label="Basic example"
                                 >
@@ -186,8 +186,8 @@ function ChatHistory({ contact, sendDataToParent }) {
                             ) : null}
                         </div>
                     </div>
-                    <div class="flex-grow-0 py-3 px-4 border-top">
-                        <div class="input-group">
+                    <div className="flex-grow-0 py-3 px-4 border-top">
+                        <div className="input-group">
                             <div ref={menuButtonRef} className="attachment">
                                 <button
                                     type="button"
@@ -209,7 +209,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                             </div>
 
                             <input
-                                class="form-control"
+                                className="form-control"
                                 type="text"
                                 placeholder="Write a new message"
                                 id="text"
@@ -217,7 +217,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                 onInput={(e) => setInput(e.target.value)}
                             ></input>
                             <button
-                                class="btn btn-primary"
+                                className="btn btn-primary"
                                 onClick={() => {
                                     const messege = [
                                         {

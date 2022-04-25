@@ -25,15 +25,11 @@ function Login() {
     }
 
     const users = [
-        { username: "Ori", password: "12345", displayname: "Ori the cool" },
-        { username: "David", password: "12345", displayname: "David the cool" },
-        { username: "Avia", password: "12345", displayname: "Avia the cool" },
-        {
-            username: "Yoni",
-            password: "12345",
-            displayname: "Yoni from the block",
-        },
-        { username: "Noa", password: "12345", displayname: "Noa 101" },
+        { username: "Ori", password: "12345", displayname: "Ori" },
+        { username: "David", password: "12345", displayname: "David" },
+        { username: "Avia", password: "12345", displayname: "Avia" },
+        { username: "Yoni", password: "12345", displayname: "Yoni" },
+        { username: "Noa", password: "12345", displayname: "Noa" },
         { username: "Shaked", password: "12345", displayname: "Shaked" },
         { username: "Aviv", password: "12345", displayname: "Aviv" },
     ];
