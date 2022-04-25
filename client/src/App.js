@@ -1,4 +1,7 @@
 import "./App.css";
+import audio from './record1.txt';
+import image1 from './img1.jpg'
+import video1 from './vid1.mp4'
 import ContactItem from "./contactItem/ContactItem";
 import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
@@ -6,6 +9,11 @@ import Popup from "./contactItem/Popup";
 import ChatHistory from "./chatHistory/ChatHistory";
 
 function App() {
+    var videoSource =
+    [
+        video1,
+        'video/mp4',
+    ];
     var listMessages = [
         {
             sender: "me",
@@ -25,12 +33,10 @@ function App() {
         },
         {
             sender: "tome",
-            type: "text",
+            type: "audio",
             date: "05/04/2022",
             time: "12:54",
-            context:
-                "dasdasdad  fdsfsf dsf sf dsf sdf sf sf sfsdfsd s f sdfsf sf df sdf ",
-
+            context: audio,
             lastContextTime: "11 min ago",
         },
     ];
@@ -43,6 +49,136 @@ function App() {
             context: "fd df",
             lastContextTime: "10 min ago",
         },
+        {
+            sender: "me",
+            type: "audio",
+            date: "05/04/2022",
+            time: "12:54",
+            context: audio,
+            lastContextTime: "10 min ago",
+        },
+        {
+            sender: "noa",
+            type: "image",
+            date: "05/04/2022",
+            time: "12:54",
+            context: image1,
+            lastContextTime: "10 min ago",
+        },
+        {
+            sender: "me",
+            type: "video",
+            date: "05/04/2022",
+            time: "12:54",
+            context: videoSource,
+            lastContextTime: "10 min ago",
+        }
+
+    ];
+    var listMessages3 = [
+        {
+            sender: "me",
+            type: "text",
+            date: "05/04/2022",
+            time: "12:54",
+            context: "fd df",
+            lastContextTime: "10 min ago",
+        },
+        {
+            sender: "me",
+            type: "audio",
+            date: "05/04/2022",
+            time: "12:54",
+            context: audio,
+            lastContextTime: "10 min ago",
+        },
+        {
+            sender: "noa",
+            type: "image",
+            date: "05/04/2022",
+            time: "12:54",
+            context: image1,
+            lastContextTime: "10 min ago",
+        },
+        {
+            sender: "me",
+            type: "video",
+            date: "05/04/2022",
+            time: "12:54",
+            context: videoSource,
+            lastContextTime: "10 min ago",
+        }
+
+    ];
+    var listMessages4 = [
+        {
+            sender: "me",
+            type: "text",
+            date: "05/04/2022",
+            time: "12:54",
+            context: "fd df",
+            lastContextTime: "10 min ago",
+        },
+        {
+            sender: "me",
+            type: "audio",
+            date: "05/04/2022",
+            time: "12:54",
+            context: audio,
+            lastContextTime: "10 min ago",
+        },
+        {
+            sender: "noa",
+            type: "image",
+            date: "05/04/2022",
+            time: "12:54",
+            context: image1,
+            lastContextTime: "10 min ago",
+        },
+        {
+            sender: "me",
+            type: "video",
+            date: "05/04/2022",
+            time: "12:54",
+            context: videoSource,
+            lastContextTime: "10 min ago",
+        }
+
+    ];
+    var listMessages5 = [
+        {
+            sender: "me",
+            type: "text",
+            date: "05/04/2022",
+            time: "12:54",
+            context: "fd df",
+            lastContextTime: "10 min ago",
+        },
+        {
+            sender: "me",
+            type: "audio",
+            date: "05/04/2022",
+            time: "12:54",
+            context: audio,
+            lastContextTime: "10 min ago",
+        },
+        {
+            sender: "noa",
+            type: "image",
+            date: "05/04/2022",
+            time: "12:54",
+            context: image1,
+            lastContextTime: "10 min ago",
+        },
+        {
+            sender: "me",
+            type: "video",
+            date: "05/04/2022",
+            time: "12:54",
+            context: videoSource,
+            lastContextTime: "10 min ago",
+        }
+
     ];
     var contactList = [
         {
@@ -56,6 +192,24 @@ function App() {
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp",
             name: "Noa",
             listMessages: listMessages2,
+        },
+        {
+            id: 2,
+            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp",
+            name: "Avia",
+            listMessages: listMessages3,
+        },
+        {
+            id: 3,
+            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp",
+            name: "David",
+            listMessages: listMessages4,
+        },
+        {
+            id: 4,
+            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp",
+            name: "Ori",
+            listMessages: listMessages5,
         },
     ];
 
