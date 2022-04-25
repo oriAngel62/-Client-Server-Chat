@@ -7,7 +7,6 @@ import AddImage from "./AddImage";
 import AddVideo from "./AddVideo";
 
 function ChatHistory({ contact, sendDataToParent }) {
-    
     var [list_of_messeges, set_list_of_messeges] = useState(
         contact.listMessages
     );
@@ -16,12 +15,12 @@ function ChatHistory({ contact, sendDataToParent }) {
     useEffect(() => {
         set_list_of_messeges(contact.listMessages);
     }, [contact.listMessages]);
-    const [modeVidPic, setModeVidPic] = useState("pic");   //
+    const [modeVidPic, setModeVidPic] = useState("pic"); //
     var chatList = list_of_messeges.map((messege, key) => {
         return <MessegeBox messege={messege} key={key} />;
     });
     const [input, setInput] = useState("");
-    const [showMenu, setShowMenu] = useState(false);     //
+    const [showMenu, setShowMenu] = useState(false); //
     let menuRef = useRef();
     let menuButtonRef = useRef();
     useEffect(() => {
@@ -34,12 +33,12 @@ function ChatHistory({ contact, sendDataToParent }) {
             }
         });
     });
-    const addImageVideo = (messege,contact) =>{
+    const addImageVideo = (messege, contact) => {
         var newList = [];
         newList = list_of_messeges.concat(messege[0]);
         set_list_of_messeges(newList);
         sendDataToParent(contact, messege[0], contact.id);
-    }
+    };
 
     const addAudio = (audioSrc) => {
         var audSource = audioSrc;
@@ -151,8 +150,11 @@ function ChatHistory({ contact, sendDataToParent }) {
                                             role="document"
                                         >
                                             <div className="modal-content">
-                                                <AddImage sendDataBack={addImageVideo}  contact={contact}/>
-                                                    {/*  <AddVidPic param="pic" selected={selectedImage} type=""/> almost working
+                                                <AddImage
+                                                    sendDataBack={addImageVideo}
+                                                    contact={contact}
+                                                />
+                                                {/*  <AddVidPic param="pic" selected={selectedImage} type=""/> almost working
                                                     its a display of the selected video or picture */}
                                             </div>
                                         </div>
@@ -170,12 +172,13 @@ function ChatHistory({ contact, sendDataToParent }) {
                                             role="document"
                                         >
                                             <div className="modal-content">
-                                                 <AddVideo sendDataBack={addImageVideo} contact={contact}/>
-                                       
+                                                <AddVideo
+                                                    sendDataBack={addImageVideo}
+                                                    contact={contact}
+                                                />
+
                                                 {/* <AddVidPic param={modeVidPic} selected={selectedImage} type={videoType}/>   almost working
                                                     its a display of the selected video or picture */}
-   
-                                                        
                                             </div>
                                         </div>
                                     </div>

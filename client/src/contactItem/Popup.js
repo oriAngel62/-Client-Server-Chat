@@ -47,12 +47,13 @@ function Popup({ sendDataToParent, users }) {
                                     onClick={() => {
                                         for (let x in users) {
                                             if (users[x].username === name) {
-                                                alert(
-                                                    "username already exist, please try another username"
-                                                );
-                                                return;
+                                                sendDataToParent({ name });
                                             }
                                         }
+                                        alert(
+                                            "username already exist, please try another username"
+                                        );
+                                        return;
                                         sendDataToParent({ name });
                                     }}
                                 >

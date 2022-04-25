@@ -23,8 +23,10 @@
   color: #61dafb;
 }
 .scroll{
-  height: 100%;
-  overflow: scroll;
+  height: 80%;
+  /* overflow: scroll; */
+  overflow-y: scroll;
+  position: relative;
 }
 .col-3{
   width: 25%
