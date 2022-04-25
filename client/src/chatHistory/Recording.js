@@ -8,8 +8,7 @@ function Recording({sendDataBack}) {
   console.log(recordingSource);
   let globalRecorder;
   let audioUrl;
-  let audio = document.createElement('audi');
-  audio.setAttribute('controls', '');
+  
   const recordAudio = () =>
   new Promise(async resolve => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -28,7 +27,6 @@ function Recording({sendDataBack}) {
           const audioBlob = new Blob(audioChunks);
           audioUrl = URL.createObjectURL(audioBlob);
           setRecordingSource(URL.createObjectURL(audioBlob));
-          // audio = new Audio(audioUrl);
           resolve({ audioBlob, audioUrl});
         });
 
@@ -46,13 +44,11 @@ function Recording({sendDataBack}) {
   globalRecorder = await recordAudio();
   globalRecorder.start();
   recording = true;
-  console.log("started");
   await sleep(30000);
   if(recording)
   {
   globalRecorder.stop();
   recording = false;
-  console.log("stopped");
   }
   }
 
@@ -61,7 +57,7 @@ function Recording({sendDataBack}) {
     {
       globalRecorder.stop();
       recording = false;
-      console.log("stopped");
+      console.log(recordingSource);
     }
   }
     
