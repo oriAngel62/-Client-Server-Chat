@@ -1,7 +1,7 @@
 import "./App.css";
-import audio from './record1.txt';
-import image1 from './img1.jpg'
-import video1 from './vid1.mp4'
+import audio from "./record1.txt";
+import image1 from "./img1.jpg";
+import video1 from "./vid1.mp4";
 import ContactItem from "./contactItem/ContactItem";
 import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
@@ -9,35 +9,31 @@ import Popup from "./contactItem/Popup";
 import ChatHistory from "./chatHistory/ChatHistory";
 
 function App() {
-    var videoSource =
-    [
-        video1,
-        'video/mp4',
-    ];
+    var videoSource = [video1, "video/mp4"];
     var listMessages = [
         {
             sender: "me",
             type: "text",
             date: "05/04/2022",
             time: "12:54",
-            context: "somthing intrseting",
-            lastContextTime: "10 min ago",
+            context: "Hi Yoni! How are you?",
+            lastContextTime: "12 min ago",
         },
         {
-            sender: "tome",
+            sender: "Yoni",
             type: "text",
             date: "05/04/2022",
             time: "12:54",
-            context: "somthing intrseting",
+            context: "Great! I want to send you audio",
             lastContextTime: "11 min ago",
         },
         {
-            sender: "tome",
+            sender: "Yoni",
             type: "audio",
             date: "05/04/2022",
             time: "12:54",
             context: audio,
-            lastContextTime: "11 min ago",
+            lastContextTime: "3 min ago",
         },
     ];
     var listMessages2 = [
@@ -46,7 +42,7 @@ function App() {
             type: "text",
             date: "05/04/2022",
             time: "12:54",
-            context: "fd df",
+            context: "Hi Noa, I have cool audio for you!",
             lastContextTime: "10 min ago",
         },
         {
@@ -71,9 +67,8 @@ function App() {
             date: "05/04/2022",
             time: "12:54",
             context: videoSource,
-            lastContextTime: "10 min ago",
-        }
-
+            lastContextTime: "4 min ago",
+        },
     ];
     var listMessages3 = [
         {
@@ -81,7 +76,7 @@ function App() {
             type: "text",
             date: "05/04/2022",
             time: "12:54",
-            context: "fd df",
+            context: "Hi Avia, look at this audio it's so cool!",
             lastContextTime: "10 min ago",
         },
         {
@@ -93,7 +88,7 @@ function App() {
             lastContextTime: "10 min ago",
         },
         {
-            sender: "noa",
+            sender: "Avia",
             type: "image",
             date: "05/04/2022",
             time: "12:54",
@@ -106,9 +101,8 @@ function App() {
             date: "05/04/2022",
             time: "12:54",
             context: videoSource,
-            lastContextTime: "10 min ago",
-        }
-
+            lastContextTime: "7 min ago",
+        },
     ];
     var listMessages4 = [
         {
@@ -116,34 +110,17 @@ function App() {
             type: "text",
             date: "05/04/2022",
             time: "12:54",
-            context: "fd df",
+            context: "Hi David! Nice to meet you",
             lastContextTime: "10 min ago",
         },
         {
-            sender: "me",
-            type: "audio",
+            sender: "David",
+            type: "text",
             date: "05/04/2022",
             time: "12:54",
-            context: audio,
-            lastContextTime: "10 min ago",
+            context: "Nice to meet you too!",
+            lastContextTime: "9 min ago",
         },
-        {
-            sender: "noa",
-            type: "image",
-            date: "05/04/2022",
-            time: "12:54",
-            context: image1,
-            lastContextTime: "10 min ago",
-        },
-        {
-            sender: "me",
-            type: "video",
-            date: "05/04/2022",
-            time: "12:54",
-            context: videoSource,
-            lastContextTime: "10 min ago",
-        }
-
     ];
     var listMessages5 = [
         {
@@ -151,34 +128,17 @@ function App() {
             type: "text",
             date: "05/04/2022",
             time: "12:54",
-            context: "fd df",
+            context: "Hi Shaked! Nice to meet you",
             lastContextTime: "10 min ago",
         },
         {
-            sender: "me",
-            type: "audio",
+            sender: "Shaked",
+            type: "text",
             date: "05/04/2022",
             time: "12:54",
-            context: audio,
-            lastContextTime: "10 min ago",
+            context: "Nice to meet you too!",
+            lastContextTime: "9 min ago",
         },
-        {
-            sender: "noa",
-            type: "image",
-            date: "05/04/2022",
-            time: "12:54",
-            context: image1,
-            lastContextTime: "10 min ago",
-        },
-        {
-            sender: "me",
-            type: "video",
-            date: "05/04/2022",
-            time: "12:54",
-            context: videoSource,
-            lastContextTime: "10 min ago",
-        }
-
     ];
     var contactList = [
         {
@@ -208,7 +168,7 @@ function App() {
         {
             id: 4,
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp",
-            name: "Ori",
+            name: "Shaked",
             listMessages: listMessages5,
         },
     ];
@@ -219,6 +179,8 @@ function App() {
         { username: "Avia" },
         { username: "Yoni" },
         { username: "Noa" },
+        { username: "Shaked" },
+        { username: "Aviv" },
     ];
 
     const [list, setList] = useState(contactList);
@@ -286,7 +248,11 @@ function App() {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-3">
-                    <Popup sendDataToParent={callbackPopUp} users={users} />
+                    <Popup
+                        sendDataToParent={callbackPopUp}
+                        users={users}
+                        contactMap={contactMap}
+                    />
                     <div className="scroll">{contactMap}</div>
                 </div>
                 <div className="col-9">
