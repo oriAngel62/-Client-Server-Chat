@@ -19,15 +19,13 @@ function Register() {
     }
 
     const users = [
-        { username: "Ori", password: "12345", displayname: "Ori the cool" },
-        { username: "David", password: "12345", displayname: "David the cool" },
-        { username: "Avia", password: "12345", displayname: "Avia the cool" },
-        {
-            username: "Yoni",
-            password: "12345",
-            displayname: "Yoni from the block",
-        },
-        { username: "Noa", password: "12345", displayname: "Noa 101" },
+        { username: "Ori", password: "a12345", displayname: "Ori" },
+        { username: "David", password: "a12345", displayname: "David" },
+        { username: "Avia", password: "a12345", displayname: "Avia" },
+        { username: "Yoni", password: "a12345", displayname: "Yoni" },
+        { username: "Noa", password: "a12345", displayname: "Noa" },
+        { username: "Shaked", password: "a12345", displayname: "Shaked" },
+        { username: "Aviv", password: "a12345", displayname: "Aviv" },
     ];
 
     return (
@@ -48,12 +46,38 @@ function Register() {
                                 value: true,
                                 message: "Please enter user name",
                             },
+                            minLength: {
+                                value: 4,
+                                message: "Please enter Min 4 charachters",
+                            },
+                            pattern: {
+                                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{4,}$/,
+                                message: "Must have letters or numbers only",
+                            },
                         })}
                     />
                     <span>{formState.errors.username?.message}</span>
 
                     <label>Password: </label>
-                    <input type="password" {...register("password")} required />
+                    <input
+                        type="password"
+                        {...register("password", {
+                            required: {
+                                value: true,
+                                message: "Please enter password",
+                            },
+                            minLength: {
+                                value: 4,
+                                message: "Please enter Min 4 charachters",
+                            },
+                            pattern: {
+                                value: /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
+                                message:
+                                    "Must have minimum one letter and minimum one number",
+                            },
+                        })}
+                    />
+                    <span>{formState.errors.password?.message}</span>
 
                     <label>Display name: </label>
                     <input type="text" {...register("display")} required />
