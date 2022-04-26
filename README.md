@@ -2,7 +2,7 @@
 
 This is Stage one of Client ServerChat task in advnace 2 course.
 
-The task was coded by Avia Hadad, Ori Angle, and David Gurovic
+The task was coded by Avia Hadad, Ori Angle, and David Gurovic.
 The project main repository can be found at:
 
 https://github.com/oriAngel62/Client-Server-Chat
@@ -36,6 +36,7 @@ const users = [
 
 Remarks:
 \*You can see npm packages that you should install in packahe.json => dependencies.
+(react-router and react-bootstarp)
 Validations for Register and Login includes:
 min 3 charachters
 regex for userneme and for password
