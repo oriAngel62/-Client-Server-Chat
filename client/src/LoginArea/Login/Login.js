@@ -43,40 +43,45 @@ function Login() {
                 <br />
                 <form onSubmit={handleSubmit(submit)}>
                     <label>Username: </label>
-                    <input type="text" {...register("username", {
-                        required: {
-                            value: true,
-                            message: "Please enter user name",
-                        },
-                        minLength: {
-                            value: 4,
-                            message: "Please enter Min 4 charachters",
-                        },
-                        pattern: {
-                            value: /^[a-zA-Z0-9]+$/,
-                            message: "Must have letters or numbers only",
-                        },
-                    })} />
+                    <input
+                        type="text"
+                        {...register("username", {
+                            required: {
+                                value: true,
+                                message: "Please enter user name",
+                            },
+                            minLength: {
+                                value: 3,
+                                message: "Please enter Min 3 charachters",
+                            },
+                            pattern: {
+                                value: /^[a-zA-Z0-9]+$/,
+                                message: "Must have letters or numbers only",
+                            },
+                        })}
+                    />
                     <span>{formState.errors.username?.message}</span>
 
-
                     <label>Password: </label>
-                    <input type="password" {...register("password", {
-                        required: {
-                            value: true,
-                            message: "Please enter password",
-                        },
-                        minLength: {
-                            value: 4,
-                            message: "Please enter Min 4 charachters",
-                        },
-                        pattern: {
-                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{4,}$/,
-                            message: "Must have minimum one letter and minimum one number",
-                        },
-                    })} />
+                    <input
+                        type="password"
+                        {...register("password", {
+                            required: {
+                                value: true,
+                                message: "Please enter password",
+                            },
+                            minLength: {
+                                value: 3,
+                                message: "Please enter Min 3 charachters",
+                            },
+                            pattern: {
+                                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{4,}$/,
+                                message:
+                                    "Must have minimum one letter and minimum one number",
+                            },
+                        })}
+                    />
                     <span>{formState.errors.password?.message}</span>
-
 
                     <button class="btn btn-success">Login</button>
                 </form>

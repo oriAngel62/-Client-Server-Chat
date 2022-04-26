@@ -3,8 +3,7 @@ import audio from "./record1.txt";
 import image1 from "./img1.jpg";
 import video1 from "./vid1.mp4";
 import ContactItem from "./contactItem/ContactItem";
-import React, { useState, useEffect } from "react";
-import { render } from "react-dom";
+import React, { useState } from "react";
 import Popup from "./contactItem/Popup";
 import ChatHistory from "./chatHistory/ChatHistory";
 
@@ -54,7 +53,7 @@ function App() {
             lastContextTime: "10 min ago",
         },
         {
-            sender: "noa",
+            sender: "Noa",
             type: "image",
             date: "05/04/2022",
             time: "12:54",

@@ -1,2 +1,48 @@
 # -Client-Server-Chat
-advnace 2 course project 
+
+This is Stage one of Client ServerChat task in advnace 2 course.
+
+The task was coded by Avia Hadad, Ori Angle, and David Gurovic
+The project main repository can be found at:
+
+https://github.com/oriAngel62/Client-Server-Chat
+
+All 3 has contributed to the projcts via git & github version control management system,
+contributions can be tracked with git log.
+
+This stage of the projec focuses on building a front end of a Chat,
+resembling a social media tool such as Whatsapp, Discord, Facebook Chat ect'
+
+The project is written with React.js Framework
+It utilizes react's tools and hooks such as useForm, useState, useNavigate of react router and more.
+
+For this stage of the project, the data is hard coded and usernames and passwords are being check against the following "database"
+that is hard coded withing Register and Login components
+
+Steps to run the project:
+*Clone the project to your PC (the project is in the main branch)
+*In the terminal get into client folder (by writing "cd client")
+*Write in the terminal "npm start"
+*In order to login please user one of the username and password conbinations from this "database":
+const users = [
+{ username: "Ori", password: "a12345", displayname: "Ori" },
+{ username: "David", password: "a12345", displayname: "David" },
+{ username: "Avia", password: "a12345", displayname: "Avia" },
+{ username: "Yoni", password: "a12345", displayname: "Yoni" },
+{ username: "Noa", password: "a12345", displayname: "Noa" },
+{ username: "Shaked", password: "a12345", displayname: "Shaked" },
+{ username: "Aviv", password: "a12345", displayname: "Aviv" },
+];
+
+Remarks:
+\*You can see npm packages that you should install in packahe.json => dependencies.
+Validations for Register and Login includes:
+min 3 charachters
+regex for userneme and for password
+One cannot register an existing username
+
+Relevant massages are presented on screen
+
+\*You can add new contact if he is in the users DB and he is not already in the contact list.
+
+All other requerments of the task regareging the chat functionality are met
