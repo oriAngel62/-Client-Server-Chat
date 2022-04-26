@@ -10,7 +10,7 @@ return(
 <div className="modal-body">
                                                     <input
                                                         type="file"
-                                                        name="myImage"
+                                                        className="myImage"
                                                         id="inputVid"
                                                         //value={inputFile}
                                                         accept="video/mp4,video/x-m4v,video/mov,video/*"

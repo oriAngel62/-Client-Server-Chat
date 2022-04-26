@@ -11,7 +11,7 @@ return(
 <div className="modal-body">
                                                     <input
                                                         type="file"
-                                                        name="myImage"
+                                                        className="myImage"
                                                         id="inputPic"
                                                         //value={inputFile}
                                                         accept="image/*"

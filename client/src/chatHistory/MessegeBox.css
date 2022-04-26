@@ -1,7 +1,7 @@
 body{margin-top:20px;}
 #myMessage {
     background-color: yellow;
-    color: #34ce57;
+    color: #34ce57
 }
 .chat-online {
     color: #34ce57
@@ -34,17 +34,17 @@ body{margin-top:20px;}
 }
 .py-3 {
     padding-top: 1rem!important;
-    padding-bottom: 1rem!important;
+    padding-bottom: 1rem!important
 }
 .px-4 {
     padding-right: 1.5rem!important;
-    padding-left: 1.5rem!important;
+    padding-left: 1.5rem!important
 }
 .flex-grow-0 {
-    flex-grow: 0!important;
+    flex-grow: 0!important
 }
 .border-top {
-    border-top: 1px solid #dee2e6!important;
+    border-top: 1px solid #dee2e6!important
 }
 .audio{
     width: 225px;

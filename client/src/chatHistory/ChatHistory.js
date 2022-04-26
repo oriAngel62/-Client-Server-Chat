@@ -69,7 +69,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                         className="card-body"
                         style={{ position: "relative", height: "400px" }}
                     >
-                        <div calssName="chatBox" id="box">
+                        <div calssname="chatBox" id="box">
                             {chatList}
                         </div>
                     </div>

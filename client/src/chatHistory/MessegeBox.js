@@ -6,7 +6,7 @@ function MessegeBox({ messege }) {
             return (
                 <div>
                     <p
-                        class="small p-2 ms-3 mb-1 rounded-3"
+                        className="small p-2 ms-3 mb-1 rounded-3"
                         style={{
                             backgroundColor: "#f5f6f7",
                             fontSize: "20px",
@@ -15,7 +15,7 @@ function MessegeBox({ messege }) {
                         {messege.context}
                     </p>
 
-                    <p class="small ms-3 mb-3 rounded-3 text-muted">
+                    <p className="small ms-3 mb-3 rounded-3 text-muted">
                         {messege.time} {messege.date}
                     </p>
                 </div>
@@ -25,16 +25,16 @@ function MessegeBox({ messege }) {
                 <div className="d-flex flex-row justify-content-end mb-4 pt-1">
                     <div>
                         <p
-                            class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
+                            className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
                             style={{
-                                backgroundColor: "#f5f6f7;",
+                                backgroundColor: "#f5f6f7",
                                 fontSize: "20px",
                             }}
                         >
                             {messege.context}
                         </p>
 
-                        <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
+                        <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
                             {messege.time} {messege.date}
                         </p>
                     </div>
@@ -47,7 +47,7 @@ function MessegeBox({ messege }) {
                 <div className="line-in-chat">
                     <div className="msg_box_send">
                         <p
-                            class="small p-2 ms-3 mb-1 rounded-3"
+                            className="small p-2 ms-3 mb-1 rounded-3"
                             style={{
                                 backgroundColor: "#f5f6f7",
                                 fontSize: "20px",
@@ -59,7 +59,7 @@ function MessegeBox({ messege }) {
                                 src={messege.context}
                             ></img>
                         </p>
-                        <p class="small ms-3 mb-3 rounded-3 text-muted">
+                        <p className="small ms-3 mb-3 rounded-3 text-muted">
                             {messege.time} {messege.date}
                         </p>
                     </div>
@@ -70,9 +70,9 @@ function MessegeBox({ messege }) {
                 <div className="d-flex flex-row justify-content-end mb-4 pt-1">
                     <div>
                         <p
-                            class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
+                            className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
                             style={{
-                                backgroundColor: "#f5f6f7;",
+                                backgroundColor: "#f5f6f7",
                                 fontSize: "20px",
                             }}
                         >
@@ -83,7 +83,7 @@ function MessegeBox({ messege }) {
                             ></img>
                         </p>
 
-                        <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
+                        <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
                             {messege.time} {messege.date}
                         </p>
                     </div>
@@ -96,7 +96,7 @@ function MessegeBox({ messege }) {
                 <div className="line-in-chat">
                     <div className="msg_box_send">
                         <p
-                            class="small p-2 ms-3 mb-1 rounded-3"
+                            className="small p-2 ms-3 mb-1 rounded-3"
                             style={{
                                 backgroundColor: "#f5f6f7",
                                 fontSize: "20px",
@@ -109,7 +109,7 @@ function MessegeBox({ messege }) {
                                 ></source>
                             </video>
                         </p>
-                        <p class="small ms-3 mb-3 rounded-3 text-muted">
+                        <p className="small ms-3 mb-3 rounded-3 text-muted">
                             {messege.time} {messege.date}
                         </p>
                     </div>
@@ -120,9 +120,9 @@ function MessegeBox({ messege }) {
                 <div className="d-flex flex-row justify-content-end mb-4 pt-1">
                     <div>
                         <p
-                            class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
+                            className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
                             style={{
-                                backgroundColor: "#f5f6f7;",
+                                backgroundColor: "#f5f6f7",
                                 fontSize: "20px",
                             }}
                         >
@@ -134,7 +134,7 @@ function MessegeBox({ messege }) {
                             </video>
                         </p>
 
-                        <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
+                        <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
                             {messege.time} {messege.date}
                         </p>
                     </div>
@@ -147,7 +147,7 @@ function MessegeBox({ messege }) {
                 <div className="line-in-chat">
                     <div className="msg_box_send">
                         <p
-                            class="small p-2 ms-3 mb-1 rounded-3"
+                            className="small p-2 ms-3 mb-1 rounded-3"
                             style={{
                                 backgroundColor: "#f5f6f7",
                                 fontSize: "20px",
@@ -160,7 +160,7 @@ function MessegeBox({ messege }) {
                                 type="audio/mpeg"
                             ></audio>
                         </p>
-                        <p class="small ms-3 mb-3 rounded-3 text-muted">
+                        <p className="small ms-3 mb-3 rounded-3 text-muted">
                             {messege.time} {messege.date}
                         </p>
                     </div>
@@ -171,9 +171,9 @@ function MessegeBox({ messege }) {
                 <div className="d-flex flex-row justify-content-end mb-4 pt-1">
                     <div>
                         <p
-                            class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
+                            className="small p-2 me-3 mb-1 text-white rounded-3 bg-primary"
                             style={{
-                                backgroundColor: "#f5f6f7;",
+                                backgroundColor: "#f5f6f7",
                                 fontSize: "20px",
                             }}
                         >
@@ -185,7 +185,7 @@ function MessegeBox({ messege }) {
                             ></audio>
                         </p>
 
-                        <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
+                        <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
                             {messege.time} {messege.date}
                         </p>
                     </div>
