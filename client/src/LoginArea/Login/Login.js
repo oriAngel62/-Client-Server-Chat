@@ -14,7 +14,6 @@ function Login() {
                 users[x].username === credentials.username &&
                 users[x].password === credentials.password
             ) {
-                // console.log(users[x], true);
                 navigator("/chat");
                 return;
             }

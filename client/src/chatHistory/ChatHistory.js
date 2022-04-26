@@ -11,7 +11,6 @@ function ChatHistory({ contact, sendDataToParent }) {
         contact.listMessages
     );
 
-    // set_list_of_messeges(contact.listMessages);
     useEffect(() => {
         set_list_of_messeges(contact.listMessages);
     }, [contact.listMessages]);

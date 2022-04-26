@@ -1,28 +1,4 @@
-/* .attachment{
-    float:  left;
-    background-color: grey;
-}
-.chatPlace{
-    height: 100%;
-    width: 100%;
-    position: relative;
-    background-color: rgb(255, 158, 102);
-}
-.chatBox{
-    position: relative;
-    overflow: scroll;
-    height: 100%;
-}
-.d-block{
-    width: 100%;
-    position: relative;
-    margin: 0px;
-    top: 0px;
-} */
-/* .bottomPart{
-    position: relative;
-    bottom: 0px;
-} */
+
 .card-body{
     overflow-y: scroll;
     position: relative;

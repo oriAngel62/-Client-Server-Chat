@@ -23,5 +23,4 @@ function AddVidPic({vidOrPic, selected, Type}) {
 
 }
 
-//  need to change from URL to path line 53,59
 export default AddVidPic;

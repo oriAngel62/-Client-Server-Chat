@@ -12,7 +12,6 @@ return(
                                                         type="file"
                                                         className="myImage"
                                                         id="inputVid"
-                                                        //value={inputFile}
                                                         accept="video/mp4,video/x-m4v,video/mov,video/*"
                                                         onInput={(e) =>
                                                             setInputFile(

@@ -4,7 +4,6 @@ import React, { useState } from "react";
 function AddImage({sendDataBack , contact}) {
 const [inputFile, setInputFile] = useState();
 const [selectedImage, setSelectedImage] = useState("");
-//document.getElementById("inputPic").value="";
 
 return(
 <div>
@@ -13,7 +12,6 @@ return(
                                                         type="file"
                                                         className="myImage"
                                                         id="inputPic"
-                                                        //value={inputFile}
                                                         accept="image/*"
                                                         onInput={(e) =>
                                                             setInputFile(
