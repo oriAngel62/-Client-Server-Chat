@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-function Popup({ sendDataToParent, users, contactMap }) {
+function Popup({ sendDataToParent, users, contactList }) {
     const [name, setName] = useState("");
     function handleChange(event) {
         setName(event.target.value);
@@ -49,7 +49,6 @@ function Popup({ sendDataToParent, users, contactMap }) {
                                         for (let x in users) {
                                             if (users[x].username === name) {
                                                 exist = true;
-                                                sendDataToParent({ name });
                                             }
                                         }
                                         if (exist == false) {
@@ -57,17 +56,23 @@ function Popup({ sendDataToParent, users, contactMap }) {
                                             return;
                                         }
                                         var exist = false;
-                                        for (let x in contactMap) {
-                                            if (x.name === name) {
+                                        for (
+                                            var i = 0;
+                                            i < contactList.length;
+                                            i++
+                                        ) {
+                                            console.log(contactList[i].name);
+                                            if (contactList[i].name === name) {
                                                 exist = true;
-                                                sendDataToParent({ name });
                                             }
                                         }
-                                        if (exist == false)
+                                        if (exist == true) {
                                             alert(
                                                 "username is already in contact list"
                                             );
-                                        return;
+                                            return;
+                                        }
+                                        sendDataToParent({ name });
                                     }}
                                 >
                                     Add

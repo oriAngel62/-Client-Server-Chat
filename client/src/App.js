@@ -250,7 +250,7 @@ function App() {
                     <Popup
                         sendDataToParent={callbackPopUp}
                         users={users}
-                        contactMap={contactMap}
+                        contactList={contactList}
                     />
                     <div className="scroll">{contactMap}</div>
                 </div>
