@@ -3,7 +3,7 @@ import audio from "./record1.txt";
 import image1 from "./img1.jpg";
 import video1 from "./vid1.mp4";
 import ContactItem from "./contactItem/ContactItem";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Popup from "./contactItem/Popup";
 import ChatHistory from "./chatHistory/ChatHistory";
 
@@ -141,15 +141,15 @@ function App() {
     ];
     var contactList = [
         {
-            id: 0,
+            id: "ori",
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp",
-            name: "Yoni",
+            name: "ori12",
             listMessages: listMessages,
         },
         {
-            id: 1,
+            id: "david",
             src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp",
-            name: "Noa",
+            name: "david12",
             listMessages: listMessages2,
         },
         {
@@ -182,8 +182,77 @@ function App() {
         { username: "Aviv" },
     ];
 
-    const [list, setList] = useState(contactList);
-    const [currentId, setCurrentId] = useState(0);
+    const backendContact = [
+        {
+            id: "Ori",
+            nickName: "o1",
+            server: "abc",
+            last: "abc",
+            lastDate: "2022-05-20T15:37:52.8042078+03:00",
+            messageList: [
+                {
+                    id: 1,
+                    type: 0,
+                    content: "hi",
+                    created: "2022-05-20T15:37:52.8042123+03:00",
+                    sent: true,
+                },
+                {
+                    id: 2,
+                    type: 0,
+                    content: "hi 2 u 2",
+                    created: "2022-05-20T15:37:52.8042127+03:00",
+                    sent: false,
+                },
+            ],
+        },
+        {
+            id: "David",
+            nickName: "d12",
+            server: "abc",
+            last: "abcd",
+            lastDate: "2022-05-20T15:37:52.8042155+03:00",
+            messageList: [
+                {
+                    id: 1,
+                    type: 0,
+                    content: "hi",
+                    created: "2022-05-20T15:37:52.8042158+03:00",
+                    sent: true,
+                },
+                {
+                    id: 2,
+                    type: 0,
+                    content: "hi 2 u 2",
+                    created: "2022-05-20T15:37:52.8042159+03:00",
+                    sent: false,
+                },
+            ],
+        },
+    ];
+    var cList = [];
+    jsonToObject(backendContact);
+    function jsonToObject(backendContact) {
+        var index = (backendContact.length + 1) % 7;
+        for (let i = 0; i < backendContact.length; i++) {
+            var cItem = [];
+            cItem.id = backendContact[i].id;
+            if (index == 0) index++;
+            cItem.src =
+                "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava" +
+                index +
+                "-bg.webp";
+            cItem.name = backendContact[i].nickName;
+            cItem.listMessages = backendContact[i].messageList;
+            cList.push(cItem);
+        }
+    }
+    console.log(backendContact);
+
+    console.log(cList);
+    const [list, setList] = useState(cList);
+    const [currentId, setCurrentId] = useState("ori");
+    const [currentIdNum, setCurrentIdNum] = useState(0);
     const [lastMessage, setLastMessage] = useState("");
     const [users, setusers] = useState(usersList);
 
@@ -193,6 +262,7 @@ function App() {
         for (let i = 0; i < list.length; i++) {
             if (list[i].id == childData.id) {
                 setCurrentId(childData.id);
+                setCurrentIdNum(i);
                 setList(list);
             }
         }
@@ -228,7 +298,7 @@ function App() {
             if (list[i].id == id) {
                 list[i].listMessages.push(meesage);
                 setCurrentId("");
-                setCurrentId(contactItem.id);
+                setCurrentIdNum(i);
             }
         }
     };
@@ -242,6 +312,13 @@ function App() {
             />
         );
     });
+    // const [backendContact, backendContactSetList] = useState([]);
+    // useEffect(async () => {
+    //     const res = await fetch("https://localhost:7285/api/contacts");
+    //     const data = await res.json();
+    //     backendContactSetList(data);
+    //     console.log(data.id);
+    // }, []);
 
     return (
         <div className="container-fluid">
@@ -256,7 +333,7 @@ function App() {
                 </div>
                 <div className="col-9">
                     <ChatHistory
-                        contact={list[currentId]}
+                        contact={list[currentIdNum]}
                         sendDataToParent={callbackChatHistory}
                     />
                 </div>
