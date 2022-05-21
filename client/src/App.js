@@ -302,7 +302,7 @@ function App() {
             }
         }
     };
-
+    var i = 1;
     var contactMap = list.map((contact, key) => {
         return (
             <ContactItem
