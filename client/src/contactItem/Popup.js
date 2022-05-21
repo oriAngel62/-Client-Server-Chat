@@ -1,8 +1,19 @@
 import React, { useState } from "react";
+import "./Popup.css";
 function Popup({ sendDataToParent, users, contactList }) {
     const [name, setName] = useState("");
-    function handleChange(event) {
+    const [nickname, setNickname] = useState("");
+    const [server, setServer] = useState("");
+    // name nick server
+    const [contact, setNewContact] = useState("");
+    function handleChangeUserName(event) {
         setName(event.target.value);
+    }
+    function handleChangeNick(event) {
+        setNickname(event.target.value);
+    }
+    function handleChangeServer(event) {
+        setServer(event.target.value);
     }
     return (
         <div>
@@ -32,10 +43,27 @@ function Popup({ sendDataToParent, users, contactList }) {
                             </h5>
                         </div>
                         <div className="modal-body">
+                            <label for="fname">Username: </label>
                             <input
                                 type="text"
                                 value={name}
-                                onChange={handleChange}
+                                onChange={handleChangeUserName}
+                            />
+                            <br></br>
+                            <br></br>
+                            <label for="fname">Nickname: </label>
+                            <input
+                                type="text"
+                                value={nickname}
+                                onChange={handleChangeNick}
+                            />
+                            <br></br>
+                            <br></br>
+                            <label for="fname">Server: </label>
+                            <input
+                                type="text"
+                                value={server}
+                                onChange={handleChangeServer}
                             />
                         </div>
                         <div className="modal-footer">
@@ -45,6 +73,11 @@ function Popup({ sendDataToParent, users, contactList }) {
                                     type="button"
                                     className="btn btn-primary btn-lg"
                                     onClick={() => {
+                                        var newcontact = [];
+                                        newcontact.id = name;
+                                        newcontact.name = nickname;
+                                        newcontact.server = server;
+                                        console.log(newcontact);
                                         var exist = false;
                                         for (let x in users) {
                                             if (users[x].username === name) {
@@ -72,7 +105,7 @@ function Popup({ sendDataToParent, users, contactList }) {
                                             );
                                             return;
                                         }
-                                        sendDataToParent({ name });
+                                        sendDataToParent({ newcontact });
                                     }}
                                 >
                                     Add

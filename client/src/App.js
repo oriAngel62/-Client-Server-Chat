@@ -267,8 +267,26 @@ function App() {
             }
         }
     };
+
     const callbackPopUp = (childData) => {
         if (childData.name !== "") {
+            //post fuction add contact asp.net
+
+            // POST request using fetch inside useEffect React hook
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: childData.id,
+                    nickName: childData.nickName,
+                    server: childData.server,
+                }),
+            };
+            fetch("https://localhost:7285/api/contacts", requestOptions).then(
+                (response) => response.json()
+            );
+            // empty dependency array means this effect will only run once (like componentDidMount in classes)
+            //add in react
             handleAdd(childData.name);
         }
     };
@@ -312,7 +330,7 @@ function App() {
             />
         );
     });
-    
+
     useEffect(async () => {
         const res = await fetch("https://localhost:7285/api/contacts");
         const data = await res.json();
