@@ -24,6 +24,15 @@ function ContactItem({ contactItem, sendDataToParent }) {
                     // data-target="#learnMore"
                     // onClick={showChatHistory(contactItem)}
 
+
+                    /*
+                    type:
+                    text -0
+                    video -1
+                    image -2
+                    audio -3
+                    */
+
                     onClick={() => {
                         sendDataToParent(contactItem);
                     }}
@@ -34,13 +43,13 @@ function ContactItem({ contactItem, sendDataToParent }) {
                         <br></br>
                         <small>{lastMessage.lastContextTime}</small>
                     </div>
-                    {lastMessage.type === "text" ? (
+                    {lastMessage.type === 0 ? (
                         <p className="mb-1">{lastMessage.context}</p>
-                    ) : lastMessage.type === "image" ? (
+                    ) : lastMessage.type === 2 ? (
                         <p className="mb-1">image</p>
-                    ) : lastMessage.type === "video" ? (
+                    ) : lastMessage.type === 1 ? (
                         <p className="mb-1">video</p>
-                    ) : lastMessage.type === "audio" ? (
+                    ) : lastMessage.type === 3 ? (
                         <p className="mb-1">audio</p>
                     ) : (
                         <p className="mb-1"></p>

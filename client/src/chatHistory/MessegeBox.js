@@ -1,7 +1,15 @@
 import "./MessegeBox.css";
 
+/*
+type:
+text -0
+video -1
+image -2
+audio -3
+*/
+
 function MessegeBox({ messege }) {
-    if (messege.type == "text") {
+    if (messege.type == 0) {
         if (messege.sender == "me")
             return (
                 <div>
@@ -41,7 +49,7 @@ function MessegeBox({ messege }) {
                 </div>
             );
     }
-    if (messege.type == "image") {
+    if (messege.type == 2) {
         if (messege.sender == "me")
             return (
                 <div className="line-in-chat">
@@ -90,7 +98,7 @@ function MessegeBox({ messege }) {
                 </div>
             );
     }
-    if (messege.type == "video") {
+    if (messege.type == 1) {
         if (messege.sender == "me")
             return (
                 <div className="line-in-chat">
@@ -141,7 +149,7 @@ function MessegeBox({ messege }) {
                 </div>
             );
     }
-    if (messege.type == "audio") {
+    if (messege.type == 3) {
         if (messege.sender == "me")
             return (
                 <div className="line-in-chat">

@@ -4,6 +4,15 @@ function AddVideo({ sendDataBack, contact }) {
     const [inputFile, setInputFile] = useState();
     const [selectedImage, setSelectedImage] = useState("");
     let videoType = "";
+
+    /*
+    type:
+    text -0
+    video -1
+    image -2
+    audio -3
+    */
+
     return (
         <div>
             <div className="modal-body">
@@ -36,7 +45,7 @@ function AddVideo({ sendDataBack, contact }) {
                                 messege = [
                                     {
                                         sender: "me",
-                                        type: "video",
+                                        type: 1,
                                         date: "05/04/2022",
                                         time: "12:54",
                                         context: imageSource,

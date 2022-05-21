@@ -10,7 +10,7 @@ function ChatHistory({ contact, sendDataToParent }) {
     var [list_of_messeges, set_list_of_messeges] = useState(
         contact.listMessages
     );
-
+    let typeText = 0;
     useEffect(() => {
         set_list_of_messeges(contact.listMessages);
     }, [contact.listMessages]);
@@ -39,12 +39,20 @@ function ChatHistory({ contact, sendDataToParent }) {
         sendDataToParent(contact, messege[0], contact.id);
     };
 
+    /*
+    type:
+    text -0
+    video -1
+    image -2
+    audio -3
+    */
+
     const addAudio = (audioSrc) => {
         var audSource = audioSrc;
         let messege = [
             {
                 sender: "me",
-                type: "audio",
+                type: 3,
                 date: "05/04/2022",
                 time: "12:54",
                 context: audSource,
@@ -209,7 +217,7 @@ function ChatHistory({ contact, sendDataToParent }) {
 
                             <input
                                 className="form-control"
-                                type="text"
+                                type = "text"
                                 placeholder="Write a new message"
                                 id="text"
                                 value={input}
@@ -221,7 +229,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                     const messege = [
                                         {
                                             sender: "me",
-                                            type: "text",
+                                            type: 0,
                                             date: "05/04/2022",
                                             time: "12:54",
                                             context: input,

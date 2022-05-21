@@ -182,7 +182,7 @@ function App() {
         { username: "Aviv" },
     ];
 
-    const backendContact = [
+    const [backendContact, backendContactSetList] = useState([
         {
             id: "Ori",
             nickName: "o1",
@@ -229,7 +229,7 @@ function App() {
                 },
             ],
         },
-    ];
+    ]);
     var cList = [];
     jsonToObject(backendContact);
     function jsonToObject(backendContact) {
@@ -312,13 +312,13 @@ function App() {
             />
         );
     });
-    // const [backendContact, backendContactSetList] = useState([]);
-    // useEffect(async () => {
-    //     const res = await fetch("https://localhost:7285/api/contacts");
-    //     const data = await res.json();
-    //     backendContactSetList(data);
-    //     console.log(data.id);
-    // }, []);
+    
+    useEffect(async () => {
+        const res = await fetch("https://localhost:7285/api/contacts");
+        const data = await res.json();
+        backendContactSetList(data);
+        console.log(data.id);
+    }, []);
 
     return (
         <div className="container-fluid">
