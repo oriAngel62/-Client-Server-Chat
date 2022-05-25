@@ -182,54 +182,65 @@ function App() {
         { username: "Aviv" },
     ];
 
-    const [backendContact, backendContactSetList] = useState([
-        {
-            id: "Ori",
-            nickName: "o1",
-            server: "abc",
-            last: "abc",
-            lastDate: "2022-05-20T15:37:52.8042078+03:00",
-            messageList: [
-                {
-                    id: 1,
-                    type: 0,
-                    content: "hi",
-                    created: "2022-05-20T15:37:52.8042123+03:00",
-                    sent: true,
-                },
-                {
-                    id: 2,
-                    type: 0,
-                    content: "hi 2 u 2",
-                    created: "2022-05-20T15:37:52.8042127+03:00",
-                    sent: false,
-                },
-            ],
-        },
-        {
-            id: "David",
-            nickName: "d12",
-            server: "abc",
-            last: "abcd",
-            lastDate: "2022-05-20T15:37:52.8042155+03:00",
-            messageList: [
-                {
-                    id: 1,
-                    type: 0,
-                    content: "hi",
-                    created: "2022-05-20T15:37:52.8042158+03:00",
-                    sent: true,
-                },
-                {
-                    id: 2,
-                    type: 0,
-                    content: "hi 2 u 2",
-                    created: "2022-05-20T15:37:52.8042159+03:00",
-                    sent: false,
-                },
-            ],
-        },
-    ]);
+
+
+
+
+    const [backendContact, backendContactSetList] = useState([]);
+
+    //localhost7285 - not final
+    useEffect(async () => {
+        const result = await fetch('https://localhost:7285/api/contacts/');
+        const data = await result.json();
+        backendContactSetList(data);
+    }, []);
+    //     {
+    //         id: "Ori",
+    //         nickName: "o1",
+    //         server: "abc",
+    //         last: "abc",
+    //         lastDate: "2022-05-20T15:37:52.8042078+03:00",
+    //         messageList: [
+    //             {
+    //                 id: 1,
+    //                 type: 0,
+    //                 content: "hi",
+    //                 created: "2022-05-20T15:37:52.8042123+03:00",
+    //                 sent: true,
+    //             },
+    //             {
+    //                 id: 2,
+    //                 type: 0,
+    //                 content: "hi 2 u 2",
+    //                 created: "2022-05-20T15:37:52.8042127+03:00",
+    //                 sent: false,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         id: "David",
+    //         nickName: "d12",
+    //         server: "abc",
+    //         last: "abcd",
+    //         lastDate: "2022-05-20T15:37:52.8042155+03:00",
+    //         messageList: [
+    //             {
+    //                 id: 1,
+    //                 type: 0,
+    //                 content: "hi",
+    //                 created: "2022-05-20T15:37:52.8042158+03:00",
+    //                 sent: true,
+    //             },
+    //             {
+    //                 id: 2,
+    //                 type: 0,
+    //                 content: "hi 2 u 2",
+    //                 created: "2022-05-20T15:37:52.8042159+03:00",
+    //                 sent: false,
+    //             },
+    //         ],
+    //     },
+    // ]);
     var cList = [];
     jsonToObject(backendContact);
     function jsonToObject(backendContact) {
@@ -243,7 +254,7 @@ function App() {
                 index +
                 "-bg.webp";
             cItem.name = backendContact[i].nickName;
-            cItem.listMessages = backendContact[i].messageList;
+            
             cList.push(cItem);
         }
     }
@@ -258,9 +269,19 @@ function App() {
 
     // useEffect(() => {}, [chatHistory]);
 
+    async function getMessages(id)
+    {
+        fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
+        const res = await fetch(fullURL);
+        const data = await res.json();
+        return(data);
+    }
+
+
     const callbackContactItem = (childData) => {
         for (let i = 0; i < list.length; i++) {
             if (list[i].id == childData.id) {
+                list[i].listMessages = getMessages(childData.id); // to check what format of mesages we using
                 setCurrentId(childData.id);
                 setCurrentIdNum(i);
                 setList(list);
@@ -268,23 +289,23 @@ function App() {
         }
     };
 
-    const callbackPopUp = (childData) => {
+    async function callbackPopUp(childData){
         if (childData.name !== "") {
             //post fuction add contact asp.net
-
-            // POST request using fetch inside useEffect React hook
-            const requestOptions = {
+            const status = await fetch("https://localhost:7285/api/contacts",{
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     id: childData.id,
                     nickName: childData.nickName,
                     server: childData.server,
+                    last: null,
+                    lastdate: null,
                 }),
-            };
-            fetch("https://localhost:7285/api/contacts", requestOptions).then(
-                (response) => response.json()
-            );
+            });
+            console.log(status);
+            // POST request using fetch inside useEffect React hook
+            
             // empty dependency array means this effect will only run once (like componentDidMount in classes)
             //add in react
             handleAdd(childData.name);

@@ -77,6 +77,8 @@ function Popup({ sendDataToParent, users, contactList }) {
                                         newcontact.id = name;
                                         newcontact.name = nickname;
                                         newcontact.server = server;
+                                        newcontact.last = null;
+                                        newcontact.lastdate = null;
                                         console.log(newcontact);
                                         var exist = false;
                                         for (let x in users) {

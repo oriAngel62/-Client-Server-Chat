@@ -6,8 +6,24 @@ function ContactItem({ contactItem, sendDataToParent }) {
     // const numImg = Math.floor(Math.random() * (8 - 1 + 1) + 1).toString();
     // const srcImg1 =
     //     "https://www.bootdey.com/img/Content/avatar/avatar" + numImg + ".png";
-    var lastMessage =
-        contactItem.listMessages[contactItem.listMessages.length - 1];
+
+    async function getMessages(id)
+    {
+        fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
+        const res = await fetch(fullURL);
+        const data = await res.json();
+        return(data);
+    }
+
+    async function getMessage(id,mesgId)
+    {
+        fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' + mesgId ;
+        const res = await fetch(fullURL);
+        const data = await res.json();
+        return(data);
+    }
+    var list_of_messeges = getMessages(contactItem.id);
+    var lastMessage = getMessage(contactItem.id,list_of_messeges.length)
     const srcImg =
         "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp";
     return (

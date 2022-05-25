@@ -7,19 +7,22 @@ import AddImage from "./AddImage";
 import AddVideo from "./AddVideo";
 
 function ChatHistory({ contact, sendDataToParent }) {
+
+    //to change according to api
     var [list_of_messeges, set_list_of_messeges] = useState(
         contact.listMessages
     );
     let typeText = 0;
+    //this too
     useEffect(() => {
         set_list_of_messeges(contact.listMessages);
     }, [contact.listMessages]);
-    const [modeVidPic, setModeVidPic] = useState("pic"); //
+    const [modeVidPic, setModeVidPic] = useState("pic"); 
     var chatList = list_of_messeges.map((messege, key) => {
-        return <MessegeBox messege={messege} key={key} />;
+        return <MessegeBox messege={messege} key={key} />;    //to check messages format is it right?
     });
     const [input, setInput] = useState("");
-    const [showMenu, setShowMenu] = useState(false); //
+    const [showMenu, setShowMenu] = useState(false); 
     let menuRef = useRef();
     let menuButtonRef = useRef();
     useEffect(() => {
@@ -46,6 +49,28 @@ function ChatHistory({ contact, sendDataToParent }) {
     image -2
     audio -3
     */
+
+    async function getTime(){
+        const time = await fetch("https://localhost:7285/api/time");
+        return(time);
+
+    }
+
+    async function postMessage(message){
+        if (childData.name !== "") {
+            //post fuction add contact asp.net
+            var newList = [];
+            newList = list_of_messeges.concat(message);
+            set_list_of_messeges(newList);
+            const status = await fetch("https://localhost:7285/api/contacts",{
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    messeges: list_of_messeges,
+                }),
+            });
+        }
+    }
 
     const addAudio = (audioSrc) => {
         var audSource = audioSrc;
@@ -231,16 +256,13 @@ function ChatHistory({ contact, sendDataToParent }) {
                                             sender: "me",
                                             type: 0,
                                             date: "05/04/2022",
-                                            time: "12:54",
+                                            time: getTime(),
                                             context: input,
                                             lastContextTime: "1 min ago",
                                         },
                                     ];
-                                    var newList = [];
                                     if (input !== "") {
-                                        newList =
-                                            list_of_messeges.concat(messege);
-                                        set_list_of_messeges(newList);
+                                        postMessage(messege);
                                         const textBox =
                                             document.getElementById("text");
                                         setInput("");
