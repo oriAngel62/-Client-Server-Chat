@@ -9,7 +9,7 @@ function ContactItem({ contactItem, sendDataToParent }) {
 
     async function getMessages(id)
     {
-        fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
+        var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
         const res = await fetch(fullURL);
         const data = await res.json();
         return(data);
@@ -17,7 +17,7 @@ function ContactItem({ contactItem, sendDataToParent }) {
 
     async function getMessage(id,mesgId)
     {
-        fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' + mesgId ;
+        var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' + mesgId ;
         const res = await fetch(fullURL);
         const data = await res.json();
         return(data);
@@ -57,11 +57,11 @@ function ContactItem({ contactItem, sendDataToParent }) {
                         <img src={contactItem.src} width="80pxd"></img>
                         <h4 className="mb-1">{contactItem.name}</h4>
                         <br></br>
-                        <small>{lastMessage.lastContextTime}</small>
+                        <small>{lastMessage.created}</small>
                     </div>
-                    {lastMessage.type === 0 ? (
+                    {/* {lastMessage.type === 0 ? (                to bring back for next ass */}
                         <p className="mb-1">{lastMessage.context}</p>
-                    ) : lastMessage.type === 2 ? (
+                    {/* ) : lastMessage.type === 2 ? (
                         <p className="mb-1">image</p>
                     ) : lastMessage.type === 1 ? (
                         <p className="mb-1">video</p>
@@ -69,7 +69,7 @@ function ContactItem({ contactItem, sendDataToParent }) {
                         <p className="mb-1">audio</p>
                     ) : (
                         <p className="mb-1"></p>
-                    )}
+                    )} */}
                 </button>
             </div>
         </div>

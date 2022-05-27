@@ -5,6 +5,11 @@ function AddVideo({ sendDataBack, contact }) {
     const [selectedImage, setSelectedImage] = useState("");
     let videoType = "";
 
+    async function getTime(){
+        const time = await fetch("https://localhost:7285/api/contacts/GetTime/time");
+        return(time);
+    }
+
     /*
     type:
     text -0
@@ -44,12 +49,10 @@ function AddVideo({ sendDataBack, contact }) {
                                 var imageSource = [selectedImage, videoType];
                                 messege = [
                                     {
-                                        sender: "me",
-                                        type: 1,
-                                        date: "05/04/2022",
-                                        time: "12:54",
-                                        context: imageSource,
-                                        lastContextTime: "1 min ago",
+                                        Type: "video",                       // to change next ass
+                                        Content: imageSource,
+                                        Sent: true,
+                                        Created: getTime(),
                                     },
                                 ];
                             }

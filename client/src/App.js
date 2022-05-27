@@ -9,178 +9,178 @@ import ChatHistory from "./chatHistory/ChatHistory";
 
 function App() {
     var videoSource = [video1, "video/mp4"];
-    var listMessages = [
-        {
-            sender: "me",
-            type: "text",
-            date: "05/04/2022",
-            time: "12:54",
-            context: "Hi Yoni! How are you?",
-            lastContextTime: "12 min ago",
-        },
-        {
-            sender: "Yoni",
-            type: "text",
-            date: "05/04/2022",
-            time: "12:54",
-            context: "Great! I want to send you audio",
-            lastContextTime: "11 min ago",
-        },
-        {
-            sender: "Yoni",
-            type: "audio",
-            date: "05/04/2022",
-            time: "12:54",
-            context: audio,
-            lastContextTime: "3 min ago",
-        },
-    ];
-    var listMessages2 = [
-        {
-            sender: "me",
-            type: "text",
-            date: "05/04/2022",
-            time: "12:54",
-            context: "Hi Noa, I have cool audio for you!",
-            lastContextTime: "10 min ago",
-        },
-        {
-            sender: "me",
-            type: "audio",
-            date: "05/04/2022",
-            time: "12:54",
-            context: audio,
-            lastContextTime: "10 min ago",
-        },
-        {
-            sender: "Noa",
-            type: "image",
-            date: "05/04/2022",
-            time: "12:54",
-            context: image1,
-            lastContextTime: "10 min ago",
-        },
-        {
-            sender: "me",
-            type: "video",
-            date: "05/04/2022",
-            time: "12:54",
-            context: videoSource,
-            lastContextTime: "4 min ago",
-        },
-    ];
-    var listMessages3 = [
-        {
-            sender: "me",
-            type: "text",
-            date: "05/04/2022",
-            time: "12:54",
-            context: "Hi Avia, look at this audio it's so cool!",
-            lastContextTime: "10 min ago",
-        },
-        {
-            sender: "me",
-            type: "audio",
-            date: "05/04/2022",
-            time: "12:54",
-            context: audio,
-            lastContextTime: "10 min ago",
-        },
-        {
-            sender: "Avia",
-            type: "image",
-            date: "05/04/2022",
-            time: "12:54",
-            context: image1,
-            lastContextTime: "10 min ago",
-        },
-        {
-            sender: "me",
-            type: "video",
-            date: "05/04/2022",
-            time: "12:54",
-            context: videoSource,
-            lastContextTime: "7 min ago",
-        },
-    ];
-    var listMessages4 = [
-        {
-            sender: "me",
-            type: "text",
-            date: "05/04/2022",
-            time: "12:54",
-            context: "Hi David! Nice to meet you",
-            lastContextTime: "10 min ago",
-        },
-        {
-            sender: "David",
-            type: "text",
-            date: "05/04/2022",
-            time: "12:54",
-            context: "Nice to meet you too!",
-            lastContextTime: "9 min ago",
-        },
-    ];
-    var listMessages5 = [
-        {
-            sender: "me",
-            type: "text",
-            date: "05/04/2022",
-            time: "12:54",
-            context: "Hi Shaked! Nice to meet you",
-            lastContextTime: "10 min ago",
-        },
-        {
-            sender: "Shaked",
-            type: "text",
-            date: "05/04/2022",
-            time: "12:54",
-            context: "Nice to meet you too!",
-            lastContextTime: "9 min ago",
-        },
-    ];
-    var contactList = [
-        {
-            id: "ori",
-            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp",
-            name: "ori12",
-            listMessages: listMessages,
-        },
-        {
-            id: "david",
-            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp",
-            name: "david12",
-            listMessages: listMessages2,
-        },
-        {
-            id: 2,
-            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp",
-            name: "Avia",
-            listMessages: listMessages3,
-        },
-        {
-            id: 3,
-            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp",
-            name: "David",
-            listMessages: listMessages4,
-        },
-        {
-            id: 4,
-            src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp",
-            name: "Shaked",
-            listMessages: listMessages5,
-        },
-    ];
+    // var listMessages = [
+    //     {
+    //         sender: "me",
+    //         type: "text",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: "Hi Yoni! How are you?",
+    //         lastContextTime: "12 min ago",
+    //     },
+    //     {
+    //         sender: "Yoni",
+    //         type: "text",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: "Great! I want to send you audio",
+    //         lastContextTime: "11 min ago",
+    //     },
+    //     {
+    //         sender: "Yoni",
+    //         type: "audio",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: audio,
+    //         lastContextTime: "3 min ago",
+    //     },
+    // ];
+    // var listMessages2 = [
+    //     {
+    //         sender: "me",
+    //         type: "text",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: "Hi Noa, I have cool audio for you!",
+    //         lastContextTime: "10 min ago",
+    //     },
+    //     {
+    //         sender: "me",
+    //         type: "audio",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: audio,
+    //         lastContextTime: "10 min ago",
+    //     },
+    //     {
+    //         sender: "Noa",
+    //         type: "image",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: image1,
+    //         lastContextTime: "10 min ago",
+    //     },
+    //     {
+    //         sender: "me",
+    //         type: "video",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: videoSource,
+    //         lastContextTime: "4 min ago",
+    //     },
+    // ];
+    // var listMessages3 = [
+    //     {
+    //         sender: "me",
+    //         type: "text",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: "Hi Avia, look at this audio it's so cool!",
+    //         lastContextTime: "10 min ago",
+    //     },
+    //     {
+    //         sender: "me",
+    //         type: "audio",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: audio,
+    //         lastContextTime: "10 min ago",
+    //     },
+    //     {
+    //         sender: "Avia",
+    //         type: "image",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: image1,
+    //         lastContextTime: "10 min ago",
+    //     },
+    //     {
+    //         sender: "me",
+    //         type: "video",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: videoSource,
+    //         lastContextTime: "7 min ago",
+    //     },
+    // ];
+    // var listMessages4 = [
+    //     {
+    //         sender: "me",
+    //         type: "text",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: "Hi David! Nice to meet you",
+    //         lastContextTime: "10 min ago",
+    //     },
+    //     {
+    //         sender: "David",
+    //         type: "text",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: "Nice to meet you too!",
+    //         lastContextTime: "9 min ago",
+    //     },
+    // ];
+    // var listMessages5 = [
+    //     {
+    //         sender: "me",
+    //         type: "text",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: "Hi Shaked! Nice to meet you",
+    //         lastContextTime: "10 min ago",
+    //     },
+    //     {
+    //         sender: "Shaked",
+    //         type: "text",
+    //         date: "05/04/2022",
+    //         time: "12:54",
+    //         context: "Nice to meet you too!",
+    //         lastContextTime: "9 min ago",
+    //     },
+    // ];
+    // var contactList = [
+    //     {
+    //         id: "ori",
+    //         src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp",
+    //         name: "ori12",
+    //         listMessages: listMessages,
+    //     },
+    //     {
+    //         id: "david",
+    //         src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp",
+    //         name: "david12",
+    //         listMessages: listMessages2,
+    //     },
+    //     {
+    //         id: 2,
+    //         src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp",
+    //         name: "Avia",
+    //         listMessages: listMessages3,
+    //     },
+    //     {
+    //         id: 3,
+    //         src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp",
+    //         name: "David",
+    //         listMessages: listMessages4,
+    //     },
+    //     {
+    //         id: 4,
+    //         src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp",
+    //         name: "Shaked",
+    //         listMessages: listMessages5,
+    //     },
+    // ];
 
-    const usersList = [
-        { username: "Ori" },
-        { username: "David" },
-        { username: "Avia" },
-        { username: "Yoni" },
-        { username: "Noa" },
-        { username: "Shaked" },
-        { username: "Aviv" },
-    ];
+    // const usersList = [
+    //     { username: "Ori" },
+    //     { username: "David" },
+    //     { username: "Avia" },
+    //     { username: "Yoni" },
+    //     { username: "Noa" },
+    //     { username: "Shaked" },
+    //     { username: "Aviv" },
+    // ];
 
 
 
@@ -194,6 +194,17 @@ function App() {
         const data = await result.json();
         backendContactSetList(data);
     }, []);
+
+    const usersList = getUsers();
+
+    async function getUsers()
+    {
+        var fullURL = 'https://localhost:7285/api/users' ;
+        const res = await fetch(fullURL);
+        const data = await res.json();
+        console.log(data);
+        return(data);
+    }
     //     {
     //         id: "Ori",
     //         nickName: "o1",
@@ -254,6 +265,7 @@ function App() {
                 index +
                 "-bg.webp";
             cItem.name = backendContact[i].nickName;
+            cItem.listMessages = null;
             
             cList.push(cItem);
         }
@@ -262,7 +274,7 @@ function App() {
 
     console.log(cList);
     const [list, setList] = useState(cList);
-    const [currentId, setCurrentId] = useState("ori");
+    const [currentId, setCurrentId] = useState("");
     const [currentIdNum, setCurrentIdNum] = useState(0);
     const [lastMessage, setLastMessage] = useState("");
     const [users, setusers] = useState(usersList);
@@ -271,7 +283,7 @@ function App() {
 
     async function getMessages(id)
     {
-        fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
+        var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
         const res = await fetch(fullURL);
         const data = await res.json();
         return(data);
@@ -308,7 +320,10 @@ function App() {
             
             // empty dependency array means this effect will only run once (like componentDidMount in classes)
             //add in react
-            handleAdd(childData.name);
+
+
+            //handleAdd(childData.name); -> should be done by useEffect - need to check! if doesnt work need to 
+            // implement get function to all contacts and set the list
         }
     };
 
@@ -334,15 +349,16 @@ function App() {
 
     const callbackChatHistory = (contactItem, meesage, id) => {
         for (let i = 0; i < list.length; i++) {
-            if (list[i].id == id) {
+            if (list[i].id === id) {
                 list[i].listMessages.push(meesage);
-                setCurrentId("");
+                setCurrentId(contactItem.id);
                 setCurrentIdNum(i);
             }
         }
     };
     var i = 1;
     var contactMap = list.map((contact, key) => {
+        if(contactMap !== null)
         return (
             <ContactItem
                 contactItem={contact}
@@ -366,7 +382,7 @@ function App() {
                     <Popup
                         sendDataToParent={callbackPopUp}
                         users={users}
-                        contactList={contactList}
+                        contactList={backendContact}
                     />
                     <div className="scroll">{contactMap}</div>
                 </div>

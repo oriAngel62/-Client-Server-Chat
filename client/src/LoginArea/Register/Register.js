@@ -8,9 +8,34 @@ function Register() {
     const { register, handleSubmit, formState } = useForm();
     const navigator = useNavigate();
 
+    async function getUsers()
+    {
+        var fullURL = 'https://localhost:7285/api/users' ;
+        const res = await fetch(fullURL);
+        const data = await res.json();
+        return(data);
+    }
+    
+
+    async function postUser(username,nickName,password){
+            //post fuction add contact asp.net
+        var currentURL = window.location.hostname;
+        const status = await fetch("https://localhost:7285/api/contacts",{
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                id: username,
+                nickName: nickName,
+                password: password,
+                server: currentURL,
+            }),
+        });
+    }
+
     function submit(credentials) {
-        for (let x in users) {
-            if (users[x].username === credentials.username) {
+        var userList = getUsers();
+        for (let x in userList) {
+            if ( userList[x].username === credentials.username) {   // maybe: x.username
                 alert("username already exist, please try another username");
                 return;
             }
@@ -18,15 +43,16 @@ function Register() {
         navigator("/chat");
     }
 
-    const users = [
-        { username: "Ori", password: "a12345", displayname: "Ori" },
-        { username: "David", password: "a12345", displayname: "David" },
-        { username: "Avia", password: "a12345", displayname: "Avia" },
-        { username: "Yoni", password: "a12345", displayname: "Yoni" },
-        { username: "Noa", password: "a12345", displayname: "Noa" },
-        { username: "Shaked", password: "a12345", displayname: "Shaked" },
-        { username: "Aviv", password: "a12345", displayname: "Aviv" },
-    ];
+
+    // const users = [
+    //     { username: "Ori", password: "a12345", displayname: "Ori" },
+    //     { username: "David", password: "a12345", displayname: "David" },
+    //     { username: "Avia", password: "a12345", displayname: "Avia" },
+    //     { username: "Yoni", password: "a12345", displayname: "Yoni" },
+    //     { username: "Noa", password: "a12345", displayname: "Noa" },
+    //     { username: "Shaked", password: "a12345", displayname: "Shaked" },
+    //     { username: "Aviv", password: "a12345", displayname: "Aviv" },
+    // ];
 
     return (
         <div className="Register Box">
@@ -39,7 +65,7 @@ function Register() {
                 <form onSubmit={handleSubmit(submit)}>
                     <label>User name: </label>
                     <input
-                        type="text"
+                        id='userName' type="text"
                         autoFocus
                         {...register("username", {
                             required: {
@@ -60,7 +86,7 @@ function Register() {
 
                     <label>Password: </label>
                     <input
-                        type="password"
+                        id='password' type="password"
                         {...register("password", {
                             required: {
                                 value: true,
@@ -78,11 +104,12 @@ function Register() {
                         })}
                     />
                     <span>{formState.errors.password?.message}</span>
-
+                        
                     <label>Display name: </label>
-                    <input type="text" {...register("display")} required />
+                    <input type="text" id='nickName' {...register("display")} required />
 
-                    <button class="btn btn-success">Register</button>
+                    <button class="btn btn-success" onClick={postUser(document.getElementById('userName'),
+                     document.getElementById('nickName'), document.getElementById('password') )}>Register</button>
                 </form>
                 <p>
                     Already registered{" "}

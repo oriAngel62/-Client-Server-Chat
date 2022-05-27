@@ -73,7 +73,7 @@ function Popup({ sendDataToParent, users, contactList }) {
                                     type="button"
                                     className="btn btn-primary btn-lg"
                                     onClick={() => {
-                                        var newcontact = [];
+                                        var newcontact;
                                         newcontact.id = name;
                                         newcontact.name = nickname;
                                         newcontact.server = server;
@@ -82,15 +82,15 @@ function Popup({ sendDataToParent, users, contactList }) {
                                         console.log(newcontact);
                                         var exist = false;
                                         for (let x in users) {
-                                            if (users[x].username === name) {
+                                            if (users[x].username === name) { // maybe: x.username
                                                 exist = true;
                                             }
                                         }
-                                        if (exist == false) {
+                                        if (exist !== false) {
                                             alert("username is not exist");
                                             return;
                                         }
-                                        var exist = false;
+                                        exist = false;
                                         for (
                                             var i = 0;
                                             i < contactList.length;
@@ -101,7 +101,7 @@ function Popup({ sendDataToParent, users, contactList }) {
                                                 exist = true;
                                             }
                                         }
-                                        if (exist == true) {
+                                        if (exist) {
                                             alert(
                                                 "username is already in contact list"
                                             );
