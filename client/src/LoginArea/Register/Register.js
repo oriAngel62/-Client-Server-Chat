@@ -47,7 +47,7 @@ function Register() {
         var currentURL = window.location.hostname;
         const status = await fetch("https://localhost:7285/api/contacts",{
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json"},
             body: JSON.stringify({
                 id: username,
                 nickName: nickName,
@@ -136,7 +136,7 @@ function Register() {
                     <label>Display name: </label>
                     <input type="text" id='nickName' {...register("display")} required />
 
-                    <button class="btn btn-success" >Register</button>
+                    <button className="btn btn-success" >Register</button>
                 </form>
                 <p>
                     Already registered{" "}

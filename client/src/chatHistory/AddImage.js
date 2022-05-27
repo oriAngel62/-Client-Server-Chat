@@ -3,9 +3,12 @@ import React, { useState } from "react";
 function AddImage({ sendDataBack, contact }) {
     const [inputFile, setInputFile] = useState();
     const [selectedImage, setSelectedImage] = useState("");
-
+    var token = localStorage.getItem('token');
     async function getTime(){
-        const time = await fetch("https://localhost:7285/api/contacts/GetTime/time");
+        const time = await fetch("https://localhost:7285/api/contacts/GetTime/time",{
+            method: 'GET',
+            headers: {"Authorization" : "Bearer " + token} 
+        });
         return(time);
     }
 

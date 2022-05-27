@@ -11,7 +11,9 @@ function Login() {
     async function getUsers()
     {
         var fullURL = 'https://localhost:7285/api/users' ;
-        const res = await fetch(fullURL);
+        const res = await fetch(fullURL, {
+            method: "GET",
+        });
         const data = await res.json();
         console.log(data);
         if( data !== null)
@@ -20,17 +22,40 @@ function Login() {
         return null;
     }
 
-    function submit(credentials) {
+    async function submit(credentials) {
         var userList = getUsers();
         for (let x in userList) {
             if (
                 userList[x].username === credentials.username &&    //maybe:  x.username  & x.password
                 userList[x] === credentials.password
             ) {
-                navigator("/chat");
+                var fullURL = 'https://localhost:7285/api/users/signin' ;
+                const res = await fetch(fullURL, {
+                    method: "GET",
+                    "Authorization": "Bearer " +token 
+                });
+                const data = await res.json();
+                const rawResponse = await fetch(fullURL, {
+                    method: 'POST',
+                    headers: {
+                      'Accept': 'application/json',
+                      'Authorization': 'Bearer ' + token,
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({"userId": credentials.username, "password": credentials.password})
+                  });
+                  const token = await rawResponse.text();
+                  localStorage.setItem('token', token);
+                  console.log("token is: " + token);
+                
+                navigator("/chat", {
+                    token: token
+                });
                 return;
             }
         }
+        
+
         alert(
             "Username or Password do not match, Please try again or register"
         );
@@ -96,7 +121,7 @@ function Login() {
                     />
                     <span>{formState.errors.password?.message}</span>
 
-                    <button class="btn btn-success">Login</button>
+                    <button className="btn btn-success">Login</button>
                 </form>
                 <p>
                     Not registered yet?{" "}

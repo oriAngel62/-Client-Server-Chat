@@ -6,11 +6,14 @@ function ContactItem({ contactItem, sendDataToParent }) {
     // const numImg = Math.floor(Math.random() * (8 - 1 + 1) + 1).toString();
     // const srcImg1 =
     //     "https://www.bootdey.com/img/Content/avatar/avatar" + numImg + ".png";
-
+    var token = localStorage.getItem('token');
     async function getMessages(id)
     {
         var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
-        const res = await fetch(fullURL);
+        const res = await fetch(fullURL, {
+            method: "GET",
+            "Authorization": "Bearer " +token 
+        });
         const data = await res.json();
         if( data !== null)
         return(data);
@@ -21,7 +24,10 @@ function ContactItem({ contactItem, sendDataToParent }) {
     async function getMessage(id,mesgId)
     {
         var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' + mesgId ;
-        const res = await fetch(fullURL);
+        const res = await fetch(fullURL, {
+            method: "GET",
+            "Authorization": "Bearer " +token 
+        });
         const data = await res.json();
         if( data !== null)
         return(data);

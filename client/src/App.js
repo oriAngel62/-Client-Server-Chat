@@ -6,9 +6,12 @@ import ContactItem from "./contactItem/ContactItem";
 import React, { useEffect, useState } from "react";
 import Popup from "./contactItem/Popup";
 import ChatHistory from "./chatHistory/ChatHistory";
+import {HubConnectionBuilder} from '@microsoft/signalr'
 
-function App() {
+function App({ token }) {
     var videoSource = [video1, "video/mp4"];
+    const [conn, setConn] = useState(null);
+
     // var listMessages = [
     //     {
     //         sender: "me",
@@ -182,20 +185,51 @@ function App() {
     //     { username: "Aviv" },
     // ];
 
-
-
-
-
     const [backendContact, backendContactSetList] = useState([]);
+    const contacts = useRef(null);
+    const [count, setCounter] = useState(0);
+    backendContact.current = backendContact;
+
+    useEffect(() => {
+        const newConn = new HubConnectionBuilder()
+        .withUrl('https://localhost:7285/hubs/chat')
+        .withAutomaticReconnect()
+        .build();
+
+        setConn(newConn);
+    })
+
+    useEffect(() => {
+        if(conn) {
+            conn.start()
+            .then(started => {
+                conn.on('NewContact', contact => {
+                    console.log("Got contact!!!");
+                    contacts.current.push(contact);
+                    backendContactSetList(contacts);
+                    setCounter(Math.random());
+                })
+            })
+        }
+    }, [conn])
 
     //localhost7285 - not final
     useEffect(async () => {
-        const result = await fetch('https://localhost:7285/api/contacts/');
+        const result = await fetch('https://localhost:7285/api/contacts/', {
+            headers: {
+                method: 'GET',
+                'Authorization': 'Bearer' + token
+            }
+        });
         const data = await result.json();
-        if(data !== null)
+        if(data !== null) {
         backendContactSetList(data);
-        else
+            contacts.current = data;
+    }
+        else {
         backendContactSetList([]);
+        contacts.current = data;
+    }
     }, []);
 
     const usersList = getUsers();
@@ -203,7 +237,12 @@ function App() {
     async function getUsers()
     {
         var fullURL = 'https://localhost:7285/api/users' ;
-        const res = await fetch(fullURL);
+        const res = await fetch(fullURL, {
+            headers: {
+                method: 'GET',
+                'Authorization': 'Bearer' + token
+            }
+        });
         const data = await res.json();
         console.log(data);
         if( data !== null)
@@ -290,7 +329,12 @@ function App() {
     async function getMessages(id)
     {
         var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
-        const res = await fetch(fullURL);
+        const res = await fetch(fullURL, {
+            headers: {
+                method: 'GET',
+                'Authorization': 'Bearer' + token
+            }
+        });
         const data = await res.json();
         if( data !== null)
         return(data);
@@ -315,7 +359,8 @@ function App() {
             //post fuction add contact asp.net
             const status = await fetch("https://localhost:7285/api/contacts",{
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json",
+                "Authorization": "Bearer " + token },
                 body: JSON.stringify({
                     id: childData.id,
                     nickName: childData.nickName,
@@ -378,13 +423,20 @@ function App() {
     });
 
     useEffect(async () => {
-        const res = await fetch("https://localhost:7285/api/contacts");
+        const res = await fetch("https://localhost:7285/api/contacts",{
+            method: 'GET',
+            headers: {"Authorization" : "Bearer " + token} 
+        });
         const data = await res.json();
-        if(data !== null)
-        backendContactSetList(data);
-        else
+        if(data !== null) {
+            contacts.current = data;
+            backendContactSetList(data);
+        }
+        else {
         backendContactSetList([]);
+        contacts.current = data;
         console.log(data.id);
+        }
     }, []);
 
     return (

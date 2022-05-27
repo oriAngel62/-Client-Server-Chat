@@ -5,13 +5,17 @@ import Recording from "./Recording";
 import "./paperclip.png";
 import AddImage from "./AddImage";
 import AddVideo from "./AddVideo";
+import {HubConnectionBuilder} from '@microsoft/signalr'
 
 function ChatHistory({ contact, sendDataToParent }) {
-
-
+    var token = localStorage.getItem('token');
+    const [conn, setConn] = useState(null);
 
     async function getTime(){
-        const time = await fetch("https://localhost:7285/api/contacts/GetTime/time");
+        const time = await fetch("https://localhost:7285/api/contacts/GetTime/time",{
+            method: 'GET',
+            headers: {"Authorization" : "Bearer " + token} 
+        });
         return(time);
     }
 
@@ -19,17 +23,49 @@ function ChatHistory({ contact, sendDataToParent }) {
     async function getMessages(id)
     {
         var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
-        const res = await fetch(fullURL);
+        const res = await fetch(fullURL, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer' + token
+            }
+        });
         const data = await res.json();
         return(data);
     }
     //to change according to api
     let anyMesseges = true;
     var [list_of_messeges, set_list_of_messeges] = useState([]);
+    const lastMsgs = useRef(null)
+    lastMsgs.current = list_of_messeges;
+
+    useEffect(() => {
+        const newConn = new HubConnectionBuilder()
+        .withUrl('https://localhost:7285/hubs/chat')
+        .withAutomaticReconnect()
+        .build();
+
+        setConn(newConn);
+    })
+
+    useEffect(() => {
+        if(conn) {
+            conn.start()
+            .then(started => {
+                conn.on('Receive', signalMessage => {
+                    var msg = { id: 200, content: signalMessage.content, sent: false,
+                    created: '2022-04-24T19:46:09.7077994' }
+                    
+                })
+            })
+        }
+    }, [conn])
+
     if(contact !== null)
     {
         if(contact.id !== null){
-        set_list_of_messeges(getMessages(contact.id));
+        var msgs = getMessages(contact.id);
+        set_list_of_messeges(msgs);
+        lastMsgs.current = msgs;
         anyMesseges = true;
         }
         else
@@ -42,6 +78,7 @@ function ChatHistory({ contact, sendDataToParent }) {
     var mess = getMessages(contact.id);
     useEffect(() => {
         set_list_of_messeges(mess);
+        lastMsgs.current = mess;
     }, [getMessages(mess)]);
     const [modeVidPic, setModeVidPic] = useState("pic"); 
     var chatList = list_of_messeges.map((messege, key) => {
@@ -65,6 +102,7 @@ function ChatHistory({ contact, sendDataToParent }) {
         var newList = [];
         newList = list_of_messeges.concat(messege[0]);
         set_list_of_messeges(newList);
+        lastMsgs.current = newList;
         sendDataToParent(contact, messege[0], contact.id);
     };
 
@@ -83,7 +121,8 @@ function ChatHistory({ contact, sendDataToParent }) {
         {
             const status = await fetch("https://localhost:7285/api/contacts",{
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json",
+                "Authorization": "Bearer " + token },
                 body: JSON.stringify({
                     Type: "text",                       // to change next ass
                     Content: message[0].content,
@@ -97,7 +136,9 @@ function ChatHistory({ contact, sendDataToParent }) {
     
 
     async function syncMessegesAfterPost(id){
-        set_list_of_messeges(getMessages(id));
+        var msgs = getMessages(id);
+        set_list_of_messeges(msgs);
+        lastMsgs.current = msgs;
     }
 
     const addAudio = (audioSrc) => {
@@ -113,6 +154,7 @@ function ChatHistory({ contact, sendDataToParent }) {
         var newList = [];
         newList = list_of_messeges.concat(messege);
         set_list_of_messeges(newList);
+        lastMsgs.current = newList;
         sendDataToParent(contact, messege[0], contact.id);
     };
 
@@ -152,7 +194,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                         }}
                                     >
                                         <span>
-                                            <i class="bi bi-file-image"></i>
+                                            <i className="bi bi-file-image"></i>
                                         </span>
                                     </button>
                                     <button
@@ -165,7 +207,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                         }}
                                     >
                                         <span>
-                                            <i class="bi bi-camera-video"></i>
+                                            <i className="bi bi-camera-video"></i>
                                         </span>
                                     </button>
 
@@ -176,7 +218,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                         data-bs-target="#exampleModal2"
                                     >
                                         <span>
-                                            <i class="bi bi-voicemail"></i>
+                                            <i className="bi bi-voicemail"></i>
                                         </span>
                                     </button>
                                     <div
