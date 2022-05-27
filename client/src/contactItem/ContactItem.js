@@ -12,7 +12,10 @@ function ContactItem({ contactItem, sendDataToParent }) {
         var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
         const res = await fetch(fullURL);
         const data = await res.json();
+        if( data !== null)
         return(data);
+        else
+        return null;
     }
 
     async function getMessage(id,mesgId)
@@ -20,7 +23,10 @@ function ContactItem({ contactItem, sendDataToParent }) {
         var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' + mesgId ;
         const res = await fetch(fullURL);
         const data = await res.json();
+        if( data !== null)
         return(data);
+        else
+        return null;
     }
     var list_of_messeges = getMessages(contactItem.id);
     var lastMessage = getMessage(contactItem.id,list_of_messeges.length)
@@ -54,13 +60,29 @@ function ContactItem({ contactItem, sendDataToParent }) {
                     }}
                 >
                     <div className="d-flex w-100 justify-content-between">
-                        <img src={contactItem.src} width="80pxd"></img>
-                        <h4 className="mb-1">{contactItem.name}</h4>
+                        {contactItem.src === null ? (
+                            <img src={null} width="80pxd"></img>
+                        ) :  (
+                            <img src={contactItem.src} width="80pxd"></img>
+                        )}
+                        { contactItem.name === null ? (
+                        <h4 className="mb-1"></h4>
+                        ) : (
+                            <h4 className="mb-1">{contactItem.name}</h4>
+                        )}
                         <br></br>
-                        <small>{lastMessage.created}</small>
+                        {lastMessage.created === null ? (
+                            <small></small>
+                        ) :  (
+                            <small>{lastMessage.created}</small>
+                        )}
                     </div>
                     {/* {lastMessage.type === 0 ? (                to bring back for next ass */}
-                        <p className="mb-1">{lastMessage.context}</p>
+                    {lastMessage.context === null ? (
+                            <p className="mb-1"></p>
+                        ) :  (
+                            <p className="mb-1">{lastMessage.context}</p>
+                        )}
                     {/* ) : lastMessage.type === 2 ? (
                         <p className="mb-1">image</p>
                     ) : lastMessage.type === 1 ? (

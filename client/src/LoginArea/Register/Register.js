@@ -11,14 +11,39 @@ function Register() {
     async function getUsers()
     {
         var fullURL = 'https://localhost:7285/api/users' ;
-        const res = await fetch(fullURL);
-        const data = await res.json();
-        return(data);
+        fetch(fullURL)
+        .then((result) => {
+            console.log(result);
+            return result.json();
+        })
+        .then((result) =>{
+            console.log(result);
+            return(result);
+         })
+        .catch(e => console.log(e));
+        // const data = await res.json();
+        // return(data);
     }
     
 
-    async function postUser(username,nickName,password){
+    async function postUser(){
             //post fuction add contact asp.net
+        console.log("in post user");
+        var username;
+        var nickName;
+        var password;
+        if(document.getElementById('userName').value !== null)
+            username = document.getElementById('userName').value;
+        if(document.getElementById('nickName').value !== null)
+            nickName = document.getElementById('nickName').value;
+        if(document.getElementById('password').value !== null)
+            password = document.getElementById('password').value;
+
+        if(username !== null && nickName !== null && password !== null)
+        {
+            console.log(username);
+            console.log(nickName);
+            console.log(password);
         var currentURL = window.location.hostname;
         const status = await fetch("https://localhost:7285/api/contacts",{
             method: "POST",
@@ -30,16 +55,19 @@ function Register() {
                 server: currentURL,
             }),
         });
+        }
     }
 
     function submit(credentials) {
         var userList = getUsers();
+        console.log(userList);
         for (let x in userList) {
             if ( userList[x].username === credentials.username) {   // maybe: x.username
                 alert("username already exist, please try another username");
                 return;
             }
         }
+        postUser();
         navigator("/chat");
     }
 
@@ -108,8 +136,7 @@ function Register() {
                     <label>Display name: </label>
                     <input type="text" id='nickName' {...register("display")} required />
 
-                    <button class="btn btn-success" onClick={postUser(document.getElementById('userName'),
-                     document.getElementById('nickName'), document.getElementById('password') )}>Register</button>
+                    <button class="btn btn-success" >Register</button>
                 </form>
                 <p>
                     Already registered{" "}

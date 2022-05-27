@@ -12,9 +12,12 @@ function Login() {
     {
         var fullURL = 'https://localhost:7285/api/users' ;
         const res = await fetch(fullURL);
-        console.log(res);
         const data = await res.json();
+        console.log(data);
+        if( data !== null)
         return(data);
+        else
+        return null;
     }
 
     function submit(credentials) {

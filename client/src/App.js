@@ -192,7 +192,10 @@ function App() {
     useEffect(async () => {
         const result = await fetch('https://localhost:7285/api/contacts/');
         const data = await result.json();
+        if(data !== null)
         backendContactSetList(data);
+        else
+        backendContactSetList([]);
     }, []);
 
     const usersList = getUsers();
@@ -203,7 +206,10 @@ function App() {
         const res = await fetch(fullURL);
         const data = await res.json();
         console.log(data);
+        if( data !== null)
         return(data);
+        else
+        return null;
     }
     //     {
     //         id: "Ori",
@@ -286,7 +292,10 @@ function App() {
         var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
         const res = await fetch(fullURL);
         const data = await res.json();
+        if( data !== null)
         return(data);
+        else
+        return null;
     }
 
 
@@ -371,7 +380,10 @@ function App() {
     useEffect(async () => {
         const res = await fetch("https://localhost:7285/api/contacts");
         const data = await res.json();
+        if(data !== null)
         backendContactSetList(data);
+        else
+        backendContactSetList([]);
         console.log(data.id);
     }, []);
 
@@ -387,10 +399,14 @@ function App() {
                     <div className="scroll">{contactMap}</div>
                 </div>
                 <div className="col-9">
-                    <ChatHistory
-                        contact={list[currentIdNum]}
-                        sendDataToParent={callbackChatHistory}
-                    />
+                {list[currentIdNum] !== null ? (
+                            <ChatHistory
+                            contact={list[currentIdNum]}
+                            sendDataToParent={callbackChatHistory}
+                        />
+                        ) :  (
+                            <br></br>
+                        )}
                 </div>
             </div>
         </div>
