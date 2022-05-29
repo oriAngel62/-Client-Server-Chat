@@ -15,7 +15,7 @@ function ContactItem({ contactItem, sendDataToParent }) {
             "Authorization": "Bearer " +token 
         });
         const data = await res.json();
-        if( data !== null)
+        if( data )
         return(data);
         else
         return null;
@@ -29,7 +29,7 @@ function ContactItem({ contactItem, sendDataToParent }) {
             "Authorization": "Bearer " +token 
         });
         const data = await res.json();
-        if( data !== null)
+        if( data )
         return(data);
         else
         return null;

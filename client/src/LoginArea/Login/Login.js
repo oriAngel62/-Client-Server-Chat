@@ -16,7 +16,7 @@ function Login() {
         });
         const data = await res.json();
         console.log(data);
-        if( data !== null)
+        if( data )
         return(data);
         else
         return null;
@@ -46,7 +46,6 @@ function Login() {
                   });
                   const token = await rawResponse.text();
                   localStorage.setItem('token', token);
-                  console.log("token is: " + token);
                 
                 navigator("/chat", {
                     token: token

@@ -60,9 +60,9 @@ function ChatHistory({ contact, sendDataToParent }) {
         }
     }, [conn])
 
-    if(contact !== null)
+    if(contact)
     {
-        if(contact.id !== null){
+        if(contact.id){
         var msgs = getMessages(contact.id);
         set_list_of_messeges(msgs);
         lastMsgs.current = msgs;

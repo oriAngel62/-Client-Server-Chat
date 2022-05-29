@@ -12,183 +12,11 @@ function App({ token }) {
     var videoSource = [video1, "video/mp4"];
     const [conn, setConn] = useState(null);
 
-    // var listMessages = [
-    //     {
-    //         sender: "me",
-    //         type: "text",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: "Hi Yoni! How are you?",
-    //         lastContextTime: "12 min ago",
-    //     },
-    //     {
-    //         sender: "Yoni",
-    //         type: "text",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: "Great! I want to send you audio",
-    //         lastContextTime: "11 min ago",
-    //     },
-    //     {
-    //         sender: "Yoni",
-    //         type: "audio",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: audio,
-    //         lastContextTime: "3 min ago",
-    //     },
-    // ];
-    // var listMessages2 = [
-    //     {
-    //         sender: "me",
-    //         type: "text",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: "Hi Noa, I have cool audio for you!",
-    //         lastContextTime: "10 min ago",
-    //     },
-    //     {
-    //         sender: "me",
-    //         type: "audio",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: audio,
-    //         lastContextTime: "10 min ago",
-    //     },
-    //     {
-    //         sender: "Noa",
-    //         type: "image",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: image1,
-    //         lastContextTime: "10 min ago",
-    //     },
-    //     {
-    //         sender: "me",
-    //         type: "video",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: videoSource,
-    //         lastContextTime: "4 min ago",
-    //     },
-    // ];
-    // var listMessages3 = [
-    //     {
-    //         sender: "me",
-    //         type: "text",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: "Hi Avia, look at this audio it's so cool!",
-    //         lastContextTime: "10 min ago",
-    //     },
-    //     {
-    //         sender: "me",
-    //         type: "audio",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: audio,
-    //         lastContextTime: "10 min ago",
-    //     },
-    //     {
-    //         sender: "Avia",
-    //         type: "image",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: image1,
-    //         lastContextTime: "10 min ago",
-    //     },
-    //     {
-    //         sender: "me",
-    //         type: "video",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: videoSource,
-    //         lastContextTime: "7 min ago",
-    //     },
-    // ];
-    // var listMessages4 = [
-    //     {
-    //         sender: "me",
-    //         type: "text",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: "Hi David! Nice to meet you",
-    //         lastContextTime: "10 min ago",
-    //     },
-    //     {
-    //         sender: "David",
-    //         type: "text",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: "Nice to meet you too!",
-    //         lastContextTime: "9 min ago",
-    //     },
-    // ];
-    // var listMessages5 = [
-    //     {
-    //         sender: "me",
-    //         type: "text",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: "Hi Shaked! Nice to meet you",
-    //         lastContextTime: "10 min ago",
-    //     },
-    //     {
-    //         sender: "Shaked",
-    //         type: "text",
-    //         date: "05/04/2022",
-    //         time: "12:54",
-    //         context: "Nice to meet you too!",
-    //         lastContextTime: "9 min ago",
-    //     },
-    // ];
-    // var contactList = [
-    //     {
-    //         id: "ori",
-    //         src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp",
-    //         name: "ori12",
-    //         listMessages: listMessages,
-    //     },
-    //     {
-    //         id: "david",
-    //         src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp",
-    //         name: "david12",
-    //         listMessages: listMessages2,
-    //     },
-    //     {
-    //         id: 2,
-    //         src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp",
-    //         name: "Avia",
-    //         listMessages: listMessages3,
-    //     },
-    //     {
-    //         id: 3,
-    //         src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp",
-    //         name: "David",
-    //         listMessages: listMessages4,
-    //     },
-    //     {
-    //         id: 4,
-    //         src: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp",
-    //         name: "Shaked",
-    //         listMessages: listMessages5,
-    //     },
-    // ];
-
-    // const usersList = [
-    //     { username: "Ori" },
-    //     { username: "David" },
-    //     { username: "Avia" },
-    //     { username: "Yoni" },
-    //     { username: "Noa" },
-    //     { username: "Shaked" },
-    //     { username: "Aviv" },
-    // ];
-
     const [backendContact, backendContactSetList] = useState([]);
     const contacts = useRef(null);
     const [count, setCounter] = useState(0);
     backendContact.current = backendContact;
+    var usersList = [];
 
     useEffect(() => {
         const newConn = new HubConnectionBuilder()
@@ -222,17 +50,16 @@ function App({ token }) {
             }
         });
         const data = await result.json();
-        if(data !== null) {
+        if(data ) {
         backendContactSetList(data);
             contacts.current = data;
     }
         else {
         backendContactSetList([]);
         contacts.current = data;
+        usersList = getUsers();
     }
     }, []);
-
-    const usersList = getUsers();
 
     async function getUsers()
     {
@@ -245,7 +72,7 @@ function App({ token }) {
         });
         const data = await res.json();
         console.log(data);
-        if( data !== null)
+        if( data )
         return(data);
         else
         return null;
@@ -336,7 +163,7 @@ function App({ token }) {
             }
         });
         const data = await res.json();
-        if( data !== null)
+        if( data )
         return(data);
         else
         return null;
@@ -411,8 +238,10 @@ function App({ token }) {
         }
     };
     var i = 1;
-    var contactMap = list.map((contact, key) => {
-        if(contactMap !== null)
+    var [contactMap, setContactMap] = useState([]);
+    useEffect(() => {
+        setContactMap(list.map((contact, key) => {
+        if(contactMap )
         return (
             <ContactItem
                 contactItem={contact}
@@ -420,7 +249,9 @@ function App({ token }) {
                 key={key}
             />
         );
-    });
+    }));
+
+    }, []);
 
     useEffect(async () => {
         const res = await fetch("https://localhost:7285/api/contacts",{
@@ -428,7 +259,7 @@ function App({ token }) {
             headers: {"Authorization" : "Bearer " + token} 
         });
         const data = await res.json();
-        if(data !== null) {
+        if(data ) {
             contacts.current = data;
             backendContactSetList(data);
         }
@@ -451,7 +282,7 @@ function App({ token }) {
                     <div className="scroll">{contactMap}</div>
                 </div>
                 <div className="col-9">
-                {list[currentIdNum] !== null ? (
+                {list[currentIdNum]  ? (
                             <ChatHistory
                             contact={list[currentIdNum]}
                             sendDataToParent={callbackChatHistory}

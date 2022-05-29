@@ -25,26 +25,24 @@ function Register() {
         var username;
         var nickName;
         var password;
-        if (document.getElementById('userName').value !== null)
+        if (document.getElementById('userName').value)
             username = document.getElementById('userName').value;
-        if (document.getElementById('nickName').value !== null)
+        if (document.getElementById('nickName').value )
             nickName = document.getElementById('nickName').value;
-        if (document.getElementById('password').value !== null)
+        if (document.getElementById('password').value )
             password = document.getElementById('password').value;
 
-        if (username !== null && nickName !== null && password !== null) {
-            console.log(username);
-            console.log(nickName);
-            console.log(password);
+        if (username  && nickName  && password ) {
+
             var currentURL = window.location.hostname;
-            const status = await fetch("https://localhost:7285/api/contacts", {
+            const status = await fetch("https://localhost:7285/api/users", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    id: username,
+                    userName: username,
                     nickName: nickName,
                     password: password,
-                    server: currentURL,
+                    server: "localhost:7285",
                 }),
             });
         }
@@ -52,7 +50,6 @@ function Register() {
 
     async function submit(credentials) {
         var userList = await getUsers();
-        console.log(userList);
         for (let x in userList) {
             if (userList[x].username === credentials.username) {   // maybe: x.username
                 alert("username already exist, please try another username");
@@ -60,7 +57,7 @@ function Register() {
             }
         }
         postUser();
-        navigator("/chat");
+        //navigator("/chat");
     }
 
 

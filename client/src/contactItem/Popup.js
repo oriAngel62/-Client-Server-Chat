@@ -43,7 +43,7 @@ function Popup({ sendDataToParent, users, contactList }) {
                             </h5>
                         </div>
                         <div className="modal-body">
-                            <label for="fname">Username: </label>
+                            <label htmlFor="fname">Username: </label>
                             <input
                                 type="text"
                                 value={name}
@@ -51,7 +51,7 @@ function Popup({ sendDataToParent, users, contactList }) {
                             />
                             <br></br>
                             <br></br>
-                            <label for="fname">Nickname: </label>
+                            <label htmlFor="fname">Nickname: </label>
                             <input
                                 type="text"
                                 value={nickname}
@@ -59,7 +59,7 @@ function Popup({ sendDataToParent, users, contactList }) {
                             />
                             <br></br>
                             <br></br>
-                            <label for="fname">Server: </label>
+                            <label htmlFor="fname">Server: </label>
                             <input
                                 type="text"
                                 value={server}
