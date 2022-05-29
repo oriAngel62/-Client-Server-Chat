@@ -3,7 +3,7 @@ import audio from "./record1.txt";
 import image1 from "./img1.jpg";
 import video1 from "./vid1.mp4";
 import ContactItem from "./contactItem/ContactItem";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Popup from "./contactItem/Popup";
 import ChatHistory from "./chatHistory/ChatHistory";
 import {HubConnectionBuilder} from '@microsoft/signalr'

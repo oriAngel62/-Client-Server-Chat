@@ -8,61 +8,53 @@ function Register() {
     const { register, handleSubmit, formState } = useForm();
     const navigator = useNavigate();
 
-    async function getUsers()
-    {
-        var fullURL = 'https://localhost:7285/api/users' ;
-        fetch(fullURL)
-        .then((result) => {
-            console.log(result);
-            return result.json();
-        })
-        .then((result) =>{
-            console.log(result);
-            return(result);
-         })
-        .catch(e => console.log(e));
+    async function getUsers() {
+        var fullURL = 'https://localhost:7285/api/users';
+        var result = await fetch(fullURL);
+        console.log(result);
+        var data = await result.json();
+        return (data);
         // const data = await res.json();
         // return(data);
     }
-    
 
-    async function postUser(){
-            //post fuction add contact asp.net
+
+    async function postUser() {
+        //post fuction add contact asp.net
         console.log("in post user");
         var username;
         var nickName;
         var password;
-        if(document.getElementById('userName').value !== null)
+        if (document.getElementById('userName').value !== null)
             username = document.getElementById('userName').value;
-        if(document.getElementById('nickName').value !== null)
+        if (document.getElementById('nickName').value !== null)
             nickName = document.getElementById('nickName').value;
-        if(document.getElementById('password').value !== null)
+        if (document.getElementById('password').value !== null)
             password = document.getElementById('password').value;
 
-        if(username !== null && nickName !== null && password !== null)
-        {
+        if (username !== null && nickName !== null && password !== null) {
             console.log(username);
             console.log(nickName);
             console.log(password);
-        var currentURL = window.location.hostname;
-        const status = await fetch("https://localhost:7285/api/contacts",{
-            method: "POST",
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({
-                id: username,
-                nickName: nickName,
-                password: password,
-                server: currentURL,
-            }),
-        });
+            var currentURL = window.location.hostname;
+            const status = await fetch("https://localhost:7285/api/contacts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: username,
+                    nickName: nickName,
+                    password: password,
+                    server: currentURL,
+                }),
+            });
         }
     }
 
-    function submit(credentials) {
-        var userList = getUsers();
+    async function submit(credentials) {
+        var userList = await getUsers();
         console.log(userList);
         for (let x in userList) {
-            if ( userList[x].username === credentials.username) {   // maybe: x.username
+            if (userList[x].username === credentials.username) {   // maybe: x.username
                 alert("username already exist, please try another username");
                 return;
             }
@@ -132,7 +124,7 @@ function Register() {
                         })}
                     />
                     <span>{formState.errors.password?.message}</span>
-                        
+
                     <label>Display name: </label>
                     <input type="text" id='nickName' {...register("display")} required />
 
