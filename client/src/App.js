@@ -169,12 +169,12 @@ function App(props) {
 
 
     const callbackContactItem = (childData) => {
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].id == childData.id) {
-                list[i].listMessages = getMessages(childData.id); // to check what format of mesages we using
-                setCurrentId(childData.id);
+        for (let i = 0; i < contactMap.length; i++) {
+            if (contactMap[i].contactName == childData.contactName) {
+                contactMap[i].listMessages = getMessages(childData.contactName); // to check what format of mesages we using
+                setCurrentId(childData.contactName);
                 setCurrentIdNum(i);
-                setList(list);
+                setContactMap(contactMap);
             }
         }
     };
@@ -317,11 +317,11 @@ function App(props) {
                     )})}</div>
                 </div>
                 <div className="col-9">
-                    {list[currentIdNum] ? (
+                    {contactMap[currentIdNum] ? (
                         <ChatHistory
                             token={token}
                             userId={userId}
-                            contact={list[currentIdNum]}
+                            contact={contactMap[currentIdNum]}
                             sendDataToParent={callbackChatHistory}
                         />
                     ) : (

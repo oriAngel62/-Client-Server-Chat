@@ -8,3 +8,7 @@ img {
     height: 33px !important;
 
 }
+
+.hour {
+    padding-left: 12px;
+}
