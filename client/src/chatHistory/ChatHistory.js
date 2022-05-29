@@ -7,8 +7,7 @@ import AddImage from "./AddImage";
 import AddVideo from "./AddVideo";
 import {HubConnectionBuilder} from '@microsoft/signalr'
 
-function ChatHistory({ contact, sendDataToParent }) {
-    var token = localStorage.getItem('token');
+function ChatHistory({ contact, sendDataToParent, token }) {
     const [conn, setConn] = useState(null);
     const [timeMsg, setTimeMsg] = useState(getTime());
 
@@ -27,7 +26,7 @@ function ChatHistory({ contact, sendDataToParent }) {
         const res = await fetch(fullURL, {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer' + token
+                'Authorization': 'Bearer ' + token
             }
         });
         const data = await res.json();
@@ -262,6 +261,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                             <div className="modal-content">
                                                 <AddImage
                                                     sendDataBack={addImageVideo}
+                                                    token = {token}
                                                     contact={contact}
                                                 />
                                                 {/*  <AddVidPic param="pic" selected={selectedImage} type=""/> almost working
@@ -283,6 +283,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                         >
                                             <div className="modal-content">
                                                 <AddVideo
+                                                    token = {token}
                                                     sendDataBack={addImageVideo}
                                                     contact={contact}
                                                 />

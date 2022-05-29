@@ -57,7 +57,7 @@ function Register() {
             }
         }
         postUser();
-        navigator("/chat");
+        navigator("/login");
     }
 
 

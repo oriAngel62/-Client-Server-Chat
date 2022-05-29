@@ -7,8 +7,11 @@ import React, { useEffect, useState, useRef } from "react";
 import Popup from "./contactItem/Popup";
 import ChatHistory from "./chatHistory/ChatHistory";
 import { HubConnectionBuilder } from '@microsoft/signalr'
+import { useLocation } from 'react-router-dom';
 
-function App({ token }) {
+function App(props) {
+    const location = useLocation();
+    var token = location.state.token;
     var videoSource = [video1, "video/mp4"];
     const [conn, setConn] = useState(null);
 
@@ -49,10 +52,11 @@ function App({ token }) {
     //localhost7285 - not final
     useEffect(() => {
         async function read() {
+            console.log(token);
             const result = await fetch('https://localhost:7285/api/contacts/', {
                 headers: {
                     method: 'GET',
-                    'Authorization': 'Bearer' + token
+                    'Authorization': 'Bearer ' + token
                 }
             });
             const data = await result.json();
@@ -73,7 +77,7 @@ function App({ token }) {
         const res = await fetch(fullURL, {
             headers: {
                 method: 'GET',
-                'Authorization': 'Bearer' + token
+                'Authorization': 'Bearer ' + token
             }
         });
         const data = await res.json();
@@ -160,11 +164,12 @@ function App({ token }) {
     // useEffect(() => {}, [chatHistory]);
 
     async function getMessages(id) {
+        console.log(token);
         var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/';
         const res = await fetch(fullURL, {
             headers: {
                 method: 'GET',
-                'Authorization': 'Bearer' + token
+                'Authorization': 'Bearer ' + token
             }
         });
         const data = await res.json();
@@ -189,6 +194,7 @@ function App({ token }) {
     async function callbackPopUp(childData) {
         if (childData.name !== "") {
             //post fuction add contact asp.net
+            console.log(token);
             const status = await fetch("https://localhost:7285/api/contacts", {
                 method: "POST",
                 headers: {
@@ -252,6 +258,7 @@ function App({ token }) {
                 if (contactMap)
                     return (
                         <ContactItem
+                            token={token}
                             contactItem={contact}
                             sendDataToParent={callbackContactItem}
                             key={key}
@@ -263,6 +270,7 @@ function App({ token }) {
     }, [list]);
 
     useEffect(() => { async function read () {
+        console.log(token);
         const res = await fetch("https://localhost:7285/api/contacts", {
             method: 'GET',
             headers: { "Authorization": "Bearer " + token }
@@ -293,6 +301,7 @@ function App({ token }) {
                 <div className="col-9">
                     {list[currentIdNum] ? (
                         <ChatHistory
+                            token ={token}
                             contact={list[currentIdNum]}
                             sendDataToParent={callbackChatHistory}
                         />

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 
-function AddVideo({ sendDataBack, contact }) {
+function AddVideo({ sendDataBack, contact, token }) {
     const [inputFile, setInputFile] = useState();
     const [timeCreated, setTimeCreated] = useState(getTime());
     const [selectedImage, setSelectedImage] = useState("");
     let videoType = "";
-    var token = localStorage.getItem('token');
 
     async function getTime(){
         const time = await fetch("https://localhost:7285/api/contacts/GetTime/time",{

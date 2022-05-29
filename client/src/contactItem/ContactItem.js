@@ -2,11 +2,10 @@ import ChatHistory from "../chatHistory/ChatHistory";
 import "./ContactItem.css";
 import React, { useEffect, useState } from "react";
 
-function ContactItem({ contactItem, sendDataToParent }) {
+function ContactItem({ contactItem, sendDataToParent, token }) {
     // const numImg = Math.floor(Math.random() * (8 - 1 + 1) + 1).toString();
     // const srcImg1 =
     //     "https://www.bootdey.com/img/Content/avatar/avatar" + numImg + ".png";
-    var token = localStorage.getItem('token');
     async function getMessages(id)
     {
         var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;

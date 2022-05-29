@@ -8,56 +8,38 @@ function Login() {
     const navigator = useNavigate();
     const { register, handleSubmit, formState } = useForm();
 
-    async function getUsers()
-    {
-        var fullURL = 'https://localhost:7285/api/users' ;
+    async function getUsers() {
+        var fullURL = 'https://localhost:7285/api/users';
         const res = await fetch(fullURL, {
             method: "GET",
         });
         const data = await res.json();
         console.log(data);
-        if( data )
-        return(data);
+        if (data)
+            return (data);
         else
-        return null;
+            return null;
     }
 
     async function submit(credentials) {
-        var userList = getUsers();
-        for (let x in userList) {
-            if (
-                userList[x].username === credentials.username &&    //maybe:  x.username  & x.password
-                userList[x] === credentials.password
-            ) {
-                var fullURL = 'https://localhost:7285/api/users/signin' ;
-                const res = await fetch(fullURL, {
-                    method: "GET",
-                    "Authorization": "Bearer " +token 
-                });
-                const data = await res.json();
-                const rawResponse = await fetch(fullURL, {
-                    method: 'POST',
-                    headers: {
-                      'Accept': 'application/json',
-                      'Authorization': 'Bearer ' + token,
-                      'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({"userId": credentials.username, "password": credentials.password})
-                  });
-                  const token = await rawResponse.text();
-                  localStorage.setItem('token', token);
-                
-                navigator("/chat", {
-                    token: token
-                });
-                return;
-            }
+        var fullURL = 'https://localhost:7285/api/users/signin' ;
+        const rawResponse = await fetch(fullURL, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "userId": credentials.username, "password": credentials.password })
+        });
+        if (rawResponse.status === 404) {
+            alert("Username or Password do not match, Please try again or register");
+            return;
         }
-        
-
-        alert(
-            "Username or Password do not match, Please try again or register"
-        );
+        const token = await rawResponse.text();
+        console.log(token);
+        navigator("/chat", {
+            state: { "token": token }
+        });
     }
 
     // const users = [
