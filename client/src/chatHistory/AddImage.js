@@ -6,7 +6,7 @@ function AddImage({ sendDataBack, contact, token}) {
     const [selectedImage, setSelectedImage] = useState("");
   
     async function getTime(){
-        const time = await fetch("https://localhost:7285/api/contacts/GetTime/time",{
+        const time = await fetch("http://localhost:5285/api/contacts/GetTime/time",{
             method: 'GET',
             headers: {"Authorization" : "Bearer " + token} 
         });

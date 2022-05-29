@@ -7,12 +7,12 @@ import AddImage from "./AddImage";
 import AddVideo from "./AddVideo";
 import {HubConnectionBuilder} from '@microsoft/signalr'
 
-function ChatHistory({ contact, sendDataToParent, token }) {
+function ChatHistory({ contact, sendDataToParent, token, userId }) {
     const [conn, setConn] = useState(null);
     const [timeMsg, setTimeMsg] = useState(getTime());
 
     async function getTime(){
-        const time = await fetch("https://localhost:7285/api/contacts/GetTime/time",{
+        const time = await fetch("http://localhost:5285/api/contacts/GetTime/time",{
             method: 'GET',
             headers: {"Authorization" : "Bearer " + token} 
         });
@@ -22,7 +22,7 @@ function ChatHistory({ contact, sendDataToParent, token }) {
 
     async function getMessages(id)
     {
-        var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
+        var fullURL = 'http://localhost:5285/api/contacts/' + id + '/messages/' ;
         const res = await fetch(fullURL, {
             method: 'GET',
             headers: {
@@ -37,10 +37,10 @@ function ChatHistory({ contact, sendDataToParent, token }) {
     var [list_of_messeges, set_list_of_messeges] = useState([]);
     const lastMsgs = useRef(null)
     lastMsgs.current = list_of_messeges;
-
+    const [count, setCount] = useState(0);
     useEffect(() => {
         const newConn = new HubConnectionBuilder()
-        .withUrl('https://localhost:7285/hubs/chat')
+        .withUrl('http://localhost:5285/hubs/chat')
         .withAutomaticReconnect()
         .build();
 
@@ -52,9 +52,12 @@ function ChatHistory({ contact, sendDataToParent, token }) {
             conn.start()
             .then(started => {
                 conn.on('Receive', signalMessage => {
+                    console.log(signalMessage);
                     var msg = { id: 200, content: signalMessage.content, sent: false,
                     created: '2022-04-24T19:46:09.7077994' }
-                    
+                    lastMsgs.current.push(msg);
+                    set_list_of_messeges(lastMsgs.current);
+                    setCount(count + 1);
                 })
             })
         }
@@ -125,7 +128,7 @@ function ChatHistory({ contact, sendDataToParent, token }) {
     async function postMessage(message){
         if(message[0].Type === "text")
         {
-            const status = await fetch("https://localhost:7285/api/contacts",{
+            const status = await fetch("http://localhost:5285/api/contacts",{
                 method: "POST",
                 headers: { "Content-Type": "application/json",
                 "Authorization": "Bearer " + token },
@@ -338,6 +341,7 @@ function ChatHistory({ contact, sendDataToParent, token }) {
                                             created: getTime(),
                                         },
                                     ];
+                                    conn.invoke('Send', userId, contact.id, input)
                                     if (input !== "") {
                                         postMessage(messege);
                                         syncMessegesAfterPost(contact.id);

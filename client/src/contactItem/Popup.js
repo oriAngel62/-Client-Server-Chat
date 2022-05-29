@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Popup.css";
-function Popup({ sendDataToParent, users, contactList }) {
+function Popup({ sendDataToParent, users, contactList, userId }) {
     const [name, setName] = useState("");
     const [nickname, setNickname] = useState("");
     const [server, setServer] = useState("");
@@ -73,41 +73,20 @@ function Popup({ sendDataToParent, users, contactList }) {
                                     type="button"
                                     className="btn btn-primary btn-lg"
                                     onClick={() => {
-                                        var newcontact;
-                                        newcontact.id = name;
-                                        newcontact.name = nickname;
-                                        newcontact.server = server;
-                                        newcontact.last = null;
-                                        newcontact.lastdate = null;
+                                        var newcontact = {
+                                        id: parseInt(Math.random() * 1000),
+                                        contactName: userId,
+                                        userName: userId,
+                                        server: server,
+                                        nickName: nickname,
+                                        last: null,
+                                        lastDate: null
+                                        }
                                         console.log(newcontact);
                                         var exist = false;
-                                        for (let x in users) {
-                                            if (users[x].username === name) { // maybe: x.username
-                                                exist = true;
-                                            }
-                                        }
-                                        if (exist !== false) {
-                                            alert("username is not exist");
-                                            return;
-                                        }
-                                        exist = false;
-                                        for (
-                                            var i = 0;
-                                            i < contactList.length;
-                                            i++
-                                        ) {
-                                            console.log(contactList[i].name);
-                                            if (contactList[i].name === name) {
-                                                exist = true;
-                                            }
-                                        }
-                                        if (exist) {
-                                            alert(
-                                                "username is already in contact list"
-                                            );
-                                            return;
-                                        }
-                                        sendDataToParent({ newcontact });
+                                        console.log(JSON.stringify(newcontact))
+                                        localStorage.setItem('newContact', JSON.stringify(newcontact))
+                                        sendDataToParent();
                                     }}
                                 >
                                     Add

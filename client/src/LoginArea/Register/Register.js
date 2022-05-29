@@ -9,7 +9,7 @@ function Register() {
     const navigator = useNavigate();
 
     async function getUsers() {
-        var fullURL = 'https://localhost:7285/api/users';
+        var fullURL = 'http://localhost:5285/api/users';
         var result = await fetch(fullURL);
         console.log(result);
         var data = await result.json();
@@ -35,7 +35,7 @@ function Register() {
         if (username  && nickName  && password ) {
 
             var currentURL = window.location.hostname;
-            const status = await fetch("https://localhost:7285/api/users", {
+            const status = await fetch("http://localhost:5285/api/users", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

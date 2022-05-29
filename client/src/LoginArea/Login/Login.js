@@ -9,7 +9,7 @@ function Login() {
     const { register, handleSubmit, formState } = useForm();
 
     async function getUsers() {
-        var fullURL = 'https://localhost:7285/api/users';
+        var fullURL = 'http://localhost:5285/api/users';
         const res = await fetch(fullURL, {
             method: "GET",
         });
@@ -22,7 +22,7 @@ function Login() {
     }
 
     async function submit(credentials) {
-        var fullURL = 'https://localhost:7285/api/users/signin' ;
+        var fullURL = 'http://localhost:5285/api/users/signin' ;
         const rawResponse = await fetch(fullURL, {
             method: 'POST',
             headers: {
@@ -35,10 +35,11 @@ function Login() {
             alert("Username or Password do not match, Please try again or register");
             return;
         }
-        const token = await rawResponse.text();
+        const data = await rawResponse.json();
+        var token = data.token;
         console.log(token);
         navigator("/chat", {
-            state: { "token": token }
+            state: { "token": token, "userId": credentials.username }
         });
     }
 

@@ -8,7 +8,7 @@ function ContactItem({ contactItem, sendDataToParent, token }) {
     //     "https://www.bootdey.com/img/Content/avatar/avatar" + numImg + ".png";
     async function getMessages(id)
     {
-        var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
+        var fullURL = 'http://localhost:5285/api/contacts/' + id + '/messages/' ;
         const res = await fetch(fullURL, {
             method: "GET",
             "Authorization": "Bearer " +token 
@@ -22,7 +22,7 @@ function ContactItem({ contactItem, sendDataToParent, token }) {
 
     async function getMessage(id,mesgId)
     {
-        var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' + mesgId ;
+        var fullURL = 'http://localhost:5285/api/contacts/' + id + '/messages/' + mesgId ;
         const res = await fetch(fullURL, {
             method: "GET",
             "Authorization": "Bearer " +token 

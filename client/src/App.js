@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 function App(props) {
     const location = useLocation();
     var token = location.state.token;
+    var userId = location.state.userId;
     var videoSource = [video1, "video/mp4"];
     const [conn, setConn] = useState(null);
 
@@ -24,7 +25,7 @@ function App(props) {
     useEffect(() => {
         async function read() {
             const newConn = new HubConnectionBuilder()
-                .withUrl('https://localhost:7285/hubs/chat')
+                .withUrl('http://localhost:5285/hubs/chat')
                 .withAutomaticReconnect()
                 .build();
 
@@ -39,6 +40,14 @@ function App(props) {
                     .then(started => {
                         conn.on('NewContact', contact => {
                             console.log("Got contact!!!");
+                            var newContact = {
+                                contactName: contact.from,
+                                userName: contact.from,
+                                nickName: contact.from,
+                                server: contact.server,
+                                last: null,
+                                lastDate: null
+                            };
                             contacts.current.push(contact);
                             backendContactSetList(contacts);
                             setCounter(Math.random());
@@ -53,7 +62,7 @@ function App(props) {
     useEffect(() => {
         async function read() {
             console.log(token);
-            const result = await fetch('https://localhost:7285/api/contacts/', {
+            const result = await fetch('http://localhost:5285/api/contacts/', {
                 headers: {
                     method: 'GET',
                     'Authorization': 'Bearer ' + token
@@ -73,7 +82,7 @@ function App(props) {
     }, []);
 
     async function getUsers() {
-        var fullURL = 'https://localhost:7285/api/users';
+        var fullURL = 'http://localhost:5285/api/users';
         const res = await fetch(fullURL, {
             headers: {
                 method: 'GET',
@@ -165,7 +174,7 @@ function App(props) {
 
     async function getMessages(id) {
         console.log(token);
-        var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/';
+        var fullURL = 'http://localhost:5285/api/contacts/' + id + '/messages/';
         const res = await fetch(fullURL, {
             headers: {
                 method: 'GET',
@@ -191,23 +200,18 @@ function App(props) {
         }
     };
 
-    async function callbackPopUp(childData) {
-        if (childData.name !== "") {
+    async function callbackPopUp() {
             //post fuction add contact asp.net
             console.log(token);
-            const status = await fetch("https://localhost:7285/api/contacts", {
+            var childData = JSON.parse(localStorage.getItem('newContact'))
+            console.log(childData);
+            const status = await fetch("http://localhost:5285/api/contacts", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + token
                 },
-                body: JSON.stringify({
-                    id: childData.id,
-                    nickName: childData.nickName,
-                    server: childData.server,
-                    last: null,
-                    lastdate: null,
-                }),
+                body: JSON.stringify(childData)
             });
             console.log(status);
             // POST request using fetch inside useEffect React hook
@@ -218,7 +222,6 @@ function App(props) {
 
             //handleAdd(childData.name); -> should be done by useEffect - need to check! if doesnt work need to 
             // implement get function to all contacts and set the list
-        }
     };
 
     function handleAdd(name) {
@@ -269,29 +272,32 @@ function App(props) {
         read()
     }, [list]);
 
-    useEffect(() => { async function read () {
-        console.log(token);
-        const res = await fetch("https://localhost:7285/api/contacts", {
-            method: 'GET',
-            headers: { "Authorization": "Bearer " + token }
-        });
-        const data = await res.json();
-        if (data) {
-            contacts.current = data;
-            backendContactSetList(data);
-        }
-        else {
-            backendContactSetList([]);
-            contacts.current = data;
-            console.log(data.id);
-        }
-    } read() }, []);
+    useEffect(() => {
+        async function read() {
+            console.log(token);
+            const res = await fetch("http://localhost:5285/api/contacts", {
+                method: 'GET',
+                headers: { "Authorization": "Bearer " + token }
+            });
+            const data = await res.json();
+            if (data) {
+                contacts.current = data;
+                backendContactSetList(data);
+            }
+            else {
+                backendContactSetList([]);
+                contacts.current = data;
+                console.log(data.id);
+            }
+        } read()
+    }, []);
 
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col-3">
                     <Popup
+                        userId={userId}
                         sendDataToParent={callbackPopUp}
                         users={users}
                         contactList={backendContact}
@@ -301,7 +307,8 @@ function App(props) {
                 <div className="col-9">
                     {list[currentIdNum] ? (
                         <ChatHistory
-                            token ={token}
+                            token={token}
+                            userId={userId}
                             contact={list[currentIdNum]}
                             sendDataToParent={callbackChatHistory}
                         />
