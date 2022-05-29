@@ -34,8 +34,18 @@ function ContactItem({ contactItem, sendDataToParent }) {
         else
         return null;
     }
-    var list_of_messeges = getMessages(contactItem.id);
-    var lastMessage = getMessage(contactItem.id,list_of_messeges.length)
+    
+    var list_of_messeges; 
+    var lastMessage;
+    
+    useEffect(() => {
+        async function read() {
+        list_of_messeges = getMessages(contactItem.id);
+        lastMessage = getMessage(contactItem.id,list_of_messeges.length)
+        }
+        read();
+    }, []);
+
     const srcImg =
         "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp";
     return (

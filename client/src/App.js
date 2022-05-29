@@ -6,7 +6,7 @@ import ContactItem from "./contactItem/ContactItem";
 import React, { useEffect, useState, useRef } from "react";
 import Popup from "./contactItem/Popup";
 import ChatHistory from "./chatHistory/ChatHistory";
-import {HubConnectionBuilder} from '@microsoft/signalr'
+import { HubConnectionBuilder } from '@microsoft/signalr'
 
 function App({ token }) {
     var videoSource = [video1, "video/mp4"];
@@ -19,51 +19,57 @@ function App({ token }) {
     var usersList = [];
 
     useEffect(() => {
-        const newConn = new HubConnectionBuilder()
-        .withUrl('https://localhost:7285/hubs/chat')
-        .withAutomaticReconnect()
-        .build();
+        async function read() {
+            const newConn = new HubConnectionBuilder()
+                .withUrl('https://localhost:7285/hubs/chat')
+                .withAutomaticReconnect()
+                .build();
 
-        setConn(newConn);
-    })
+            setConn(newConn);
+        } read();
+    }, [])
 
     useEffect(() => {
-        if(conn) {
-            conn.start()
-            .then(started => {
-                conn.on('NewContact', contact => {
-                    console.log("Got contact!!!");
-                    contacts.current.push(contact);
-                    backendContactSetList(contacts);
-                    setCounter(Math.random());
-                })
-            })
+        async function read() {
+            if (conn) {
+                conn.start()
+                    .then(started => {
+                        conn.on('NewContact', contact => {
+                            console.log("Got contact!!!");
+                            contacts.current.push(contact);
+                            backendContactSetList(contacts);
+                            setCounter(Math.random());
+                        })
+                    })
+            }
         }
+        read();
     }, [conn])
 
     //localhost7285 - not final
-    useEffect(async () => {
-        const result = await fetch('https://localhost:7285/api/contacts/', {
-            headers: {
-                method: 'GET',
-                'Authorization': 'Bearer' + token
+    useEffect(() => {
+        async function read() {
+            const result = await fetch('https://localhost:7285/api/contacts/', {
+                headers: {
+                    method: 'GET',
+                    'Authorization': 'Bearer' + token
+                }
+            });
+            const data = await result.json();
+            if (data) {
+                backendContactSetList(data);
+                contacts.current = data;
             }
-        });
-        const data = await result.json();
-        if(data ) {
-        backendContactSetList(data);
-            contacts.current = data;
-    }
-        else {
-        backendContactSetList([]);
-        contacts.current = data;
-        usersList = getUsers();
-    }
+            else {
+                backendContactSetList([]);
+                contacts.current = data;
+                usersList = getUsers();
+            }
+        } read();
     }, []);
 
-    async function getUsers()
-    {
-        var fullURL = 'https://localhost:7285/api/users' ;
+    async function getUsers() {
+        var fullURL = 'https://localhost:7285/api/users';
         const res = await fetch(fullURL, {
             headers: {
                 method: 'GET',
@@ -72,10 +78,10 @@ function App({ token }) {
         });
         const data = await res.json();
         console.log(data);
-        if( data )
-        return(data);
+        if (data)
+            return (data);
         else
-        return null;
+            return null;
     }
     //     {
     //         id: "Ori",
@@ -138,7 +144,7 @@ function App({ token }) {
                 "-bg.webp";
             cItem.name = backendContact[i].nickName;
             cItem.listMessages = null;
-            
+
             cList.push(cItem);
         }
     }
@@ -153,9 +159,8 @@ function App({ token }) {
 
     // useEffect(() => {}, [chatHistory]);
 
-    async function getMessages(id)
-    {
-        var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
+    async function getMessages(id) {
+        var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/';
         const res = await fetch(fullURL, {
             headers: {
                 method: 'GET',
@@ -163,10 +168,10 @@ function App({ token }) {
             }
         });
         const data = await res.json();
-        if( data )
-        return(data);
+        if (data)
+            return (data);
         else
-        return null;
+            return null;
     }
 
 
@@ -181,13 +186,15 @@ function App({ token }) {
         }
     };
 
-    async function callbackPopUp(childData){
+    async function callbackPopUp(childData) {
         if (childData.name !== "") {
             //post fuction add contact asp.net
-            const status = await fetch("https://localhost:7285/api/contacts",{
+            const status = await fetch("https://localhost:7285/api/contacts", {
                 method: "POST",
-                headers: { "Content-Type": "application/json",
-                "Authorization": "Bearer " + token },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
                 body: JSON.stringify({
                     id: childData.id,
                     nickName: childData.nickName,
@@ -198,7 +205,7 @@ function App({ token }) {
             });
             console.log(status);
             // POST request using fetch inside useEffect React hook
-            
+
             // empty dependency array means this effect will only run once (like componentDidMount in classes)
             //add in react
 
@@ -240,35 +247,37 @@ function App({ token }) {
     var i = 1;
     var [contactMap, setContactMap] = useState([]);
     useEffect(() => {
-        setContactMap(list.map((contact, key) => {
-        if(contactMap )
-        return (
-            <ContactItem
-                contactItem={contact}
-                sendDataToParent={callbackContactItem}
-                key={key}
-            />
-        );
-    }));
+        async function read() {
+            setContactMap(list.map((contact, key) => {
+                if (contactMap)
+                    return (
+                        <ContactItem
+                            contactItem={contact}
+                            sendDataToParent={callbackContactItem}
+                            key={key}
+                        />
+                    );
+            }));
+        }
+        read()
+    }, [list]);
 
-    }, []);
-
-    useEffect(async () => {
-        const res = await fetch("https://localhost:7285/api/contacts",{
+    useEffect(() => { async function read () {
+        const res = await fetch("https://localhost:7285/api/contacts", {
             method: 'GET',
-            headers: {"Authorization" : "Bearer " + token} 
+            headers: { "Authorization": "Bearer " + token }
         });
         const data = await res.json();
-        if(data ) {
+        if (data) {
             contacts.current = data;
             backendContactSetList(data);
         }
         else {
-        backendContactSetList([]);
-        contacts.current = data;
-        console.log(data.id);
+            backendContactSetList([]);
+            contacts.current = data;
+            console.log(data.id);
         }
-    }, []);
+    } read() }, []);
 
     return (
         <div className="container-fluid">
@@ -282,14 +291,14 @@ function App({ token }) {
                     <div className="scroll">{contactMap}</div>
                 </div>
                 <div className="col-9">
-                {list[currentIdNum]  ? (
-                            <ChatHistory
+                    {list[currentIdNum] ? (
+                        <ChatHistory
                             contact={list[currentIdNum]}
                             sendDataToParent={callbackChatHistory}
                         />
-                        ) :  (
-                            <br></br>
-                        )}
+                    ) : (
+                        <br></br>
+                    )}
                 </div>
             </div>
         </div>

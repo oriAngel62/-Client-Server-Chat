@@ -10,6 +10,7 @@ import {HubConnectionBuilder} from '@microsoft/signalr'
 function ChatHistory({ contact, sendDataToParent }) {
     var token = localStorage.getItem('token');
     const [conn, setConn] = useState(null);
+    const [timeMsg, setTimeMsg] = useState(getTime());
 
     async function getTime(){
         const time = await fetch("https://localhost:7285/api/contacts/GetTime/time",{
@@ -45,7 +46,7 @@ function ChatHistory({ contact, sendDataToParent }) {
         .build();
 
         setConn(newConn);
-    })
+    }, [])
 
     useEffect(() => {
         if(conn) {
@@ -60,10 +61,12 @@ function ChatHistory({ contact, sendDataToParent }) {
         }
     }, [conn])
 
+    useEffect(() => {
+        async function read() {  
     if(contact)
     {
         if(contact.id){
-        var msgs = getMessages(contact.id);
+        var msgs = await getMessages(contact.id);
         set_list_of_messeges(msgs);
         lastMsgs.current = msgs;
         anyMesseges = true;
@@ -73,19 +76,23 @@ function ChatHistory({ contact, sendDataToParent }) {
     }
     else{
     anyMesseges = false;}
-    let typeText = 0;
-    //this too
-    var mess = getMessages(contact.id);
+    } read() }, [])
+
     useEffect(() => {
+        async function read() {
+        var mess = await getMessages(contact.id);
         set_list_of_messeges(mess);
         lastMsgs.current = mess;
-    }, [getMessages(mess)]);
+        }
+        read();
+    }, []);
     const [modeVidPic, setModeVidPic] = useState("pic"); 
     var chatList = list_of_messeges.map((messege, key) => {
         return <MessegeBox messege={messege} key={key} />;    
     });
     const [input, setInput] = useState("");
     const [showMenu, setShowMenu] = useState(false); 
+
     let menuRef = useRef();
     let menuButtonRef = useRef();
     useEffect(() => {
@@ -97,7 +104,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                 setShowMenu(false);
             }
         });
-    });
+    }, []);
     const addImageVideo = (messege, contact) => {
         var newList = [];
         newList = list_of_messeges.concat(messege[0]);
@@ -127,7 +134,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                     Type: "text",                       // to change next ass
                     Content: message[0].content,
                     Sent: true,
-                    Created: getTime(),
+                    Created: timeMsg,
                 }),
             });
         }

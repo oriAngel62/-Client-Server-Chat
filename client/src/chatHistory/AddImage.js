@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function AddImage({ sendDataBack, contact }) {
     const [inputFile, setInputFile] = useState();
+    const [timeCreated, setTimeCreated] = useState(getTime());
     const [selectedImage, setSelectedImage] = useState("");
     var token = localStorage.getItem('token');
+  
     async function getTime(){
         const time = await fetch("https://localhost:7285/api/contacts/GetTime/time",{
             method: 'GET',
@@ -51,7 +53,7 @@ function AddImage({ sendDataBack, contact }) {
                                         Type: "image",                       // to change next ass
                                         Content: imageSource,
                                         Sent: true,
-                                        Created: getTime(),
+                                        Created: timeCreated,
                                     },
                                 ];
 

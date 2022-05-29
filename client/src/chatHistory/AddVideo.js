@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 function AddVideo({ sendDataBack, contact }) {
     const [inputFile, setInputFile] = useState();
+    const [timeCreated, setTimeCreated] = useState(getTime());
     const [selectedImage, setSelectedImage] = useState("");
     let videoType = "";
     var token = localStorage.getItem('token');
@@ -56,7 +57,7 @@ function AddVideo({ sendDataBack, contact }) {
                                         Type: "video",                       // to change next ass
                                         Content: imageSource,
                                         Sent: true,
-                                        Created: getTime(),
+                                        Created: timeCreated,
                                     },
                                 ];
                             }
