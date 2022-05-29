@@ -10,16 +10,16 @@ import { HubConnectionBuilder } from '@microsoft/signalr'
 import { useLocation } from 'react-router-dom';
 
 function App(props) {
+    var [contactMap, setContactMap] = useState([]);
     const location = useLocation();
     var token = location.state.token;
     var userId = location.state.userId;
     var videoSource = [video1, "video/mp4"];
     const [conn, setConn] = useState(null);
-
-    const [backendContact, backendContactSetList] = useState([]);
+    const [show, setShow] = useState(false);
     const contacts = useRef(null);
     const [count, setCounter] = useState(0);
-    backendContact.current = backendContact;
+    //backendContact.current = backendContact;
     var usersList = [];
 
     useEffect(() => {
@@ -49,8 +49,7 @@ function App(props) {
                                 lastDate: null
                             };
                             contacts.current.push(contact);
-                            backendContactSetList(contacts);
-                            setCounter(Math.random());
+                            setContactMap(contacts);
                         })
                     })
             }
@@ -61,7 +60,6 @@ function App(props) {
     //localhost7285 - not final
     useEffect(() => {
         async function read() {
-            console.log(token);
             const result = await fetch('http://localhost:5285/api/contacts/', {
                 headers: {
                     method: 'GET',
@@ -70,12 +68,13 @@ function App(props) {
             });
             const data = await result.json();
             if (data) {
-                backendContactSetList(data);
+                console.log(data);
+                setContactMap(data);
                 contacts.current = data;
             }
             else {
-                backendContactSetList([]);
-                contacts.current = data;
+                //setContactMap([]);
+                //contacts.current = data;
                 usersList = getUsers();
             }
         } read();
@@ -90,7 +89,6 @@ function App(props) {
             }
         });
         const data = await res.json();
-        console.log(data);
         if (data)
             return (data);
         else
@@ -144,26 +142,8 @@ function App(props) {
     //     },
     // ]);
     var cList = [];
-    jsonToObject(backendContact);
-    function jsonToObject(backendContact) {
-        var index = (backendContact.length + 1) % 7;
-        for (let i = 0; i < backendContact.length; i++) {
-            var cItem = [];
-            cItem.id = backendContact[i].id;
-            if (index == 0) index++;
-            cItem.src =
-                "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava" +
-                index +
-                "-bg.webp";
-            cItem.name = backendContact[i].nickName;
-            cItem.listMessages = null;
+    
 
-            cList.push(cItem);
-        }
-    }
-    console.log(backendContact);
-
-    console.log(cList);
     const [list, setList] = useState(cList);
     const [currentId, setCurrentId] = useState("");
     const [currentIdNum, setCurrentIdNum] = useState(0);
@@ -173,7 +153,6 @@ function App(props) {
     // useEffect(() => {}, [chatHistory]);
 
     async function getMessages(id) {
-        console.log(token);
         var fullURL = 'http://localhost:5285/api/contacts/' + id + '/messages/';
         const res = await fetch(fullURL, {
             headers: {
@@ -202,9 +181,7 @@ function App(props) {
 
     async function callbackPopUp() {
             //post fuction add contact asp.net
-            console.log(token);
             var childData = JSON.parse(localStorage.getItem('newContact'))
-            console.log(childData);
             const status = await fetch("http://localhost:5285/api/contacts", {
                 method: "POST",
                 headers: {
@@ -213,7 +190,25 @@ function App(props) {
                 },
                 body: JSON.stringify(childData)
             });
-            console.log(status);
+
+            const result = await fetch('http://localhost:5285/api/contacts/', {
+                headers: {
+                    method: 'GET',
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+            const data = await result.json();
+            console.log(data);
+            if (data) {
+                console.log(data);
+                setContactMap(data);
+                contacts.current = data;
+            }
+            else {
+                //backendContactSetList([]);
+                //contacts.current = data;
+                usersList = getUsers();
+            }
             // POST request using fetch inside useEffect React hook
 
             // empty dependency array means this effect will only run once (like componentDidMount in classes)
@@ -254,27 +249,9 @@ function App(props) {
         }
     };
     var i = 1;
-    var [contactMap, setContactMap] = useState([]);
-    useEffect(() => {
-        async function read() {
-            setContactMap(list.map((contact, key) => {
-                if (contactMap)
-                    return (
-                        <ContactItem
-                            token={token}
-                            contactItem={contact}
-                            sendDataToParent={callbackContactItem}
-                            key={key}
-                        />
-                    );
-            }));
-        }
-        read()
-    }, [list]);
 
     useEffect(() => {
         async function read() {
-            console.log(token);
             const res = await fetch("http://localhost:5285/api/contacts", {
                 method: 'GET',
                 headers: { "Authorization": "Bearer " + token }
@@ -282,27 +259,62 @@ function App(props) {
             const data = await res.json();
             if (data) {
                 contacts.current = data;
-                backendContactSetList(data);
+                setContactMap(data);
+                console.log(data);
             }
             else {
-                backendContactSetList([]);
+                //setContactMap([]);
                 contacts.current = data;
-                console.log(data.id);
             }
         } read()
+        jsonToObject(contactMap);
     }, []);
+    function jsonToObject(contactMap) {
+        var index = (contactMap.length + 1) % 7;
+        for (let i = 0; i < contactMap.length; i++) {
+            var cItem = [];
+            cItem.id = contactMap[i].id;
+            if (index == 0) index++;
+            cItem.src =
+                "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava" +
+                index +
+                "-bg.webp";
+            cItem.name = contactMap[i].nickName;
+            cItem.listMessages = null;
 
+            cList.push(cItem);
+        }
+    }
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col-3">
+                <button
+                type="button"
+                onClick={() => {setShow(true)}}
+                className="btn btn-primary"
+                //add -bs
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+            >
+                Add new contact
+            </button>
                     <Popup
                         userId={userId}
                         sendDataToParent={callbackPopUp}
                         users={users}
-                        contactList={backendContact}
+                        show={show} setShow={setShow}
+                        contactList={contactMap}
                     />
-                    <div className="scroll">{contactMap}</div>
+                    <div className="scroll">{contactMap.map((contact, key) => {
+                    return (
+                        <ContactItem
+                            contactItem={contact}
+                            sendDataToParent={callbackContactItem}
+                            token={token}
+                            key={key}
+                        />
+                    )})}</div>
                 </div>
                 <div className="col-9">
                     {list[currentIdNum] ? (

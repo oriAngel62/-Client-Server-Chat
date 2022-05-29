@@ -14,7 +14,6 @@ function Login() {
             method: "GET",
         });
         const data = await res.json();
-        console.log(data);
         if (data)
             return (data);
         else
@@ -37,7 +36,6 @@ function Login() {
         }
         const data = await rawResponse.json();
         var token = data.token;
-        console.log(token);
         navigator("/chat", {
             state: { "token": token, "userId": credentials.username }
         });

@@ -5,7 +5,6 @@ import React, { useState } from "react";
 function Recording({sendDataBack}) {
   let recording = false;
   const [recordingSource, setRecordingSource] = useState("");
-  console.log(recordingSource);
   let globalRecorder;
   let audioUrl;
   
@@ -57,7 +56,6 @@ function Recording({sendDataBack}) {
     {
       globalRecorder.stop();
       recording = false;
-      console.log(recordingSource);
     }
   }
     

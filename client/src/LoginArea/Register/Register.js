@@ -11,7 +11,6 @@ function Register() {
     async function getUsers() {
         var fullURL = 'http://localhost:5285/api/users';
         var result = await fetch(fullURL);
-        console.log(result);
         var data = await result.json();
         return (data);
         // const data = await res.json();
@@ -21,7 +20,6 @@ function Register() {
 
     async function postUser() {
         //post fuction add contact asp.net
-        console.log("in post user");
         var username;
         var nickName;
         var password;
