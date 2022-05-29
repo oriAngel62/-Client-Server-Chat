@@ -59,8 +59,20 @@ function Register() {
     }
 
     function submit(credentials) {
-        var userList = getUsers();
-        console.log(userList);
+        // var userList = getUsers();
+        var userList;
+        (async () => {
+            const rawResponse = await fetch('https://localhost:7285/api/users', {
+              method: 'GET',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              }
+            });
+            userList = await rawResponse.json();
+          
+            console.log(userList);
+          })();
         for (let x in userList) {
             if ( userList[x].username === credentials.username) {   // maybe: x.username
                 alert("username already exist, please try another username");
