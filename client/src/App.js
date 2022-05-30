@@ -141,8 +141,8 @@ function App(props) {
     var cList = [];
 
     const [list, setList] = useState(cList);
-    const [currentId, setCurrentId] = useState("");
-    const [currentIdNum, setCurrentIdNum] = useState(0);
+    const [currentContactName, setCurrentContactName] = useState(0);
+
     const [lastMessage, setLastMessage] = useState("");
     const [users, setusers] = useState(usersList);
 
@@ -162,16 +162,7 @@ function App(props) {
     }
 
     const callbackContactItem = (childData) => {
-        console.log(childData);
-        for (let i = 0; i < contactMap.length; i++) {
-            if (contactMap[i].contactName == childData.contactName) {
-                contactMap[i].listMessages = getMessages(childData.contactName); // to check what format of mesages we using
-                setCurrentId(childData.contactName);
-                setCurrentIdNum(i);
-                setContactMap(contactMap);
-                console.log(contactMap[currentIdNum]);
-            }
-        }
+        setCurrentContactName(childData.contactName);
     };
 
     async function callbackPopUp() {
@@ -232,15 +223,14 @@ function App(props) {
         setusers(newUser);
     }
 
-    const callbackChatHistory = (contactItem, meesage, id) => {
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].id === id) {
-                list[i].listMessages.push(meesage);
-                setCurrentId(contactItem.id);
-                setCurrentIdNum(i);
-            }
-        }
-    };
+    // const callbackChatHistory = (meesage, id) => {
+    //     for (let i = 0; i < list.length; i++) {
+    //         if (list[i].id === id) {
+    //             list[i].listMessages.push(meesage);
+    //             setCurrentIdNum(i);
+    //         }
+    //     }
+    // };
     var i = 1;
 
     useEffect(() => {
@@ -316,11 +306,11 @@ function App(props) {
                     </div>
                 </div>
                 <div className="col-9">
-                    {contactMap[currentIdNum] ? (
+                    {currentContactName ? (
                         <ChatHistory
                             token={token}
                             userId={userId}
-                            contact={contactMap[currentIdNum]}
+                            contactName={currentContactName}
                             sendDataToParent={callbackChatHistory}
                         />
                     ) : (

@@ -7,7 +7,7 @@ import AddImage from "./AddImage";
 import AddVideo from "./AddVideo";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 
-function ChatHistory({ contact, sendDataToParent, token, userId }) {
+function ChatHistory({ contactName, sendDataToParent, token, userId }) {
     //debugger;
     var chatList = [];
     const [messages, setMessages] = useState([]);
@@ -127,10 +127,10 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
     }, []);
     const addImageVideo = (messege, contact) => {
         var newList = [];
-        newList = messages.concat(messege[0]);
+        newList = messages.concat(messege);
         setMessages(newList);
         lastMsgs.current = newList;
-        sendDataToParent(contact, messege[0], contact.contactName);
+        sendDataToParent(messege, contact.contactName);
     };
 
     /*
@@ -176,7 +176,7 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
         newList = messages.concat(messege);
         setMessages(newList);
         lastMsgs.current = newList;
-        sendDataToParent(contact, messege[0], contact.contactName);
+        sendDataToParent(messege, contact.contactName);
     };
 
     return (
@@ -369,7 +369,6 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
                                             document.getElementById("text");
                                         setInput("");
                                         sendDataToParent(
-                                            contact,
                                             messege,
                                             contact.contactName
                                         );
