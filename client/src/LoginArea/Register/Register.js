@@ -9,29 +9,27 @@ function Register() {
     const navigator = useNavigate();
 
     async function getUsers() {
-        var fullURL = 'http://localhost:5285/api/users';
+        var fullURL = "http://localhost:5285/api/users";
         var result = await fetch(fullURL);
         var data = await result.json();
-        return (data);
+        return data;
         // const data = await res.json();
         // return(data);
     }
-
 
     async function postUser() {
         //post fuction add contact asp.net
         var username;
         var nickName;
         var password;
-        if (document.getElementById('userName').value)
-            username = document.getElementById('userName').value;
-        if (document.getElementById('nickName').value )
-            nickName = document.getElementById('nickName').value;
-        if (document.getElementById('password').value )
-            password = document.getElementById('password').value;
+        if (document.getElementById("userName").value)
+            username = document.getElementById("userName").value;
+        if (document.getElementById("nickName").value)
+            nickName = document.getElementById("nickName").value;
+        if (document.getElementById("password").value)
+            password = document.getElementById("password").value;
 
-        if (username  && nickName  && password ) {
-
+        if (username && nickName && password) {
             var currentURL = window.location.hostname;
             const status = await fetch("http://localhost:5285/api/users", {
                 method: "POST",
@@ -49,7 +47,8 @@ function Register() {
     async function submit(credentials) {
         var userList = await getUsers();
         for (let x in userList) {
-            if (userList[x].username === credentials.username) {   // maybe: x.username
+            if (userList[x].username === credentials.username) {
+                // maybe: x.username
                 alert("username already exist, please try another username");
                 return;
             }
@@ -57,7 +56,6 @@ function Register() {
         postUser();
         navigator("/login");
     }
-
 
     // const users = [
     //     { username: "Ori", password: "a12345", displayname: "Ori" },
@@ -80,7 +78,8 @@ function Register() {
                 <form onSubmit={handleSubmit(submit)}>
                     <label>User name: </label>
                     <input
-                        id='userName' type="text"
+                        id="userName"
+                        type="text"
                         autoFocus
                         {...register("username", {
                             required: {
@@ -88,11 +87,11 @@ function Register() {
                                 message: "Please enter user name",
                             },
                             minLength: {
-                                value: 3,
-                                message: "Please enter Min 3 charachters",
+                                value: 1,
+                                message: "Please enter Min 1 charachters",
                             },
                             pattern: {
-                                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{3,}$/,
+                                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]+$/,
                                 message: "Must have letters or numbers only",
                             },
                         })}
@@ -101,7 +100,8 @@ function Register() {
 
                     <label>Password: </label>
                     <input
-                        id='password' type="password"
+                        id="password"
+                        type="password"
                         {...register("password", {
                             required: {
                                 value: true,
@@ -121,9 +121,14 @@ function Register() {
                     <span>{formState.errors.password?.message}</span>
 
                     <label>Display name: </label>
-                    <input type="text" id='nickName' {...register("display")} required />
+                    <input
+                        type="text"
+                        id="nickName"
+                        {...register("display")}
+                        required
+                    />
 
-                    <button className="btn btn-success" >Register</button>
+                    <button className="btn btn-success">Register</button>
                 </form>
                 <p>
                     Already registered{" "}
