@@ -6,8 +6,8 @@ import ContactItem from "./contactItem/ContactItem";
 import React, { useEffect, useState, useRef } from "react";
 import Popup from "./contactItem/Popup";
 import ChatHistory from "./chatHistory/ChatHistory";
-import { HubConnectionBuilder } from '@microsoft/signalr'
-import { useLocation } from 'react-router-dom';
+import { HubConnectionBuilder } from "@microsoft/signalr";
+import { useLocation } from "react-router-dom";
 
 function App(props) {
     var [contactMap, setContactMap] = useState([]);
@@ -25,74 +25,71 @@ function App(props) {
     useEffect(() => {
         async function read() {
             const newConn = new HubConnectionBuilder()
-                .withUrl('http://localhost:5285/hubs/chat')
+                .withUrl("http://localhost:5285/hubs/chat")
                 .withAutomaticReconnect()
                 .build();
 
             setConn(newConn);
-        } read();
-    }, [])
+        }
+        read();
+    }, []);
 
     useEffect(() => {
         async function read() {
             if (conn) {
-                conn.start()
-                    .then(started => {
-                        conn.on('NewContact', contact => {
-                            console.log("Got contact!!!");
-                            var newContact = {
-                                contactName: contact.from,
-                                userName: contact.from,
-                                nickName: contact.from,
-                                server: contact.server,
-                                last: null,
-                                lastDate: null
-                            };
-                            contacts.current.push(contact);
-                            setContactMap(contacts);
-                        })
-                    })
+                conn.start().then((started) => {
+                    conn.on("NewContact", (contact) => {
+                        var newContact = {
+                            contactName: contact.from,
+                            userName: contact.from,
+                            nickName: contact.from,
+                            server: contact.server,
+                            last: null,
+                            lastDate: null,
+                        };
+                        contacts.current.push(contact);
+                        setContactMap(contacts);
+                    });
+                });
             }
         }
         read();
-    }, [conn])
+    }, [conn]);
 
     //localhost7285 - not final
     useEffect(() => {
         async function read() {
-            const result = await fetch('http://localhost:5285/api/contacts/', {
+            const result = await fetch("http://localhost:5285/api/contacts/", {
                 headers: {
-                    method: 'GET',
-                    'Authorization': 'Bearer ' + token
-                }
+                    method: "GET",
+                    Authorization: "Bearer " + token,
+                },
             });
             const data = await result.json();
             if (data) {
                 console.log(data);
                 setContactMap(data);
                 contacts.current = data;
-            }
-            else {
+            } else {
                 //setContactMap([]);
                 //contacts.current = data;
                 usersList = getUsers();
             }
-        } read();
+        }
+        read();
     }, []);
 
     async function getUsers() {
-        var fullURL = 'http://localhost:5285/api/users';
+        var fullURL = "http://localhost:5285/api/users";
         const res = await fetch(fullURL, {
             headers: {
-                method: 'GET',
-                'Authorization': 'Bearer ' + token
-            }
+                method: "GET",
+                Authorization: "Bearer " + token,
+            },
         });
         const data = await res.json();
-        if (data)
-            return (data);
-        else
-            return null;
+        if (data) return data;
+        else return null;
     }
     //     {
     //         id: "Ori",
@@ -142,7 +139,6 @@ function App(props) {
     //     },
     // ]);
     var cList = [];
-    
 
     const [list, setList] = useState(cList);
     const [currentId, setCurrentId] = useState("");
@@ -153,71 +149,68 @@ function App(props) {
     // useEffect(() => {}, [chatHistory]);
 
     async function getMessages(id) {
-        var fullURL = 'http://localhost:5285/api/contacts/' + id + '/messages/';
+        var fullURL = "http://localhost:5285/api/contacts/" + id + "/messages/";
         const res = await fetch(fullURL, {
             headers: {
-                method: 'GET',
-                'Authorization': 'Bearer ' + token
-            }
+                method: "GET",
+                Authorization: "Bearer " + token,
+            },
         });
         const data = await res.json();
-        if (data)
-            return (data);
-        else
-            return null;
+        if (data) return data;
+        else return null;
     }
 
-
     const callbackContactItem = (childData) => {
+        console.log(childData);
         for (let i = 0; i < contactMap.length; i++) {
             if (contactMap[i].contactName == childData.contactName) {
                 contactMap[i].listMessages = getMessages(childData.contactName); // to check what format of mesages we using
                 setCurrentId(childData.contactName);
                 setCurrentIdNum(i);
                 setContactMap(contactMap);
+                console.log(contactMap[currentIdNum]);
             }
         }
     };
 
     async function callbackPopUp() {
-            //post fuction add contact asp.net
-            var childData = JSON.parse(localStorage.getItem('newContact'))
-            const status = await fetch("http://localhost:5285/api/contacts", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token
-                },
-                body: JSON.stringify(childData)
-            });
+        //post fuction add contact asp.net
+        var childData = JSON.parse(localStorage.getItem("newContact"));
+        const status = await fetch("http://localhost:5285/api/contacts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify(childData),
+        });
 
-            const result = await fetch('http://localhost:5285/api/contacts/', {
-                headers: {
-                    method: 'GET',
-                    'Authorization': 'Bearer ' + token
-                }
-            });
-            const data = await result.json();
+        const result = await fetch("http://localhost:5285/api/contacts/", {
+            headers: {
+                method: "GET",
+                Authorization: "Bearer " + token,
+            },
+        });
+        const data = await result.json();
+        console.log(data);
+        if (data) {
             console.log(data);
-            if (data) {
-                console.log(data);
-                setContactMap(data);
-                contacts.current = data;
-            }
-            else {
-                //backendContactSetList([]);
-                //contacts.current = data;
-                usersList = getUsers();
-            }
-            // POST request using fetch inside useEffect React hook
+            setContactMap(data);
+            contacts.current = data;
+        } else {
+            //backendContactSetList([]);
+            //contacts.current = data;
+            usersList = getUsers();
+        }
+        // POST request using fetch inside useEffect React hook
 
-            // empty dependency array means this effect will only run once (like componentDidMount in classes)
-            //add in react
+        // empty dependency array means this effect will only run once (like componentDidMount in classes)
+        //add in react
 
-
-            //handleAdd(childData.name); -> should be done by useEffect - need to check! if doesnt work need to 
-            // implement get function to all contacts and set the list
-    };
+        //handleAdd(childData.name); -> should be done by useEffect - need to check! if doesnt work need to
+        // implement get function to all contacts and set the list
+    }
 
     function handleAdd(name) {
         var index = (list.length + 1) % 7;
@@ -253,20 +246,20 @@ function App(props) {
     useEffect(() => {
         async function read() {
             const res = await fetch("http://localhost:5285/api/contacts", {
-                method: 'GET',
-                headers: { "Authorization": "Bearer " + token }
+                method: "GET",
+                headers: { Authorization: "Bearer " + token },
             });
             const data = await res.json();
             if (data) {
                 contacts.current = data;
                 setContactMap(data);
                 console.log(data);
-            }
-            else {
+            } else {
                 //setContactMap([]);
                 contacts.current = data;
             }
-        } read()
+        }
+        read();
         jsonToObject(contactMap);
     }, []);
     function jsonToObject(contactMap) {
@@ -289,32 +282,38 @@ function App(props) {
         <div className="container-fluid">
             <div className="row">
                 <div className="col-3">
-                <button
-                type="button"
-                onClick={() => {setShow(true)}}
-                className="btn btn-primary"
-                //add -bs
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-            >
-                Add new contact
-            </button>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            setShow(true);
+                        }}
+                        className="btn btn-primary"
+                        //add -bs
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                    >
+                        Add new contact
+                    </button>
                     <Popup
                         userId={userId}
                         sendDataToParent={callbackPopUp}
                         users={users}
-                        show={show} setShow={setShow}
+                        show={show}
+                        setShow={setShow}
                         contactList={contactMap}
                     />
-                    <div className="scroll">{contactMap.map((contact, key) => {
-                    return (
-                        <ContactItem
-                            contactItem={contact}
-                            sendDataToParent={callbackContactItem}
-                            token={token}
-                            key={key}
-                        />
-                    )})}</div>
+                    <div className="scroll">
+                        {contactMap.map((contact, key) => {
+                            return (
+                                <ContactItem
+                                    contactItem={contact}
+                                    sendDataToParent={callbackContactItem}
+                                    token={token}
+                                    key={key}
+                                />
+                            );
+                        })}
+                    </div>
                 </div>
                 <div className="col-9">
                     {contactMap[currentIdNum] ? (

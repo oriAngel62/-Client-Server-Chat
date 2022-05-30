@@ -5,48 +5,48 @@ import Recording from "./Recording";
 import "./paperclip.png";
 import AddImage from "./AddImage";
 import AddVideo from "./AddVideo";
-import { HubConnectionBuilder } from '@microsoft/signalr'
+import { HubConnectionBuilder } from "@microsoft/signalr";
 
 function ChatHistory({ contact, sendDataToParent, token, userId }) {
     //debugger;
     var chatList = [];
     const [messages, setMessages] = useState([]);
-    const lastMsgs = useRef(null)
+    const lastMsgs = useRef(null);
     lastMsgs.current = messages;
     const [conn, setConn] = useState(null);
     const [timeMsg, setTimeMsg] = useState(new Date());
     var didGotMessages = false;
     async function getTime() {
-        const time = await fetch("http://localhost:5285/api/contacts/GetTime/time", {
-            method: 'GET',
-            headers: { "Authorization": "Bearer " + token }
-        });
-        return (time);
+        const time = await fetch(
+            "http://localhost:5285/api/contacts/GetTime/time",
+            {
+                method: "GET",
+                headers: { Authorization: "Bearer " + token },
+            }
+        );
+        return time;
     }
-
 
     async function getMessages(id) {
-        var fullURL = 'http://localhost:5285/api/contacts/' + id + '/messages/';
+        var fullURL = "http://localhost:5285/api/contacts/" + id + "/messages/";
         const res = await fetch(fullURL, {
-            method: 'GET',
+            method: "GET",
             headers: {
-                'Authorization': 'Bearer ' + token
-            }
+                Authorization: "Bearer " + token,
+            },
         });
         const data = await res.json();
+        console.log(data);
         lastMsgs.current = data;
         setMessages(data);
-        return (data);
+        return data;
     }
     useEffect(() => {
-            getMessages(contact.contactName).then(data => {
-                lastMsgs.current = data;
-                console.log(lastMsgs.current);
-                setMessages(lastMsgs.current);
-                console.log(messages);
-
-            })
-    }, [])
+        getMessages(contact.contactName).then((data) => {
+            lastMsgs.current = data;
+            setMessages(lastMsgs.current);
+        });
+    }, []);
 
     didGotMessages = true;
     //to change according to api
@@ -54,30 +54,30 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
     const [count, setCount] = useState(0);
     useEffect(() => {
         const newConn = new HubConnectionBuilder()
-            .withUrl('http://localhost:5285/hubs/chat')
+            .withUrl("http://localhost:5285/hubs/chat")
             .withAutomaticReconnect()
             .build();
 
         setConn(newConn);
-    }, [])
+    }, []);
 
     useEffect(() => {
         if (conn) {
-            conn.start()
-                .then(started => {
-                    conn.on('Receive', signalMessage => {
-                        console.log(signalMessage);
-                        var msg = {
-                            id: 200, content: signalMessage.content, sent: false,
-                            created: '2022-04-24T19:46:09.7077994'
-                        }
-                        lastMsgs.current.push(msg);
-                        setMessages(lastMsgs.current);
-                        setCount(count + 1);
-                    })
-                })
+            conn.start().then((started) => {
+                conn.on("Receive", (signalMessage) => {
+                    var msg = {
+                        id: 200,
+                        content: signalMessage.content,
+                        sent: false,
+                        created: "2022-04-24T19:46:09.7077994",
+                    };
+                    lastMsgs.current.push(msg);
+                    setMessages(lastMsgs.current);
+                    setCount(count + 1);
+                });
+            });
         }
-    }, [conn])
+    }, [conn]);
 
     useEffect(() => {
         async function read() {
@@ -87,15 +87,13 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
                     setMessages(msgs);
                     lastMsgs.current = msgs;
                     anymessages = true;
-                }
-                else
-                    anymessages = false;
-            }
-            else {
+                } else anymessages = false;
+            } else {
                 anymessages = false;
             }
-        } read()
-    }, [])
+        }
+        read();
+    }, []);
 
     useEffect(() => {
         async function read() {
@@ -104,11 +102,11 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
             lastMsgs.current = mess;
         }
         read();
-
+        console.log(messages);
         chatList = messages.map((messege, key) => {
+            console.log(messages);
             return <MessegeBox messege={messege} key={key} />;
         });
-
     }, []);
     const [modeVidPic, setModeVidPic] = useState("pic");
 
@@ -135,9 +133,6 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
         sendDataToParent(contact, messege[0], contact.contactName);
     };
 
-
-
-
     /*
     type:
     text -0
@@ -146,21 +141,23 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
     audio -3
     */
     async function postMessage(message) {
-        const status = await fetch("http://localhost:5285/api/contacts/" + contact.contactName + "/messages", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-            },
-            body: JSON.stringify(message)
-        });
+        const status = await fetch(
+            "http://localhost:5285/api/contacts/" +
+                contact.contactName +
+                "/messages",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token,
+                },
+                body: JSON.stringify(message),
+            }
+        );
     }
-
-
 
     async function syncmessagesAfterPost(id) {
         var msgs = await getMessages(id);
-        console.log(msgs);
         setMessages(msgs);
         lastMsgs.current = msgs;
     }
@@ -169,7 +166,7 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
         var audSource = audioSrc;
         let messege = [
             {
-                Type: "audio",                       // to change next ass
+                Type: "audio", // to change next ass
                 Content: audSource,
                 Sent: true,
                 Created: getTime(),
@@ -187,10 +184,10 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
             <div className="card" id="chat2">
                 <div className="row d-flex justify-content-center">
                     <div className="card-header d-flex justify-content-between align-items-center p-3">
-                        {contact.name ? (
-                            <h5 className="mb-0">{contact.name}</h5>)
-                            // trying here
-                            : null}
+                        {contact.contactName ? (
+                            <h5 className="mb-0">{contact.contactName}</h5>
+                        ) : // trying here
+                        null}
                     </div>
                     <div
                         className="card-body"
@@ -348,8 +345,7 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
                             <button
                                 className="btn btn-primary"
                                 onClick={() => {
-                                    const messege =
-                                    {
+                                    const messege = {
                                         id: parseInt(Math.random() * 1000),
                                         from: userId,
                                         to: contact.contactName,
@@ -358,10 +354,17 @@ function ChatHistory({ contact, sendDataToParent, token, userId }) {
                                         content: input,
                                         sent: true,
                                     };
-                                    conn.invoke('Send', userId, contact.contactName, input)
+                                    conn.invoke(
+                                        "Send",
+                                        userId,
+                                        contact.contactName,
+                                        input
+                                    );
                                     if (input !== "") {
                                         postMessage(messege);
-                                        syncmessagesAfterPost(contact.contactName);
+                                        syncmessagesAfterPost(
+                                            contact.contactName
+                                        );
                                         const textBox =
                                             document.getElementById("text");
                                         setInput("");
