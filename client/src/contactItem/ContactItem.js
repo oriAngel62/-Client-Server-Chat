@@ -3,15 +3,8 @@ import "./ContactItem.css";
 import React, { useEffect, useState } from "react";
 
 function ContactItem(props) {
-    var lastMessage = {
-        id: 1,
-        type: 0,
-        content: "hi",
-        created: new Date()
-            .toLocaleTimeString()
-            .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3"),
-        sent: true,
-    };
+    const [lastMessage, setLastMessage] = useState("");
+
     // const numImg = Math.floor(Math.random() * (8 - 1 + 1) + 1).toString();
     // const srcImg1 =
     //     "https://www.bootdey.com/img/Content/avatar/avatar" + numImg + ".png";
@@ -41,12 +34,14 @@ function ContactItem(props) {
                 headers: { Authorization: "Bearer " + props.token },
             });
             const data = await res.json();
-            if (data && data.length > 0) lastMessage = data[data.length - 1];
+            if (data && data.length > 0) {
+                setLastMessage(data[data.length - 1]);
+            }
             // console.log(lastMessage);
 
-            lastMessage.created = new Date(Date.parse(lastMessage.created))
-                .toLocaleTimeString()
-                .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
+            // lastMessage.created = new Date(Date.parse(lastMessage.created))
+            //     .toLocaleTimeString()
+            //     .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
         }
         read();
     }, []);
@@ -67,7 +62,7 @@ function ContactItem(props) {
                     }}
                 >
                     <div className="d-flex w-100 justify-content-between">
-                        {props.contactItem.src === null ? (
+                        {props.contactItem.src ? (
                             <img
                                 src="https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg"
                                 width="80pxd"
@@ -81,18 +76,18 @@ function ContactItem(props) {
                         <b>{props.contactItem.nickName}</b>
                         <br></br>
                         <span className="hour">
-                            {lastMessage.created === null ? (
-                                <small></small>
-                            ) : (
+                            {lastMessage.created ? (
                                 <small>{lastMessage.created}</small>
+                            ) : (
+                                <small></small>
                             )}
                         </span>
                     </div>
                     {/* {lastMessage.type === 0 ? (                to bring back for next ass */}
-                    {lastMessage.content === null ? (
-                        <p className="mb-1"></p>
-                    ) : (
+                    {lastMessage.content ? (
                         <p className="mb-1">{lastMessage.content}</p>
+                    ) : (
+                        <p className="mb-1"></p>
                     )}
                     {/* ) : lastMessage.type === 2 ? (
                         <p className="mb-1">image</p>

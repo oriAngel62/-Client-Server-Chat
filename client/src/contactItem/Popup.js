@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import "./Popup.css";
-import Modal from 'react-bootstrap/Modal'
+import Modal from "react-bootstrap/Modal";
 
-function Popup({ sendDataToParent, users, contactList, userId, show, setShow }) {
+function Popup({
+    sendDataToParent,
+    users,
+    contactList,
+    userId,
+    show,
+    setShow,
+}) {
     const [name, setName] = useState("");
     const [nickname, setNickname] = useState("");
     const [server, setServer] = useState("");
@@ -19,7 +26,7 @@ function Popup({ sendDataToParent, users, contactList, userId, show, setShow }) 
     }
     return (
         <Modal show={show} animation={false}>
-            <Modal.Header closeButton>
+            <Modal.Header>
                 <Modal.Title>Adding new contact</Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -60,10 +67,13 @@ function Popup({ sendDataToParent, users, contactList, userId, show, setShow }) 
                             server: server,
                             nickName: nickname,
                             last: null,
-                            lastDate: null
-                        }
+                            lastDate: null,
+                        };
                         var exist = false;
-                        localStorage.setItem('newContact', JSON.stringify(newcontact))
+                        localStorage.setItem(
+                            "newContact",
+                            JSON.stringify(newcontact)
+                        );
                         sendDataToParent();
                         setShow(false);
                     }}
@@ -71,6 +81,9 @@ function Popup({ sendDataToParent, users, contactList, userId, show, setShow }) 
                     Add
                 </button>
                 <button
+                    onClick={() => {
+                        setShow(false);
+                    }}
                     type="button"
                     className="btn btn-secondary btn-lg"
                     data-bs-dismiss="modal"
