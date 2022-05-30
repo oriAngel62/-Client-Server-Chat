@@ -7,7 +7,13 @@ import AddImage from "./AddImage";
 import AddVideo from "./AddVideo";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 
-function ChatHistory({ contactName, token, userId, setLMessage, lMessage }) {
+function ChatHistory({
+    selectedContact,
+    token,
+    userId,
+    setLMessage,
+    lMessage,
+}) {
     //debugger;
 
     var chatList = [];
@@ -44,12 +50,12 @@ function ChatHistory({ contactName, token, userId, setLMessage, lMessage }) {
         return data;
     }
     useEffect(() => {
-        getMessages(contactName).then((data) => {
+        getMessages(selectedContact.contactName).then((data) => {
             lastMsgs.current = data;
             console.log(lastMsgs.current);
             setMessages(lastMsgs.current);
         });
-    }, [contactName, sendNewMes]);
+    }, [selectedContact.contactName, sendNewMes]);
 
     didGotMessages = true;
     //to change according to api
@@ -84,8 +90,8 @@ function ChatHistory({ contactName, token, userId, setLMessage, lMessage }) {
 
     useEffect(() => {
         async function read() {
-            if (contactName) {
-                var msgs = await getMessages(contactName);
+            if (selectedContact.contactName) {
+                var msgs = await getMessages(selectedContact.contactName);
                 setMessages(msgs);
                 lastMsgs.current = msgs;
                 anymessages = true;
@@ -96,7 +102,7 @@ function ChatHistory({ contactName, token, userId, setLMessage, lMessage }) {
 
     useEffect(() => {
         async function read() {
-            var mess = await getMessages(contactName);
+            var mess = await getMessages(selectedContact.contactName);
             setMessages(mess);
             lastMsgs.current = mess;
         }
@@ -135,7 +141,9 @@ function ChatHistory({ contactName, token, userId, setLMessage, lMessage }) {
     */
     async function postMessage(message) {
         const status = await fetch(
-            "http://localhost:5285/api/contacts/" + contactName + "/messages",
+            "http://localhost:5285/api/contacts/" +
+                selectedContact.contactName +
+                "/messages",
             {
                 method: "POST",
                 headers: {
@@ -193,8 +201,8 @@ function ChatHistory({ contactName, token, userId, setLMessage, lMessage }) {
             <div className="card" id="chat2">
                 <div className="row d-flex justify-content-center">
                     <div className="card-header d-flex justify-content-between align-items-center p-3">
-                        {contactName ? (
-                            <h5 className="mb-0">{contactName}</h5>
+                        {selectedContact.nickName ? (
+                            <h5 className="mb-0">{selectedContact.nickName}</h5>
                         ) : // trying here
                         null}
                     </div>
@@ -364,7 +372,7 @@ function ChatHistory({ contactName, token, userId, setLMessage, lMessage }) {
                                     const message = {
                                         // id: parseInt(Math.random() * 1000),
                                         from: userId,
-                                        to: contactName,
+                                        to: selectedContact.contactName,
                                         type: "text",
                                         created: new Date(),
                                         content: input,
@@ -373,13 +381,13 @@ function ChatHistory({ contactName, token, userId, setLMessage, lMessage }) {
                                     conn.invoke(
                                         "Send",
                                         userId,
-                                        contactName,
+                                        selectedContact.contactName,
                                         input
                                     );
                                     if (input !== "") {
                                         postMessage(message);
                                         syncmessagesAfterPost(
-                                            contactName,
+                                            selectedContact.contactName,
                                             message
                                         );
                                         const textBox =

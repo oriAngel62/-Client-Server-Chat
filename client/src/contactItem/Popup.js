@@ -61,7 +61,7 @@ function Popup({
                     className="btn btn-primary btn-lg"
                     onClick={() => {
                         var newcontact = {
-                            id: parseInt(Math.random() * 1000),
+                            // id: parseInt(Math.random() * 1000),
                             contactName: name,
                             userName: userId,
                             server: server,

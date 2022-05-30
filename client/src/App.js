@@ -57,7 +57,6 @@ function App(props) {
         read();
     }, [conn]);
 
-    //localhost7285 - not final
     useEffect(() => {
         async function read() {
             const result = await fetch("http://localhost:5285/api/contacts/", {
@@ -159,16 +158,10 @@ function App(props) {
         if (data) return data;
         else return null;
     }
-    const [currentContactName, setCurrentContactName] = useState("");
-
-    // const callbackContactItem = (childData) => {
-    //     console.log(childData.contactName);
-    //     setCurrentContactName(childData.contactName);
-    //     console.log(currentContactName);
-    // };
+    const [selectedContact, setSelectedContact] = useState("");
 
     const callbackContactItem = (childData) => {
-        setCurrentContactName(childData.contactName);
+        setSelectedContact(childData);
     };
 
     async function callbackPopUp() {
@@ -314,11 +307,11 @@ function App(props) {
                     </div>
                 </div>
                 <div className="col-9">
-                    {currentContactName ? (
+                    {selectedContact.contactName ? (
                         <ChatHistory
                             token={token}
                             userId={userId}
-                            contactName={currentContactName}
+                            selectedContact={selectedContact}
                             setLMessage={setLMessage}
                             lMessage={lMessage}
                         />

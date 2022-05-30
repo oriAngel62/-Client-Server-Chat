@@ -57,16 +57,6 @@ function Register() {
         navigator("/login");
     }
 
-    // const users = [
-    //     { username: "Ori", password: "a12345", displayname: "Ori" },
-    //     { username: "David", password: "a12345", displayname: "David" },
-    //     { username: "Avia", password: "a12345", displayname: "Avia" },
-    //     { username: "Yoni", password: "a12345", displayname: "Yoni" },
-    //     { username: "Noa", password: "a12345", displayname: "Noa" },
-    //     { username: "Shaked", password: "a12345", displayname: "Shaked" },
-    //     { username: "Aviv", password: "a12345", displayname: "Aviv" },
-    // ];
-
     return (
         <div className="Register Box">
             <header>
@@ -92,7 +82,8 @@ function Register() {
                             },
                             pattern: {
                                 value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]+$/,
-                                message: "Must have letters or numbers only",
+                                message:
+                                    "Must include letters and numbers only",
                             },
                         })}
                     />
@@ -114,7 +105,7 @@ function Register() {
                             pattern: {
                                 value: /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
                                 message:
-                                    "Must have minimum one letter and minimum one number",
+                                    "Please include at least one letter and one number",
                             },
                         })}
                     />

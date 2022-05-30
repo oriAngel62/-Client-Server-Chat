@@ -61,14 +61,6 @@ function Login() {
                                 value: true,
                                 message: "Please enter user name",
                             },
-                            minLength: {
-                                value: 3,
-                                message: "Please enter Min 3 charachters",
-                            },
-                            pattern: {
-                                value: /^[a-zA-Z0-9]+$/,
-                                message: "Must have letters or numbers only",
-                            },
                         })}
                     />
                     <span>{formState.errors.username?.message}</span>
@@ -80,15 +72,6 @@ function Login() {
                             required: {
                                 value: true,
                                 message: "Please enter password",
-                            },
-                            minLength: {
-                                value: 3,
-                                message: "Please enter Min 3 charachters",
-                            },
-                            pattern: {
-                                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{4,}$/,
-                                message:
-                                    "Must have minimum one letter and minimum one number",
                             },
                         })}
                     />
