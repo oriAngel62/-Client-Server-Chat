@@ -248,7 +248,7 @@ function App(props) {
             if (data) {
                 contacts.current = data;
                 setContactMap(data);
-                console.log(data);
+                // console.log(data);
             } else {
                 //setContactMap([]);
                 contacts.current = data;

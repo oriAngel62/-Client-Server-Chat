@@ -30,9 +30,6 @@ function ContactItem(props) {
 
     useEffect(() => {
         async function read() {
-            console.log(props.contactItem);
-            console.log(props.contactItem);
-            console.log("contact name is: " + props.contactItem.contactName);
             list_of_messeges = getMessages(props.contactItem.contactName);
 
             var fullURL =
@@ -45,7 +42,7 @@ function ContactItem(props) {
             });
             const data = await res.json();
             if (data && data.length > 0) lastMessage = data[data.length - 1];
-            console.log(lastMessage);
+            // console.log(lastMessage);
 
             lastMessage.created = new Date(Date.parse(lastMessage.created))
                 .toLocaleTimeString()

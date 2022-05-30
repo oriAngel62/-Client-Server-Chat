@@ -9,6 +9,7 @@ import { HubConnectionBuilder } from "@microsoft/signalr";
 
 function ChatHistory({ contactName, token, userId }) {
     //debugger;
+
     var chatList = [];
     const [messages, setMessages] = useState([]);
     const lastMsgs = useRef(null);
@@ -36,7 +37,6 @@ function ChatHistory({ contactName, token, userId }) {
             },
         });
         const data = await res.json();
-        console.log(data);
         lastMsgs.current = data;
         setMessages(data);
         return data;
@@ -46,7 +46,7 @@ function ChatHistory({ contactName, token, userId }) {
             lastMsgs.current = data;
             setMessages(lastMsgs.current);
         });
-    }, []);
+    }, [contactName, messages]);
 
     didGotMessages = true;
     //to change according to api
@@ -98,11 +98,6 @@ function ChatHistory({ contactName, token, userId }) {
             lastMsgs.current = mess;
         }
         read();
-        console.log(messages);
-        chatList = messages.map((messege, key) => {
-            console.log(messages);
-            return <MessegeBox messege={messege} key={key} />;
-        });
     }, []);
     const [modeVidPic, setModeVidPic] = useState("pic");
 
@@ -149,10 +144,18 @@ function ChatHistory({ contactName, token, userId }) {
         );
     }
 
-    async function syncmessagesAfterPost(id) {
-        var msgs = await getMessages(id);
-        setMessages(msgs);
-        lastMsgs.current = msgs;
+    async function syncmessagesAfterPost(id, message) {
+        var newList = [];
+        newList = messages.concat(message);
+        // setMessages(newList);
+        // console.log(messages);
+        // var newList = messages.concat(message);
+        // console.log(newList);
+        // newList = messages.concat(message);
+        // setMessages(messages.concat(message));
+        // var msgs = await getMessages(id);
+        // setMessages(msgs);
+        // lastMsgs.current = msgs;
     }
 
     const addAudio = (audioSrc) => {
@@ -186,7 +189,16 @@ function ChatHistory({ contactName, token, userId }) {
                         style={{ position: "relative", height: "400px" }}
                     >
                         <div className="chatBox" id="box">
-                            {chatList}
+                            {
+                                (chatList = messages.map((messege, key) => {
+                                    return (
+                                        <MessegeBox
+                                            messege={messege}
+                                            key={key}
+                                        />
+                                    );
+                                }))
+                            }
                         </div>
                     </div>
                     <div className="bottomPart">
@@ -335,7 +347,7 @@ function ChatHistory({ contactName, token, userId }) {
                             <button
                                 className="btn btn-primary"
                                 onClick={() => {
-                                    const messege = {
+                                    const message = {
                                         id: parseInt(Math.random() * 1000),
                                         from: userId,
                                         to: contactName,
@@ -351,8 +363,11 @@ function ChatHistory({ contactName, token, userId }) {
                                         input
                                     );
                                     if (input !== "") {
-                                        postMessage(messege);
-                                        syncmessagesAfterPost(contactName);
+                                        postMessage(message);
+                                        syncmessagesAfterPost(
+                                            contactName,
+                                            message
+                                        );
                                         const textBox =
                                             document.getElementById("text");
                                         setInput("");
