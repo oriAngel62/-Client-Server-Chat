@@ -17,10 +17,10 @@ function App(props) {
     var videoSource = [video1, "video/mp4"];
     const [conn, setConn] = useState(null);
     const [show, setShow] = useState(false);
-    const [lsMes, setlsMes] = useState(false);
     const contacts = useRef(null);
     const [count, setCounter] = useState(0);
     //backendContact.current = backendContact;
+
     var usersList = [];
 
     useEffect(() => {
@@ -142,7 +142,7 @@ function App(props) {
 
     const [list, setList] = useState(cList);
 
-    const [lastMessage, setLastMessage] = useState("");
+    const [lMessage, setLMessage] = useState(true);
     const [users, setusers] = useState(usersList);
 
     // useEffect(() => {}, [chatHistory]);
@@ -306,6 +306,8 @@ function App(props) {
                                     sendDataToParent={callbackContactItem}
                                     token={token}
                                     key={key}
+                                    setLMessage={setLMessage}
+                                    lMessage={lMessage}
                                 />
                             );
                         })}
@@ -317,6 +319,8 @@ function App(props) {
                             token={token}
                             userId={userId}
                             contactName={currentContactName}
+                            setLMessage={setLMessage}
+                            lMessage={lMessage}
                         />
                     ) : (
                         <br></br>

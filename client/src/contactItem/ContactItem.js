@@ -44,7 +44,7 @@ function ContactItem(props) {
             //     .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
         }
         read();
-    }, []);
+    }, [props.lMessage]);
 
     const srcImg =
         "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp";

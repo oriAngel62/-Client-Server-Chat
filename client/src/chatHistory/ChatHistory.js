@@ -7,7 +7,7 @@ import AddImage from "./AddImage";
 import AddVideo from "./AddVideo";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 
-function ChatHistory({ contactName, token, userId }) {
+function ChatHistory({ contactName, token, userId, setLMessage, lMessage }) {
     //debugger;
 
     var chatList = [];
@@ -154,6 +154,12 @@ function ChatHistory({ contactName, token, userId }) {
             setSendNewMes(false);
         } else {
             setSendNewMes(true);
+        }
+
+        if (lMessage == true) {
+            setLMessage(false);
+        } else {
+            setLMessage(true);
         }
         // setMessages(newList);
         // console.log(messages);
