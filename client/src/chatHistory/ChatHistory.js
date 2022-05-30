@@ -7,7 +7,7 @@ import AddImage from "./AddImage";
 import AddVideo from "./AddVideo";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 
-function ChatHistory({ contactName, sendDataToParent, token, userId }) {
+function ChatHistory({ contactName, token, userId }) {
     //debugger;
     var chatList = [];
     const [messages, setMessages] = useState([]);
@@ -42,7 +42,7 @@ function ChatHistory({ contactName, sendDataToParent, token, userId }) {
         return data;
     }
     useEffect(() => {
-        getMessages(contact.contactName).then((data) => {
+        getMessages(contactName).then((data) => {
             lastMsgs.current = data;
             setMessages(lastMsgs.current);
         });
@@ -81,23 +81,19 @@ function ChatHistory({ contactName, sendDataToParent, token, userId }) {
 
     useEffect(() => {
         async function read() {
-            if (contact) {
-                if (contact.contactName) {
-                    var msgs = await getMessages(contact.contactName);
-                    setMessages(msgs);
-                    lastMsgs.current = msgs;
-                    anymessages = true;
-                } else anymessages = false;
-            } else {
-                anymessages = false;
-            }
+            if (contactName) {
+                var msgs = await getMessages(contactName);
+                setMessages(msgs);
+                lastMsgs.current = msgs;
+                anymessages = true;
+            } else anymessages = false;
         }
         read();
     }, []);
 
     useEffect(() => {
         async function read() {
-            var mess = await getMessages(contact.contactName);
+            var mess = await getMessages(contactName);
             setMessages(mess);
             lastMsgs.current = mess;
         }
@@ -125,12 +121,11 @@ function ChatHistory({ contactName, sendDataToParent, token, userId }) {
             }
         });
     }, []);
-    const addImageVideo = (messege, contact) => {
+    const addImageVideo = (messege) => {
         var newList = [];
         newList = messages.concat(messege);
         setMessages(newList);
         lastMsgs.current = newList;
-        sendDataToParent(messege, contact.contactName);
     };
 
     /*
@@ -142,9 +137,7 @@ function ChatHistory({ contactName, sendDataToParent, token, userId }) {
     */
     async function postMessage(message) {
         const status = await fetch(
-            "http://localhost:5285/api/contacts/" +
-                contact.contactName +
-                "/messages",
+            "http://localhost:5285/api/contacts/" + contactName + "/messages",
             {
                 method: "POST",
                 headers: {
@@ -176,7 +169,6 @@ function ChatHistory({ contactName, sendDataToParent, token, userId }) {
         newList = messages.concat(messege);
         setMessages(newList);
         lastMsgs.current = newList;
-        sendDataToParent(messege, contact.contactName);
     };
 
     return (
@@ -184,8 +176,8 @@ function ChatHistory({ contactName, sendDataToParent, token, userId }) {
             <div className="card" id="chat2">
                 <div className="row d-flex justify-content-center">
                     <div className="card-header d-flex justify-content-between align-items-center p-3">
-                        {contact.contactName ? (
-                            <h5 className="mb-0">{contact.contactName}</h5>
+                        {contactName ? (
+                            <h5 className="mb-0">{contactName}</h5>
                         ) : // trying here
                         null}
                     </div>
@@ -277,7 +269,6 @@ function ChatHistory({ contactName, sendDataToParent, token, userId }) {
                                                 <AddImage
                                                     sendDataBack={addImageVideo}
                                                     token={token}
-                                                    contact={contact}
                                                 />
                                                 {/*  <AddVidPic param="pic" selected={selectedImage} type=""/> almost working
                                                     its a display of the selected video or picture */}
@@ -300,7 +291,6 @@ function ChatHistory({ contactName, sendDataToParent, token, userId }) {
                                                 <AddVideo
                                                     token={token}
                                                     sendDataBack={addImageVideo}
-                                                    contact={contact}
                                                 />
 
                                                 {/* <AddVidPic param={modeVidPic} selected={selectedImage} type={videoType}/>   almost working
@@ -348,7 +338,7 @@ function ChatHistory({ contactName, sendDataToParent, token, userId }) {
                                     const messege = {
                                         id: parseInt(Math.random() * 1000),
                                         from: userId,
-                                        to: contact.contactName,
+                                        to: contactName,
                                         type: "text",
                                         created: new Date(),
                                         content: input,
@@ -357,21 +347,15 @@ function ChatHistory({ contactName, sendDataToParent, token, userId }) {
                                     conn.invoke(
                                         "Send",
                                         userId,
-                                        contact.contactName,
+                                        contactName,
                                         input
                                     );
                                     if (input !== "") {
                                         postMessage(messege);
-                                        syncmessagesAfterPost(
-                                            contact.contactName
-                                        );
+                                        syncmessagesAfterPost(contactName);
                                         const textBox =
                                             document.getElementById("text");
                                         setInput("");
-                                        sendDataToParent(
-                                            messege,
-                                            contact.contactName
-                                        );
                                     }
                                 }}
                             >

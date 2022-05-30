@@ -67,7 +67,6 @@ function App(props) {
             });
             const data = await result.json();
             if (data) {
-                console.log(data);
                 setContactMap(data);
                 contacts.current = data;
             } else {
@@ -141,7 +140,6 @@ function App(props) {
     var cList = [];
 
     const [list, setList] = useState(cList);
-    const [currentContactName, setCurrentContactName] = useState(0);
 
     const [lastMessage, setLastMessage] = useState("");
     const [users, setusers] = useState(usersList);
@@ -160,6 +158,13 @@ function App(props) {
         if (data) return data;
         else return null;
     }
+    const [currentContactName, setCurrentContactName] = useState("");
+
+    // const callbackContactItem = (childData) => {
+    //     console.log(childData.contactName);
+    //     setCurrentContactName(childData.contactName);
+    //     console.log(currentContactName);
+    // };
 
     const callbackContactItem = (childData) => {
         setCurrentContactName(childData.contactName);
@@ -311,7 +316,6 @@ function App(props) {
                             token={token}
                             userId={userId}
                             contactName={currentContactName}
-                            sendDataToParent={callbackChatHistory}
                         />
                     ) : (
                         <br></br>

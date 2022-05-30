@@ -7,46 +7,49 @@ function ContactItem(props) {
         id: 1,
         type: 0,
         content: "hi",
-        created: new Date().toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3"),
+        created: new Date()
+            .toLocaleTimeString()
+            .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3"),
         sent: true,
-    }
+    };
     // const numImg = Math.floor(Math.random() * (8 - 1 + 1) + 1).toString();
     // const srcImg1 =
     //     "https://www.bootdey.com/img/Content/avatar/avatar" + numImg + ".png";
     async function getMessages(id) {
-        var fullURL = 'http://localhost:5285/api/contacts/' + id + '/messages/';
+        var fullURL = "http://localhost:5285/api/contacts/" + id + "/messages/";
         const res = await fetch(fullURL, {
             method: "GET",
-            headers: { "Authorization": "Bearer " + props.token }
+            headers: { Authorization: "Bearer " + props.token },
         });
         const data = await res.json();
-        if (data)
-            return (data);
-        else
-            return null;
+        if (data) return data;
+        else return null;
     }
 
     var list_of_messeges;
 
-
     useEffect(() => {
         async function read() {
             console.log(props.contactItem);
-            console.log(props.contactItem)
+            console.log(props.contactItem);
             console.log("contact name is: " + props.contactItem.contactName);
             list_of_messeges = getMessages(props.contactItem.contactName);
 
-            var fullURL = 'http://localhost:5285/api/contacts/' + props.contactItem.contactName + '/messages/';
+            var fullURL =
+                "http://localhost:5285/api/contacts/" +
+                props.contactItem.contactName +
+                "/messages/";
             const res = await fetch(fullURL, {
                 method: "GET",
-                headers: { "Authorization": "Bearer " + props.token }
+                headers: { Authorization: "Bearer " + props.token },
             });
             const data = await res.json();
-            if (data && data.length > 0)
-                lastMessage = data[data.length - 1];
+            if (data && data.length > 0) lastMessage = data[data.length - 1];
             console.log(lastMessage);
 
-            lastMessage.created = new Date(Date.parse(lastMessage.created)).toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
+            lastMessage.created = new Date(Date.parse(lastMessage.created))
+                .toLocaleTimeString()
+                .replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
         }
         read();
     }, []);
@@ -64,21 +67,28 @@ function ContactItem(props) {
                     aria-current="true"
                     onClick={() => {
                         props.sendDataToParent(props.contactItem);
-                    }}>
+                    }}
+                >
                     <div className="d-flex w-100 justify-content-between">
                         {props.contactItem.src === null ? (
-                            <img src="https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg" width="80pxd"></img>
+                            <img
+                                src="https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg"
+                                width="80pxd"
+                            ></img>
                         ) : (
-                            <img src="https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg" width="80pxd"></img>
+                            <img
+                                src="https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg"
+                                width="80pxd"
+                            ></img>
                         )}
                         <b>{props.contactItem.nickName}</b>
                         <br></br>
                         <span className="hour">
-                        {lastMessage.created === null ? (
-                            <small></small>
-                        ) : (
-                            <small>{lastMessage.created}</small>
-                        )}
+                            {lastMessage.created === null ? (
+                                <small></small>
+                            ) : (
+                                <small>{lastMessage.created}</small>
+                            )}
                         </span>
                     </div>
                     {/* {lastMessage.type === 0 ? (                to bring back for next ass */}
