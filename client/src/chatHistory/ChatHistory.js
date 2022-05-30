@@ -12,6 +12,8 @@ function ChatHistory({ contactName, token, userId }) {
 
     var chatList = [];
     const [messages, setMessages] = useState([]);
+    const [sendNewMes, setSendNewMes] = useState(true);
+
     const lastMsgs = useRef(null);
     lastMsgs.current = messages;
     const [conn, setConn] = useState(null);
@@ -38,16 +40,16 @@ function ChatHistory({ contactName, token, userId }) {
         });
         const data = await res.json();
         lastMsgs.current = data;
-        setMessages(data);
+        // setMessages(data);
         return data;
     }
     useEffect(() => {
         getMessages(contactName).then((data) => {
             lastMsgs.current = data;
-            console.log(messages);
+            console.log(lastMsgs.current);
             setMessages(lastMsgs.current);
         });
-    }, [contactName, messages]);
+    }, [contactName, sendNewMes]);
 
     didGotMessages = true;
     //to change according to api
@@ -148,6 +150,11 @@ function ChatHistory({ contactName, token, userId }) {
     async function syncmessagesAfterPost(id, message) {
         var newList = [];
         newList = messages.concat(message);
+        if (sendNewMes == true) {
+            setSendNewMes(false);
+        } else {
+            setSendNewMes(true);
+        }
         // setMessages(newList);
         // console.log(messages);
         // var newList = messages.concat(message);

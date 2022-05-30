@@ -9,47 +9,40 @@ function Login() {
     const { register, handleSubmit, formState } = useForm();
 
     async function getUsers() {
-        var fullURL = 'http://localhost:5285/api/users';
+        var fullURL = "http://localhost:5285/api/users";
         const res = await fetch(fullURL, {
             method: "GET",
         });
         const data = await res.json();
-        if (data)
-            return (data);
-        else
-            return null;
+        if (data) return data;
+        else return null;
     }
 
     async function submit(credentials) {
-        var fullURL = 'http://localhost:5285/api/users/signin' ;
+        var fullURL = "http://localhost:5285/api/users/signin";
         const rawResponse = await fetch(fullURL, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                Accept: "application/json",
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({ "userId": credentials.username, "password": credentials.password })
+            body: JSON.stringify({
+                userId: credentials.username,
+                password: credentials.password,
+            }),
         });
         if (rawResponse.status === 404) {
-            alert("Username or Password do not match, Please try again or register");
+            alert(
+                "Username or Password do not match, Please try again or register"
+            );
             return;
         }
         const data = await rawResponse.json();
         var token = data.token;
         navigator("/chat", {
-            state: { "token": token, "userId": credentials.username }
+            state: { token: token, userId: credentials.username },
         });
     }
-
-    // const users = [
-    //     { username: "Ori", password: "a12345", displayname: "Ori" },
-    //     { username: "David", password: "a12345", displayname: "David" },
-    //     { username: "Avia", password: "a12345", displayname: "Avia" },
-    //     { username: "Yoni", password: "a12345", displayname: "Yoni" },
-    //     { username: "Noa", password: "a12345", displayname: "Noa" },
-    //     { username: "Shaked", password: "a12345", displayname: "Shaked" },
-    //     { username: "Aviv", password: "a12345", displayname: "Aviv" },
-    // ];
 
     return (
         <div className="Login Box">
