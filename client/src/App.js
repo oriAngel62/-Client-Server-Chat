@@ -17,6 +17,7 @@ function App(props) {
     var videoSource = [video1, "video/mp4"];
     const [conn, setConn] = useState(null);
     const [show, setShow] = useState(false);
+    const [lsMes, setlsMes] = useState(false);
     const contacts = useRef(null);
     const [count, setCounter] = useState(0);
     //backendContact.current = backendContact;
