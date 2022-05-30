@@ -44,6 +44,7 @@ function ChatHistory({ contactName, token, userId }) {
     useEffect(() => {
         getMessages(contactName).then((data) => {
             lastMsgs.current = data;
+            console.log(messages);
             setMessages(lastMsgs.current);
         });
     }, [contactName, messages]);
@@ -348,7 +349,7 @@ function ChatHistory({ contactName, token, userId }) {
                                 className="btn btn-primary"
                                 onClick={() => {
                                     const message = {
-                                        id: parseInt(Math.random() * 1000),
+                                        // id: parseInt(Math.random() * 1000),
                                         from: userId,
                                         to: contactName,
                                         type: "text",
