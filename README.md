@@ -1,5 +1,7 @@
 # -Client-Chat
 
+Run backend API and MVC before running client chat!
+
 This is Stage one of Client ServerChat task in advnace 2 course.
 
 The task was coded by Avia Hadad, Ori Angle, and David Gurovic.
