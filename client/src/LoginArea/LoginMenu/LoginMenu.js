@@ -14,6 +14,13 @@ function LoginMenu() {
                     Register
                 </button>
             </NavLink>
+            <a
+                className="button"
+                id="design-button"
+                href="http://localhost:5049/"
+            >
+                Ranking App
+            </a>
             <hr />
         </div>
     );
