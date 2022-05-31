@@ -31,6 +31,7 @@ function App(props) {
         setConn(newConn);
     }, []);
 
+    //useEffect to detect SignalR connection that tells this user to add a new contact
     useEffect(() => {
         if (conn) {
             conn.start().then((started) => {
