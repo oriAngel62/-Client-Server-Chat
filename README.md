@@ -1,4 +1,6 @@
-# -Client-Server-Chat
+# -Client-Chat
+## Run backend API and MVC (Read backend README before running this app!) 
+https://github.com/oriAngel62/backendChatApp.git
 
 This is Stage one of Client ServerChat task in advnace 2 course.
 
@@ -23,16 +25,6 @@ Steps to run the project:
 *Clone the project to your PC (the project is in the main branch)
 *In the terminal get into client folder (by writing "cd client")
 *Write in the terminal "npm start"
-*In order to login please user one of the username and password conbinations from this "database":
-const users = [
-{ username: "Ori", password: "a12345", displayname: "Ori" },
-{ username: "David", password: "a12345", displayname: "David" },
-{ username: "Avia", password: "a12345", displayname: "Avia" },
-{ username: "Yoni", password: "a12345", displayname: "Yoni" },
-{ username: "Noa", password: "a12345", displayname: "Noa" },
-{ username: "Shaked", password: "a12345", displayname: "Shaked" },
-{ username: "Aviv", password: "a12345", displayname: "Aviv" },
-];
 
 Remarks:
 \*You can see npm packages that you should install in packahe.json => dependencies.
