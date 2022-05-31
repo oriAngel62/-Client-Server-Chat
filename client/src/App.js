@@ -19,45 +19,38 @@ function App(props) {
     const [show, setShow] = useState(false);
     const contacts = useRef(null);
 
-
     var usersList = [];
-
 
     //useEffect to detect SignalR first connection
     useEffect(() => {
-        async function read() {
-            const newConn = new HubConnectionBuilder()
-                .withUrl("http://localhost:5285/hubs/chat")
-                .withAutomaticReconnect()
-                .build();
+        const newConn = new HubConnectionBuilder()
+            .withUrl("http://localhost:5285/hubs/chat")
+            .withAutomaticReconnect()
+            .build();
 
-            setConn(newConn);
-        }
-        read();
+        setConn(newConn);
     }, []);
 
     useEffect(() => {
-        async function read() {
-            if (conn) {
-                conn.start().then((started) => {
-                    conn.on("NewContact", (contact) => {
-                        var newContact = {
-                            contactName: contact.from,
-                            userName: contact.from,
-                            nickName: contact.from,
-                            server: contact.server,
-                            last: null,
-                            lastDate: null,
-                        };
-                        contacts.current.push(contact);
-                        setContactMap(contacts);
-                    });
+        if (conn) {
+            conn.start().then((started) => {
+                conn.on("NewContact", (contact) => {
+                    console.log("Got NewContact");
+                    console.log(contact);
+                    var newContact = {
+                        contactName: contact.from,
+                        userName: contact.from,
+                        nickName: contact.from,
+                        server: contact.server,
+                        last: null,
+                        lastDate: null,
+                    };
+                    contacts.current.push(contact);
+                    setContactMap(contacts);
                 });
-            }
+            });
         }
-        read();
     }, [conn]);
-
 
     //useEffect hook to render all contacts of a connected user when this page is refreshed
     useEffect(() => {
@@ -80,8 +73,7 @@ function App(props) {
         read();
     }, []);
 
-
-    //GET API function 
+    //GET API function
     async function getUsers() {
         var fullURL = "http://localhost:5285/api/users";
         const res = await fetch(fullURL, {
@@ -94,7 +86,6 @@ function App(props) {
         if (data) return data;
         else return null;
     }
-   
 
     const [lMessage, setLMessage] = useState(true);
     const [users, setusers] = useState(usersList);
@@ -105,8 +96,7 @@ function App(props) {
         setSelectedContact(childData);
     };
 
-
-    //this function adds a contact by posting the info to the server 
+    //this function adds a contact by posting the info to the server
     //and updates at the client side by getting the updated info from the server
     async function callbackPopUp() {
         //post fuction add contact asp.net
@@ -150,8 +140,8 @@ function App(props) {
                         data-bs-target="#exampleModal"
                     >
                         Add new contact
-                                                            {/* here we add a new contact */}
-                    </button>                                
+                        {/* here we add a new contact */}
+                    </button>
                     <Popup
                         userId={userId}
                         sendDataToParent={callbackPopUp}
@@ -161,7 +151,7 @@ function App(props) {
                         contactList={contactMap}
                     />
                     <div className="scroll">
-                                                                {/* here we desplay all current contacts */}
+                        {/* here we desplay all current contacts */}
                         {contactMap.map((contact, key) => {
                             return (
                                 <ContactItem
@@ -178,7 +168,7 @@ function App(props) {
                 </div>
                 <div className="col-9">
                     {selectedContact.contactName ? (
-                                                            // here we desplay the chat with a chosen contact
+                        // here we desplay the chat with a chosen contact
                         <ChatHistory
                             token={token}
                             userId={userId}

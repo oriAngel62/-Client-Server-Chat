@@ -14,7 +14,6 @@ function ChatHistory({
     setLMessage,
     lMessage,
 }) {
-
     var chatList = [];
     const [messages, setMessages] = useState([]);
     const [sendNewMes, setSendNewMes] = useState(true);
@@ -24,6 +23,7 @@ function ChatHistory({
     const [conn, setConn] = useState(null);
     const [timeMsg, setTimeMsg] = useState(new Date());
     var didGotMessages = false;
+    const [counter, setCounter] = useState(0);
     async function getTime() {
         const time = await fetch(
             "http://localhost:5285/api/contacts/GetTime/time",
@@ -53,7 +53,7 @@ function ChatHistory({
             console.log(lastMsgs.current);
             setMessages(lastMsgs.current);
         });
-    }, [selectedContact.contactName, sendNewMes]);
+    }, [selectedContact.contactName, sendNewMes, counter]);
 
     didGotMessages = true;
     let anymessages = true;
@@ -71,6 +71,8 @@ function ChatHistory({
         if (conn) {
             conn.start().then((started) => {
                 conn.on("Receive", (signalMessage) => {
+                    console.log("Receive message");
+                    console.log(signalMessage);
                     var msg = {
                         id: 200,
                         content: signalMessage.content,
@@ -79,7 +81,9 @@ function ChatHistory({
                     };
                     lastMsgs.current.push(msg);
                     setMessages(lastMsgs.current);
-                    setCount(count + 1);
+                    setCounter(Math.random());
+
+                    var box = document.getElementById("box");
                 });
             });
         }
@@ -184,24 +188,22 @@ function ChatHistory({
                     <div className="card-header d-flex justify-content-between align-items-center p-3">
                         {selectedContact.nickName ? (
                             <h5 className="mb-0">{selectedContact.nickName}</h5>
-                        ) : 
-                        null}
+                        ) : null}
                     </div>
                     <div
                         className="card-body"
                         style={{ position: "relative", height: "400px" }}
                     >
                         <div className="chatBox" id="box">
-                            {
-                                (chatList = messages.map((messege, key) => {
-                                    return (
-                                        <MessegeBox
-                                            messege={messege}
-                                            key={key}
-                                        />
-                                    );
-                                }))
-                            }
+                            {messages.map((messege, key) => {
+                                return (
+                                    <MessegeBox
+                                        messege={messege}
+                                        key={key}
+                                        counter={counter}
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
                     <div className="bottomPart">
@@ -382,6 +384,7 @@ function ChatHistory({
                     </div>
                 </div>
             </div>
+            <div className="renderAgain">{counter}</div>
         </div>
     );
 }
