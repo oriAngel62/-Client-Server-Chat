@@ -24,6 +24,8 @@ function ChatHistory({
     const [timeMsg, setTimeMsg] = useState(new Date());
     var didGotMessages = false;
     const [counter, setCounter] = useState(0);
+
+    //GET API function for the server's time so it would be consistant
     async function getTime() {
         const time = await fetch(
             "http://localhost:5285/api/contacts/GetTime/time",
@@ -35,6 +37,7 @@ function ChatHistory({
         return time;
     }
 
+     //GET API function 
     async function getMessages(id) {
         var fullURL = "http://localhost:5285/api/contacts/" + id + "/messages/";
         const res = await fetch(fullURL, {
