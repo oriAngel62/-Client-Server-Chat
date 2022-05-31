@@ -14,7 +14,6 @@ function ChatHistory({
     setLMessage,
     lMessage,
 }) {
-    //debugger;
 
     var chatList = [];
     const [messages, setMessages] = useState([]);
@@ -46,7 +45,6 @@ function ChatHistory({
         });
         const data = await res.json();
         lastMsgs.current = data;
-        // setMessages(data);
         return data;
     }
     useEffect(() => {
@@ -58,7 +56,6 @@ function ChatHistory({
     }, [selectedContact.contactName, sendNewMes]);
 
     didGotMessages = true;
-    //to change according to api
     let anymessages = true;
     const [count, setCount] = useState(0);
     useEffect(() => {
@@ -132,13 +129,6 @@ function ChatHistory({
         lastMsgs.current = newList;
     };
 
-    /*
-    type:
-    text -0
-    video -1
-    image -2
-    audio -3
-    */
     async function postMessage(message) {
         const status = await fetch(
             "http://localhost:5285/api/contacts/" +
@@ -169,15 +159,6 @@ function ChatHistory({
         } else {
             setLMessage(true);
         }
-        // setMessages(newList);
-        // console.log(messages);
-        // var newList = messages.concat(message);
-        // console.log(newList);
-        // newList = messages.concat(message);
-        // setMessages(messages.concat(message));
-        // var msgs = await getMessages(id);
-        // setMessages(msgs);
-        // lastMsgs.current = msgs;
     }
 
     const addAudio = (audioSrc) => {
@@ -203,7 +184,7 @@ function ChatHistory({
                     <div className="card-header d-flex justify-content-between align-items-center p-3">
                         {selectedContact.nickName ? (
                             <h5 className="mb-0">{selectedContact.nickName}</h5>
-                        ) : // trying here
+                        ) : 
                         null}
                     </div>
                     <div
@@ -370,7 +351,6 @@ function ChatHistory({
                                 className="btn btn-primary"
                                 onClick={() => {
                                     const message = {
-                                        // id: parseInt(Math.random() * 1000),
                                         from: userId,
                                         to: selectedContact.contactName,
                                         type: "text",

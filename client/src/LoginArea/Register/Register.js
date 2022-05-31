@@ -13,12 +13,9 @@ function Register() {
         var result = await fetch(fullURL);
         var data = await result.json();
         return data;
-        // const data = await res.json();
-        // return(data);
     }
 
     async function postUser() {
-        //post fuction add contact asp.net
         var username;
         var nickName;
         var password;
@@ -48,7 +45,6 @@ function Register() {
         var userList = await getUsers();
         for (let x in userList) {
             if (userList[x].username === credentials.username) {
-                // maybe: x.username
                 alert("username already exist, please try another username");
                 return;
             }

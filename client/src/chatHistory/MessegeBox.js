@@ -1,12 +1,5 @@
 import "./MessegeBox.css";
 
-/*
-type:
-text -0
-video -1
-image -2
-audio -3
-*/
 
 function MessegeBox({ messege }) {
     if (messege.type == "text") {

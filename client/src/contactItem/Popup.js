@@ -13,7 +13,6 @@ function Popup({
     const [name, setName] = useState("");
     const [nickname, setNickname] = useState("");
     const [server, setServer] = useState("");
-    // name nick server
     const [contact, setNewContact] = useState("");
     function handleChangeUserName(event) {
         setName(event.target.value);
@@ -61,7 +60,6 @@ function Popup({
                     className="btn btn-primary btn-lg"
                     onClick={() => {
                         var newcontact = {
-                            // id: parseInt(Math.random() * 1000),
                             contactName: name,
                             userName: userId,
                             server: server,

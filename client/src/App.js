@@ -18,8 +18,7 @@ function App(props) {
     const [conn, setConn] = useState(null);
     const [show, setShow] = useState(false);
     const contacts = useRef(null);
-    const [count, setCounter] = useState(0);
-    //backendContact.current = backendContact;
+
 
     var usersList = [];
 
@@ -70,8 +69,6 @@ function App(props) {
                 setContactMap(data);
                 contacts.current = data;
             } else {
-                //setContactMap([]);
-                //contacts.current = data;
                 usersList = getUsers();
             }
         }
@@ -90,53 +87,7 @@ function App(props) {
         if (data) return data;
         else return null;
     }
-    //     {
-    //         id: "Ori",
-    //         nickName: "o1",
-    //         server: "abc",
-    //         last: "abc",
-    //         lastDate: "2022-05-20T15:37:52.8042078+03:00",
-    //         messageList: [
-    //             {
-    //                 id: 1,
-    //                 type: 0,
-    //                 content: "hi",
-    //                 created: "2022-05-20T15:37:52.8042123+03:00",
-    //                 sent: true,
-    //             },
-    //             {
-    //                 id: 2,
-    //                 type: 0,
-    //                 content: "hi 2 u 2",
-    //                 created: "2022-05-20T15:37:52.8042127+03:00",
-    //                 sent: false,
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         id: "David",
-    //         nickName: "d12",
-    //         server: "abc",
-    //         last: "abcd",
-    //         lastDate: "2022-05-20T15:37:52.8042155+03:00",
-    //         messageList: [
-    //             {
-    //                 id: 1,
-    //                 type: 0,
-    //                 content: "hi",
-    //                 created: "2022-05-20T15:37:52.8042158+03:00",
-    //                 sent: true,
-    //             },
-    //             {
-    //                 id: 2,
-    //                 type: 0,
-    //                 content: "hi 2 u 2",
-    //                 created: "2022-05-20T15:37:52.8042159+03:00",
-    //                 sent: false,
-    //             },
-    //         ],
-    //     },
-    // ]);
+   
     var cList = [];
 
     const [list, setList] = useState(cList);
@@ -144,11 +95,9 @@ function App(props) {
     const [lMessage, setLMessage] = useState(true);
     const [users, setusers] = useState(usersList);
 
-    // useEffect(() => {}, [chatHistory]);
-
     async function getMessages(id) {
         var fullURL = "http://localhost:5285/api/contacts/" + id + "/messages/";
-        const res = await fetch(fullURL, {
+        const res =await fetch(fullURL, {
             headers: {
                 method: "GET",
                 Authorization: "Bearer " + token,
@@ -189,48 +138,10 @@ function App(props) {
             setContactMap(data);
             contacts.current = data;
         } else {
-            //backendContactSetList([]);
-            //contacts.current = data;
             usersList = getUsers();
         }
-        // POST request using fetch inside useEffect React hook
-
-        // empty dependency array means this effect will only run once (like componentDidMount in classes)
-        //add in react
-
-        //handleAdd(childData.name); -> should be done by useEffect - need to check! if doesnt work need to
-        // implement get function to all contacts and set the list
     }
 
-    function handleAdd(name) {
-        var index = (list.length + 1) % 7;
-        if (index == 0) index++;
-        var src =
-            "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava" +
-            index +
-            "-bg.webp";
-        const newList = list.concat({
-            id: list.length,
-            src: src,
-            name: name,
-            listMessages: [{}],
-        });
-        setList(newList);
-
-        const newUser = users.concat({ username: name });
-        setList(newList);
-        setusers(newUser);
-    }
-
-    // const callbackChatHistory = (meesage, id) => {
-    //     for (let i = 0; i < list.length; i++) {
-    //         if (list[i].id === id) {
-    //             list[i].listMessages.push(meesage);
-    //             setCurrentIdNum(i);
-    //         }
-    //     }
-    // };
-    var i = 1;
 
     useEffect(() => {
         async function read() {
@@ -242,9 +153,7 @@ function App(props) {
             if (data) {
                 contacts.current = data;
                 setContactMap(data);
-                // console.log(data);
             } else {
-                //setContactMap([]);
                 contacts.current = data;
             }
         }
@@ -277,7 +186,6 @@ function App(props) {
                             setShow(true);
                         }}
                         className="btn btn-primary"
-                        //add -bs
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal"
                     >

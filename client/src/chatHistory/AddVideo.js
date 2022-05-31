@@ -14,13 +14,6 @@ function AddVideo({ sendDataBack, contact, token }) {
         return(time);
     }
 
-    /*
-    type:
-    text -0
-    video -1
-    image -2
-    audio -3
-    */
 
     return (
         <div>
