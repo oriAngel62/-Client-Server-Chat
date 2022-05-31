@@ -79,7 +79,7 @@ function Register() {
                             pattern: {
                                 value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]+$/,
                                 message:
-                                    "Must include letters and numbers only",
+                                    "Must include letters and numbers, no other symbols",
                             },
                         })}
                     />

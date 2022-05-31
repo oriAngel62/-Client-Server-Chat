@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 function ContactItem(props) {
     const [lastMessage, setLastMessage] = useState("");
 
+    //GET API function
     async function getMessages(id) {
         var fullURL = "http://localhost:5285/api/contacts/" + id + "/messages/";
         const res = await fetch(fullURL, {
