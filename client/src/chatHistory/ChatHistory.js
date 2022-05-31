@@ -5,50 +5,118 @@ import Recording from "./Recording";
 import "./paperclip.png";
 import AddImage from "./AddImage";
 import AddVideo from "./AddVideo";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 
-function ChatHistory({ contact, sendDataToParent }) {
+function ChatHistory({
+    selectedContact,
+    token,
+    userId,
+    setLMessage,
+    lMessage,
+}) {
+    var chatList = [];
+    const [messages, setMessages] = useState([]);
+    const [sendNewMes, setSendNewMes] = useState(true);
 
+    const lastMsgs = useRef(null);
+    lastMsgs.current = messages;
+    const [conn, setConn] = useState(null);
+    const [timeMsg, setTimeMsg] = useState(new Date());
+    var didGotMessages = false;
+    const [counter, setCounter] = useState(0);
 
-
-    async function getTime(){
-        const time = await fetch("https://localhost:7285/api/contacts/GetTime/time");
-        return(time);
+    //GET API function for the server's time so it would be consistant
+    async function getTime() {
+        const time = await fetch(
+            "http://localhost:5285/api/contacts/GetTime/time",
+            {
+                method: "GET",
+                headers: { Authorization: "Bearer " + token },
+            }
+        );
+        return time;
     }
 
-
-    async function getMessages(id)
-    {
-        var fullURL = 'https://localhost:7285/api/contacts/' + id + '/messages/' ;
-        const res = await fetch(fullURL);
+     //GET API function 
+    async function getMessages(id) {
+        var fullURL = "http://localhost:5285/api/contacts/" + id + "/messages/";
+        const res = await fetch(fullURL, {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        });
         const data = await res.json();
-        return(data);
+        lastMsgs.current = data;
+        return data;
     }
-    //to change according to api
-    let anyMesseges = true;
-    var [list_of_messeges, set_list_of_messeges] = useState([]);
-    if(contact !== null)
-    {
-        if(contact.id !== null){
-        set_list_of_messeges(getMessages(contact.id));
-        anyMesseges = true;
-        }
-        else
-        anyMesseges = false;
-    }
-    else{
-    anyMesseges = false;}
-    let typeText = 0;
-    //this too
-    var mess = getMessages(contact.id);
     useEffect(() => {
-        set_list_of_messeges(mess);
-    }, [getMessages(mess)]);
-    const [modeVidPic, setModeVidPic] = useState("pic"); 
-    var chatList = list_of_messeges.map((messege, key) => {
-        return <MessegeBox messege={messege} key={key} />;    
-    });
+        getMessages(selectedContact.contactName).then((data) => {
+            lastMsgs.current = data;
+            console.log(lastMsgs.current);
+            setMessages(lastMsgs.current);
+        });
+    }, [selectedContact.contactName, sendNewMes, counter]);
+
+    didGotMessages = true;
+    let anymessages = true;
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        const newConn = new HubConnectionBuilder()
+            .withUrl("http://localhost:5285/hubs/chat")
+            .withAutomaticReconnect()
+            .build();
+
+        setConn(newConn);
+    }, []);
+
+    useEffect(() => {
+        if (conn) {
+            conn.start().then((started) => {
+                conn.on("Receive", (signalMessage) => {
+                    console.log("Receive message");
+                    console.log(signalMessage);
+                    var msg = {
+                        id: 200,
+                        content: signalMessage.content,
+                        sent: false,
+                        created: "2022-04-24T19:46:09.7077994",
+                    };
+                    lastMsgs.current.push(msg);
+                    setMessages(lastMsgs.current);
+                    setCounter(Math.random());
+
+                    var box = document.getElementById("box");
+                });
+            });
+        }
+    }, [conn]);
+
+    useEffect(() => {
+        async function read() {
+            if (selectedContact.contactName) {
+                var msgs = await getMessages(selectedContact.contactName);
+                setMessages(msgs);
+                lastMsgs.current = msgs;
+                anymessages = true;
+            } else anymessages = false;
+        }
+        read();
+    }, []);
+
+    useEffect(() => {
+        async function read() {
+            var mess = await getMessages(selectedContact.contactName);
+            setMessages(mess);
+            lastMsgs.current = mess;
+        }
+        read();
+    }, []);
+    const [modeVidPic, setModeVidPic] = useState("pic");
+
     const [input, setInput] = useState("");
-    const [showMenu, setShowMenu] = useState(false); 
+    const [showMenu, setShowMenu] = useState(false);
+
     let menuRef = useRef();
     let menuButtonRef = useRef();
     useEffect(() => {
@@ -60,60 +128,60 @@ function ChatHistory({ contact, sendDataToParent }) {
                 setShowMenu(false);
             }
         });
-    });
-    const addImageVideo = (messege, contact) => {
+    }, []);
+    const addImageVideo = (messege) => {
         var newList = [];
-        newList = list_of_messeges.concat(messege[0]);
-        set_list_of_messeges(newList);
-        sendDataToParent(contact, messege[0], contact.id);
+        newList = messages.concat(messege);
+        setMessages(newList);
+        lastMsgs.current = newList;
     };
 
-    
-    
-    
-    /*
-    type:
-    text -0
-    video -1
-    image -2
-    audio -3
-    */
-    async function postMessage(message){
-        if(message[0].Type === "text")
-        {
-            const status = await fetch("https://localhost:7285/api/contacts",{
+    async function postMessage(message) {
+        const status = await fetch(
+            "http://localhost:5285/api/contacts/" +
+                selectedContact.contactName +
+                "/messages",
+            {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    Type: "text",                       // to change next ass
-                    Content: message[0].content,
-                    Sent: true,
-                    Created: getTime(),
-                }),
-            });
-        }
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token,
+                },
+                body: JSON.stringify(message),
+            }
+        );
     }
 
-    
+    async function syncmessagesAfterPost(id, message) {
+        var newList = [];
+        newList = messages.concat(message);
+        if (sendNewMes == true) {
+            setSendNewMes(false);
+        } else {
+            setSendNewMes(true);
+        }
 
-    async function syncMessegesAfterPost(id){
-        set_list_of_messeges(getMessages(id));
+        if (lMessage == true) {
+            setLMessage(false);
+        } else {
+            setLMessage(true);
+        }
     }
 
     const addAudio = (audioSrc) => {
         var audSource = audioSrc;
         let messege = [
             {
-                Type: "audio",                       // to change next ass
+                Type: "audio", // to change next ass
                 Content: audSource,
                 Sent: true,
                 Created: getTime(),
             },
         ];
         var newList = [];
-        newList = list_of_messeges.concat(messege);
-        set_list_of_messeges(newList);
-        sendDataToParent(contact, messege[0], contact.id);
+        newList = messages.concat(messege);
+        setMessages(newList);
+        lastMsgs.current = newList;
     };
 
     return (
@@ -121,17 +189,24 @@ function ChatHistory({ contact, sendDataToParent }) {
             <div className="card" id="chat2">
                 <div className="row d-flex justify-content-center">
                     <div className="card-header d-flex justify-content-between align-items-center p-3">
-                        {contact.name ? (
-                        <h5 className="mb-0">{contact.name}</h5>)   
-                        // trying here
-                        : null}
+                        {selectedContact.nickName ? (
+                            <h5 className="mb-0">{selectedContact.nickName}</h5>
+                        ) : null}
                     </div>
                     <div
                         className="card-body"
                         style={{ position: "relative", height: "400px" }}
                     >
-                        <div calssname="chatBox" id="box">
-                            {chatList}
+                        <div className="chatBox" id="box">
+                            {messages.map((messege, key) => {
+                                return (
+                                    <MessegeBox
+                                        messege={messege}
+                                        key={key}
+                                        counter={counter}
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
                     <div className="bottomPart">
@@ -152,7 +227,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                         }}
                                     >
                                         <span>
-                                            <i class="bi bi-file-image"></i>
+                                            <i className="bi bi-file-image"></i>
                                         </span>
                                     </button>
                                     <button
@@ -165,7 +240,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                         }}
                                     >
                                         <span>
-                                            <i class="bi bi-camera-video"></i>
+                                            <i className="bi bi-camera-video"></i>
                                         </span>
                                     </button>
 
@@ -176,7 +251,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                         data-bs-target="#exampleModal2"
                                     >
                                         <span>
-                                            <i class="bi bi-voicemail"></i>
+                                            <i className="bi bi-voicemail"></i>
                                         </span>
                                     </button>
                                     <div
@@ -213,7 +288,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                                             <div className="modal-content">
                                                 <AddImage
                                                     sendDataBack={addImageVideo}
-                                                    contact={contact}
+                                                    token={token}
                                                 />
                                                 {/*  <AddVidPic param="pic" selected={selectedImage} type=""/> almost working
                                                     its a display of the selected video or picture */}
@@ -234,8 +309,8 @@ function ChatHistory({ contact, sendDataToParent }) {
                                         >
                                             <div className="modal-content">
                                                 <AddVideo
+                                                    token={token}
                                                     sendDataBack={addImageVideo}
-                                                    contact={contact}
                                                 />
 
                                                 {/* <AddVidPic param={modeVidPic} selected={selectedImage} type={videoType}/>   almost working
@@ -271,7 +346,7 @@ function ChatHistory({ contact, sendDataToParent }) {
 
                             <input
                                 className="form-control"
-                                type = "text"
+                                type="text"
                                 placeholder="Write a new message"
                                 id="text"
                                 value={input}
@@ -280,25 +355,29 @@ function ChatHistory({ contact, sendDataToParent }) {
                             <button
                                 className="btn btn-primary"
                                 onClick={() => {
-                                    const messege = [
-                                        {
-                                            content: input,
-                                            sent: true,
-                                            type: "text",
-                                            created: getTime(),
-                                        },
-                                    ];
+                                    const message = {
+                                        from: userId,
+                                        to: selectedContact.contactName,
+                                        type: "text",
+                                        created: new Date(),
+                                        content: input,
+                                        sent: true,
+                                    };
+                                    conn.invoke(
+                                        "Send",
+                                        userId,
+                                        selectedContact.contactName,
+                                        input
+                                    );
                                     if (input !== "") {
-                                        postMessage(messege);
-                                        syncMessegesAfterPost(contact.id);
+                                        postMessage(message);
+                                        syncmessagesAfterPost(
+                                            selectedContact.contactName,
+                                            message
+                                        );
                                         const textBox =
                                             document.getElementById("text");
                                         setInput("");
-                                        sendDataToParent(
-                                            contact,
-                                            messege[0],
-                                            contact.id
-                                        );
                                     }
                                 }}
                             >
@@ -308,6 +387,7 @@ function ChatHistory({ contact, sendDataToParent }) {
                     </div>
                 </div>
             </div>
+            <div className="renderAgain">{counter}</div>
         </div>
     );
 }

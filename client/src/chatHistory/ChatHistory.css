@@ -25,3 +25,8 @@ flex: 1;
 height: 1px;
 background: #eee;
 }
+
+.renderAgain {
+    color:white;
+    display: none;
+}

@@ -1,17 +1,9 @@
 import "./MessegeBox.css";
 
-/*
-type:
-text -0
-video -1
-image -2
-audio -3
-*/
-
 
 function MessegeBox({ messege }) {
-    if (messege.Type === "text") {
-        if (messege.Sent)
+    if (messege.type == "text") {
+        if (messege.sent) {
             return (
                 <div>
                     <p
@@ -21,15 +13,15 @@ function MessegeBox({ messege }) {
                             fontSize: "20px",
                         }}
                     >
-                        {messege.Content}
+                        {messege.content}
                     </p>
 
                     <p className="small ms-3 mb-3 rounded-3 text-muted">
-                        {messege.Created}
+                        {messege.created}
                     </p>
                 </div>
             );
-        else
+        } else
             return (
                 <div className="d-flex flex-row justify-content-end mb-4 pt-1">
                     <div>
@@ -40,18 +32,16 @@ function MessegeBox({ messege }) {
                                 fontSize: "20px",
                             }}
                         >
-                            {messege.Content}
+                            {messege.content}
                         </p>
 
                         <p className="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">
-                            {messege.Created}
+                            {messege.created}
                         </p>
                     </div>
                 </div>
             );
-    }
-    else
-    return null;
+    } else return null;
     // if (messege.type == 2) {
     //     if (messege.sender == "me")
     //         return (

@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 
-function AddVideo({ sendDataBack, contact }) {
+function AddVideo({ sendDataBack, contact, token }) {
     const [inputFile, setInputFile] = useState();
+    const [timeCreated, setTimeCreated] = useState(getTime());
     const [selectedImage, setSelectedImage] = useState("");
     let videoType = "";
 
     async function getTime(){
-        const time = await fetch("https://localhost:7285/api/contacts/GetTime/time");
+        const time = await fetch("http://localhost:5285/api/contacts/GetTime/time",{
+            method: 'GET',
+            headers: {"Authorization" : "Bearer " + token} 
+        });
         return(time);
     }
 
-    /*
-    type:
-    text -0
-    video -1
-    image -2
-    audio -3
-    */
 
     return (
         <div>
@@ -52,7 +49,7 @@ function AddVideo({ sendDataBack, contact }) {
                                         Type: "video",                       // to change next ass
                                         Content: imageSource,
                                         Sent: true,
-                                        Created: getTime(),
+                                        Created: timeCreated,
                                     },
                                 ];
                             }

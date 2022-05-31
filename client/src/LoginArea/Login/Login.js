@@ -8,43 +8,41 @@ function Login() {
     const navigator = useNavigate();
     const { register, handleSubmit, formState } = useForm();
 
-    async function getUsers()
-    {
-        var fullURL = 'https://localhost:7285/api/users' ;
-        const res = await fetch(fullURL);
+    async function getUsers() {
+        var fullURL = "http://localhost:5285/api/users";
+        const res = await fetch(fullURL, {
+            method: "GET",
+        });
         const data = await res.json();
-        console.log(data);
-        if( data !== null)
-        return(data);
-        else
-        return null;
+        if (data) return data;
+        else return null;
     }
 
-    function submit(credentials) {
-        var userList = getUsers();
-        for (let x in userList) {
-            if (
-                userList[x].username === credentials.username &&    //maybe:  x.username  & x.password
-                userList[x] === credentials.password
-            ) {
-                navigator("/chat");
-                return;
-            }
+    async function submit(credentials) {
+        var fullURL = "http://localhost:5285/api/users/signin";
+        const rawResponse = await fetch(fullURL, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: credentials.username,
+                password: credentials.password,
+            }),
+        });
+        if (rawResponse.status === 404) {
+            alert(
+                "Username or Password do not match, Please try again or register"
+            );
+            return;
         }
-        alert(
-            "Username or Password do not match, Please try again or register"
-        );
+        const data = await rawResponse.json();
+        var token = data.token;
+        navigator("/chat", {
+            state: { token: token, userId: credentials.username },
+        });
     }
-
-    // const users = [
-    //     { username: "Ori", password: "a12345", displayname: "Ori" },
-    //     { username: "David", password: "a12345", displayname: "David" },
-    //     { username: "Avia", password: "a12345", displayname: "Avia" },
-    //     { username: "Yoni", password: "a12345", displayname: "Yoni" },
-    //     { username: "Noa", password: "a12345", displayname: "Noa" },
-    //     { username: "Shaked", password: "a12345", displayname: "Shaked" },
-    //     { username: "Aviv", password: "a12345", displayname: "Aviv" },
-    // ];
 
     return (
         <div className="Login Box">
@@ -63,14 +61,6 @@ function Login() {
                                 value: true,
                                 message: "Please enter user name",
                             },
-                            minLength: {
-                                value: 3,
-                                message: "Please enter Min 3 charachters",
-                            },
-                            pattern: {
-                                value: /^[a-zA-Z0-9]+$/,
-                                message: "Must have letters or numbers only",
-                            },
                         })}
                     />
                     <span>{formState.errors.username?.message}</span>
@@ -83,20 +73,11 @@ function Login() {
                                 value: true,
                                 message: "Please enter password",
                             },
-                            minLength: {
-                                value: 3,
-                                message: "Please enter Min 3 charachters",
-                            },
-                            pattern: {
-                                value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&^_-]{4,}$/,
-                                message:
-                                    "Must have minimum one letter and minimum one number",
-                            },
                         })}
                     />
                     <span>{formState.errors.password?.message}</span>
 
-                    <button class="btn btn-success">Login</button>
+                    <button className="btn btn-success">Login</button>
                 </form>
                 <p>
                     Not registered yet?{" "}
