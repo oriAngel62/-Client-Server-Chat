@@ -1,6 +1,5 @@
 # -Client-Chat
-
-Run backend API and MVC before running client chat!
+## Run backend API and MVC (Read backend README before running this app!) 
 https://github.com/oriAngel62/backendChatApp.git
 
 This is Stage one of Client ServerChat task in advnace 2 course.
