@@ -5,21 +5,17 @@ function LoginMenu() {
     return (
         <div className="LoginMenu Box">
             <NavLink to="/login">
-                <button type="button" className="btn btn-primary">
+                <a type="button" className="btn primary">
                     Login
-                </button>
+                </a>
             </NavLink>
             <NavLink to="/register">
-                <button type="button" className="btn btn-primary">
+                <a type="button" className="btn primary">
                     Register
-                </button>
+                </a>
             </NavLink>
-            <a
-                className="button"
-                id="design-button"
-                href="http://localhost:5049/"
-            >
-                Ranking App
+            <a id="aa" className="btn primary" href="http://localhost:5049/">
+                Rank Site
             </a>
             <hr />
         </div>
