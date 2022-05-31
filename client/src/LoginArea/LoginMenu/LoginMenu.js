@@ -14,7 +14,7 @@ function LoginMenu() {
                     Register
                 </a>
             </NavLink>
-            <a id="aa" className="btn primary" href="http://localhost:5049/">
+            <a className="btn primary" href="http://localhost:5049/">
                 Rank Site
             </a>
             <hr />
