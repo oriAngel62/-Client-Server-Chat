@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import React, { useState } from "react";
+
 import LoginMenu from "../LoginMenu/LoginMenu";
 import { NavLink } from "react-router-dom";
 import "./Register.css";
@@ -7,13 +9,14 @@ import "./Register.css";
 function Register() {
     const { register, handleSubmit, formState } = useForm();
     const navigator = useNavigate();
+    var [userList, setUserList] = useState([]);
 
-    async function getUsers() {
-        var fullURL = "http://localhost:5285/api/users";
-        var result = await fetch(fullURL);
-        var data = await result.json();
-        return data;
-    }
+    // async function getUsers() {
+    //     var fullURL = "http://localhost:5285/api/users";
+    //     var result = await fetch(fullURL);
+    //     var data = await result.json();
+    //     return data;
+    // }
 
     async function postUser() {
         var username;
@@ -42,9 +45,11 @@ function Register() {
     }
 
     async function submit(credentials) {
-        var userList = await getUsers();
-        for (let x in userList) {
-            if (userList[x].username === credentials.username) {
+        var fullURL = "http://localhost:5285/api/users";
+        var result = await fetch(fullURL);
+        var data = await result.json();
+        for (let x in data) {
+            if (data[x].userName == credentials.username) {
                 alert("username already exist, please try another username");
                 return;
             }
